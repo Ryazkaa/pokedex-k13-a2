@@ -86,47 +86,16 @@
 
         <div class="bento-panel control-panel">
             <div class="excel-actions">
-                <a href="{{ route('pokedex.export') }}" class="action-pill" id="exportTrigger" data-export-trigger>
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <div>
-                        <strong>Export ke Excel</strong>
-                        <small>Unduh .xlsx + timestamp</small>
-                    </div>
-                </a>
-
-                <form id="importForm" class="import-form" method="POST" action="{{ route('pokedex.import') }}" enctype="multipart/form-data">
+                <form id="importForm" class="import-form" method="POST" action="{{ route('pokedex.import') }}" enctype="multipart/form-data" style="width: 100%;">
                     @csrf
                     <input type="file" id="importFile" name="file_excel" class="visually-hidden" tabindex="-1"
                            accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" aria-label="Pilih file Excel">
-                    <button type="button" class="action-pill" id="importTrigger" data-action="import">
+                    <button type="button" class="action-pill action-pill--wide" id="importTrigger" data-action="import">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         <div>
-                            <strong>Import Excel</strong>
-                            <small>Pilih / tarik file .xlsx</small>
+                            <strong>Import Master Dataset (.xlsx)</strong>
+                            <small>Fitur Developer · Perbarui 1.025 data ke Library</small>
                         </div>
-                    </button>
-
-                    {{-- Panel Konfirmasi Export (Hold to Confirm -> Envelope Seal) --}}
-                    <div class="import-chip" id="exportChip" hidden>
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z M14 3v5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-                        <span id="exportName">Pokedex_Library_{{ now('Asia/Jakarta')->format('Y-m-d') }}.xlsx ({{ $total }} Pokémon)</span>
-                        <button type="button" id="exportCancel" aria-label="Batalkan export">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
-                        </button>
-                    </div>
-                    <button type="button" class="action-pill action-pill--upload hold-btn" id="exportHoldBtn" data-export-url="{{ route('pokedex.export') }}" hidden>
-                        <svg class="hold-btn__perimeter" viewBox="0 0 400 56" preserveAspectRatio="none" aria-hidden="true">
-                            <rect x="2" y="2" width="396" height="52" rx="13" ry="13" pathLength="100"/>
-                        </svg>
-                        <span class="hold-btn__ring-wrap" aria-hidden="true">
-                            <svg class="hold-btn__ring" viewBox="0 0 36 36">
-                                <circle class="hold-btn__track" cx="18" cy="18" r="15" pathLength="100"/>
-                                <circle class="hold-btn__fill" cx="18" cy="18" r="15" pathLength="100"/>
-                            </svg>
-                            <svg class="hold-btn__icon hold-btn__icon--idle" viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            <svg class="hold-btn__icon hold-btn__icon--check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </span>
-                        <span class="hold-btn__text" data-label>Hold to Confirm Export</span>
                     </button>
 
                     {{-- Panel Konfirmasi Import (Hold to Import -> Checklist) --}}
@@ -310,7 +279,7 @@
                             @if ($nextIndexNum <= $maxCatalog)
                                 Entri ke-<strong>{{ $total }}</strong> · Target import berikutnya: <strong>{{ $nextIndexStr }}</strong>
                             @else
-                                Entri ke-<strong>{{ $total }}</strong> · <strong>Seluruh {{ $maxCatalog }} Pokémon Terkoleksi!</strong>
+                                Entri ke-<strong>{{ $total }}</strong> · <strong>Seluruh {{ $maxCatalog }} Pokémon Terdaftar!</strong>
                             @endif
                         </p>
                     @else
