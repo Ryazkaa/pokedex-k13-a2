@@ -138,12 +138,3 @@ Sistem membedakan dua tingkatan hak akses:
   * Mengembangkan kontroler `app/Http/Controllers/TrainerJournalController.php` dengan pembersih XSS / HTML sanitizer.
   * Membangun modal interaktif Jurnal Taktik (`journal-modal.blade.php`) dengan field *Tanggal Tangkap*, *Lokasi Tangkap*, serta editor teks kaya **Quill.js WYSIWYG**.
   * Menghubungkan jurnal taktis langsung dengan entri koleksi Pokémon trainer.
-
----
-
-## 6. Standar Integrasi & Isolasi Kode (Zero Merge Conflict)
-
-Untuk menjamin seluruh 4 pengembang dapat bekerja secara paralel tanpa saling menimpa kode:
-1. **Aturan 1 File Utuh (Ctrl+A & Ctrl+V):** Setiap berkas panduan teknis (`PANDUAN_JOB_*.docx`) menyertakan kode sumber berkas 100% utuh tanpa potongan sisipan, sehingga pengembang cukup membuat berkas baru atau menimpa berkas terkait secara menyeluruh.
-2. **Modular Blade Partials:** Seluruh komponen visual dipecah ke dalam folder `resources/views/pokedex/partials/` yang memiliki kepemilikan file terpisah.
-3. **Penyatuan Rute Terpusat:** Berkas `routes/web.php` telah dirancang modular dengan pemetaan jelas per modul tugas.

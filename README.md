@@ -57,12 +57,8 @@ Pertemuan 999/
 │   ├── pokedex-app(v1.0.1).zip     # Rilis perombakan konsep v1.1 & UI Bento
 │   └── README.md                   # Catatan rilis dan riwayat versi
 ├── datasets/                       # Dataset acuan spreadsheet (.xlsx)
-├── docs/                           # Dokumentasi & panduan pengerjaan tim
-│   ├── arsitektur-sistem.md        # Dokumen rancangan arsitektur lengkap
-│   ├── PANDUAN_JOB_1_YANUAR.docx   # Panduan modul sesi & autentikasi
-│   ├── PANDUAN_JOB_2_ARYA.docx     # Panduan modul master library & DevOps
-│   ├── PANDUAN_JOB_3_MADINA.docx   # Panduan modul caught tracker & export
-│   └── PANDUAN_JOB_4_IASHA.docx    # Panduan modul field notes & WYSIWYG
+├── docs/                           # Dokumentasi & rancangan sistem
+│   └── arsitektur-sistem.md        # Dokumen rancangan arsitektur lengkap
 ├── src/                            # Kode sumber aplikasi Laravel 11
 │   ├── app/                        # Controllers, Models, Middleware
 │   ├── config/                     # Konfigurasi sistem
