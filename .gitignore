@@ -1,0 +1,14 @@
+# Panduan Teknis Internal Tim (Hanya untuk konsumsi lokal anggota)
+docs/PANDUAN_JOB_*.docx
+PANDUAN_JOB_*.docx
+*.tmp
+~$*.docx
+
+# Environment & Dependencies
+.env
+/src/.env
+/src/vendor/
+/src/node_modules/
+/src/storage/*.key
+.DS_Store
+Thumbs.db

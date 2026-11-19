@@ -38,12 +38,8 @@ Pertemuan 999/
 │   └── README.md               # Dokumentasi log rilis versi
 ├── datasets/          # 10 Berkas Master Excel (.xlsx) resmi 1.025 Pokémon (Gen I-IX)
 ├── design-assets/     # Wireframe, palet warna, dan aset desain visual
-├── docs/              # Dokumentasi arsitektur sistem & panduan langkah per anggota (.docx)
-│   ├── arsitektur-sistem.md    # Spesifikasi teknis, ERD, dan diagram alur
-│   ├── PANDUAN_JOB_1_YANUAR.docx
-│   ├── PANDUAN_JOB_2_ARYA.docx
-│   ├── PANDUAN_JOB_3_MADINA.docx
-│   └── PANDUAN_JOB_4_IASHA.docx
+├── docs/              # Dokumentasi teknis & arsitektur sistem
+│   └── arsitektur-sistem.md    # Spesifikasi teknis, ERD, dan diagram alur
 └── src/               # Source code utama aplikasi Laravel 11
     ├── app/Http/Controllers/   # Controller logika aplikasi
     ├── database/migrations/    # Migrasi skema database
