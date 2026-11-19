@@ -85,16 +85,20 @@
         </div>
 
         <div class="bento-panel control-panel">
-            <div class="excel-actions">
+            <div class="excel-actions" style="grid-template-columns: 1fr; width: 100%;">
                 <form id="importForm" class="import-form" method="POST" action="{{ route('pokedex.import') }}" enctype="multipart/form-data" style="width: 100%;">
                     @csrf
                     <input type="file" id="importFile" name="file_excel" class="visually-hidden" tabindex="-1"
                            accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" aria-label="Pilih file Excel">
-                    <button type="button" class="action-pill action-pill--wide" id="importTrigger" data-action="import">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        <div>
-                            <strong>Import Master Dataset (.xlsx)</strong>
-                            <small>Fitur Developer · Perbarui 1.025 data ke Library</small>
+                    <button type="button" class="action-pill action-pill--wide" id="importTrigger" data-action="import"
+                            style="width: 100%; padding: 14px 18px; border-radius: 12px; display: flex; align-items: center; gap: 14px;">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 24px; height: 24px; flex-shrink: 0;"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div style="flex: 1; text-align: left;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 3px;">
+                                <strong style="font-size: 0.95rem; color: #FFFFFF; font-weight: 700;">Import Pokemon untuk Database</strong>
+                                <span style="background: rgba(225, 29, 72, 0.22); color: #F43F5E; border: 1px solid rgba(225, 29, 72, 0.45); font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase;">Fitur Developer</span>
+                            </div>
+                            <small style="color: #94A3B8; font-size: 0.78rem;">Khusus Developer · Perbarui atau tambahkan semua Pokémon terbaru ke Library (.xlsx)</small>
                         </div>
                     </button>
 
