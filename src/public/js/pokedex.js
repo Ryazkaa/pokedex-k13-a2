@@ -899,6 +899,11 @@
         if (resetPill) {
             resetPill.hidden = !tVal;
         }
+
+        const bentoGen = document.getElementById('bentoGenFilter');
+        if (bentoGen && bentoGen.value !== gVal) {
+            bentoGen.value = gVal;
+        }
     }
 
     let totalPagesCount = 1;
@@ -995,6 +1000,14 @@
     searchInput?.addEventListener('input', () => applyTable(true));
     typeFilter?.addEventListener('change', () => applyTable(true));
     genFilter?.addEventListener('change', () => applyTable(true));
+
+    const bentoGenFilter = document.getElementById('bentoGenFilter');
+    bentoGenFilter?.addEventListener('change', () => {
+        if (!genFilter) return;
+        genFilter.value = bentoGenFilter.value;
+        applyTable(true);
+        document.getElementById('search')?.scrollIntoView({ behavior: 'smooth' });
+    });
 
     // Shortcut "/" untuk fokus ke kotak search
     document.addEventListener('keydown', (e) => {

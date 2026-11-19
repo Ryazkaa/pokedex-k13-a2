@@ -154,7 +154,7 @@
                 </form>
             </div>
 
-            {{-- Filter Generasi (Gen 1 dan Gen 2) --}}
+            {{-- Filter Generasi (Dropdown Generasi 1 - 9) --}}
             <div class="control-group">
                 <div class="control-group__head">
                     <p class="pill-label">Filter Generasi</p>
@@ -162,22 +162,24 @@
                         Reset filter ×
                     </button>
                 </div>
-                <div class="gen-shortcuts" aria-label="Filter Generasi">
-                    <button type="button" class="gen-card" data-filter-gen="Generasi I (Kanto)" aria-pressed="false">
-                        <span class="gen-card__num">I</span>
-                        <span class="gen-card__body">
-                            <strong>Gen 1 · Kanto</strong>
-                            <small>#0001 – #0151</small>
+                <div class="gen-dropdown-wrap">
+                    <label class="bento-select-wrap">
+                        <select id="bentoGenFilter" class="bento-select" aria-label="Pilih Generasi Pokémon">
+                            <option value="">Semua Generasi (Pilih Gen 1 – 9)</option>
+                            <option value="Generasi I (Kanto)">Gen 1 · Kanto (#0001 – #0151)</option>
+                            <option value="Generasi II (Johto)">Gen 2 · Johto (#0152 – #0251)</option>
+                            <option value="Generasi III (Hoenn)">Gen 3 · Hoenn (#0252 – #0386)</option>
+                            <option value="Generasi IV (Sinnoh)">Gen 4 · Sinnoh (#0387 – #0493)</option>
+                            <option value="Generasi V (Unova)">Gen 5 · Unova (#0494 – #0649)</option>
+                            <option value="Generasi VI (Kalos)">Gen 6 · Kalos (#0650 – #0721)</option>
+                            <option value="Generasi VII (Alola)">Gen 7 · Alola (#0722 – #0809)</option>
+                            <option value="Generasi VIII (Galar)">Gen 8 · Galar (#0810 – #0905)</option>
+                            <option value="Generasi IX (Paldea)">Gen 9 · Paldea (#0906 – #1025)</option>
+                        </select>
+                        <span class="bento-select__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
                         </span>
-                    </button>
-
-                    <button type="button" class="gen-card" data-filter-gen="Generasi II (Johto)" aria-pressed="false">
-                        <span class="gen-card__num">II</span>
-                        <span class="gen-card__body">
-                            <strong>Gen 2 · Johto</strong>
-                            <small>#0152 – #0251</small>
-                        </span>
-                    </button>
+                    </label>
                 </div>
             </div>
 
@@ -218,15 +220,15 @@
         </div>
 
         <div class="bento__info">
-            {{-- Kartu 1: Ringkasan Koleksi (dipertahankan) --}}
+            {{-- Kartu 1: Koleksi Pokédex (Integrasi Modul Madina) --}}
             <article class="info-card">
                 <div class="info-card__icon info-card__icon--stats">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V11m7 9V5m7 15v-6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
                 </div>
                 <div class="info-card__body">
-                    <p class="info-card__kicker">Ringkasan Koleksi</p>
-                    <h3>{{ $total }} Pokémon</h3>
-                    <p>{{ count($typeMeta) }} tipe elemen (18 standar + Stellar) dari {{ $generasiList->count() }} generasi berbeda.</p>
+                    <p class="info-card__kicker">Koleksi Pokédex</p>
+                    <h3>N/A</h3>
+                    <p>Menunggu integrasi modul Pokédex Caught Tracker (Madina Dwiyana Putri).</p>
                 </div>
             </article>
 
