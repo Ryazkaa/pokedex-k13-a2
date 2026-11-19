@@ -2,8 +2,8 @@
 <section id="search" class="pokedex section" aria-labelledby="pokedexTitle">
     <div class="pokedex__head">
         <div>
-            <p class="section-kicker">Pokédex Library</p>
-            <h2 id="pokedexTitle" class="section-title section-title--lg">Data Pokédex</h2>
+            <p class="section-kicker">Pokemon Library</p>
+            <h2 id="pokedexTitle" class="section-title section-title--lg">Data Pokemon</h2>
         </div>
         <p class="pokedex__count" aria-live="polite">Menampilkan <strong id="resultCount">{{ $total }}</strong> dari {{ $total }} Pokémon</p>
     </div>
@@ -28,10 +28,16 @@
         <label class="select-field">
             <span class="visually-hidden">Filter generasi</span>
             <select id="genFilter">
-                <option value="">Semua generasi</option>
-                @foreach ($generasiList as $gen)
-                    <option value="{{ $gen }}">{{ $gen }}</option>
-                @endforeach
+                <option value="">Semua generasi (Gen I – IX)</option>
+                <option value="Generasi I (Kanto)">Generasi I (Kanto)</option>
+                <option value="Generasi II (Johto)">Generasi II (Johto)</option>
+                <option value="Generasi III (Hoenn)">Generasi III (Hoenn)</option>
+                <option value="Generasi IV (Sinnoh)">Generasi IV (Sinnoh)</option>
+                <option value="Generasi V (Unova)">Generasi V (Unova)</option>
+                <option value="Generasi VI (Kalos)">Generasi VI (Kalos)</option>
+                <option value="Generasi VII (Alola)">Generasi VII (Alola)</option>
+                <option value="Generasi VIII (Galar)">Generasi VIII (Galar)</option>
+                <option value="Generasi IX (Paldea)">Generasi IX (Paldea)</option>
             </select>
         </label>
     </div>

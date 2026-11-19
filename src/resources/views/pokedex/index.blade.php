@@ -36,7 +36,7 @@
     </main>
 
     <footer class="site-footer shell">
-        <p>Pokedex - Arya Andra Diazka - J0404251155 - A / A2</p>
+        <p>Pokédex - Kelompok 13 - Kelas A / A2</p>
         <p>Laravel {{ app()->version() }} · PhpSpreadsheet · Artwork dari PokeAPI</p>
     </footer>
 

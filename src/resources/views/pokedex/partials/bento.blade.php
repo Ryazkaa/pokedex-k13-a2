@@ -2,13 +2,13 @@
 @php
     $kantoCount = $pokemons->where('gen_roman', 'I')->count();
     $johtoCount = $pokemons->where('gen_roman', 'II')->count();
-    $maxCatalog = 251;
+    $maxCatalog = $total > 251 ? 1025 : 251;
     $completionPct = $maxCatalog > 0 ? min(100, (int) round(($total / $maxCatalog) * 100)) : 0;
     $remainingSlot = max(0, $maxCatalog - $total);
     $latestPokemon = $pokemons->sortByDesc('number')->first();
     $lastPageNum = max(1, (int) ceil($total / 20));
     $nextIndexNum = ($latestPokemon?->number ?? $total) + 1;
-    $nextIndexStr = '#' . str_pad((string) $nextIndexNum, 4, '0', STR_PAD_LEFT);
+    $nextIndexStr = $nextIndexNum <= $maxCatalog ? ('#' . str_pad((string) $nextIndexNum, 4, '0', STR_PAD_LEFT)) : 'Lengkap';
 @endphp
 
 <section id="explore" class="bento section" aria-label="Explore">
@@ -230,24 +230,42 @@
                 </div>
             </article>
 
-            {{-- Kartu 2: Kelengkapan Kanto & Johto (#0001 - #0251) --}}
+            {{-- Kartu 2: Kelengkapan Pokédex (Responsif 251 atau 1025) --}}
             <article class="info-card">
                 <div class="info-card__icon info-card__icon--progress">
                     <span>{{ $completionPct }}%</span>
                 </div>
                 <div class="info-card__body">
                     <p class="info-card__kicker">Kelengkapan Pokédex ({{ $total }} / {{ $maxCatalog }})</p>
-                    <h3>Kanto {{ $kantoCount }}/151 · Johto {{ $johtoCount }}/100</h3>
-                    <div class="dex-progress" role="progressbar" aria-valuenow="{{ $completionPct }}" aria-valuemin="0" aria-valuemax="100">
-                        <span class="dex-progress__bar" style="width: {{ $completionPct }}%"></span>
-                    </div>
-                    <p>
-                        @if ($remainingSlot > 0)
-                            Tersisa <strong>{{ $remainingSlot }} slot Gen II</strong> (#{{ str_pad((string) ($total + 1), 4, '0', STR_PAD_LEFT) }}–#0251) siap di-import via <strong>.xlsx</strong>.
+                    @if ($maxCatalog === 1025)
+                        @if ($total >= 1025)
+                            <h3>Semua 9 Generasi Terdaftar (Gen I–IX)</h3>
                         @else
-                            Seluruh <strong>251 Pokémon</strong> Generasi I &amp; II telah lengkap terdaftar!
+                            <h3>{{ $generasiList->count() }} Generasi Terdata · {{ $total }}/1025</h3>
                         @endif
-                    </p>
+                        <div class="dex-progress" role="progressbar" aria-valuenow="{{ $completionPct }}" aria-valuemin="0" aria-valuemax="100">
+                            <span class="dex-progress__bar" style="width: {{ $completionPct }}%"></span>
+                        </div>
+                        <p>
+                            @if ($remainingSlot > 0)
+                                Tersisa <strong>{{ $remainingSlot }} Pokémon</strong> dari total 1.025 Pokémon siap di-import via <strong>.xlsx</strong>.
+                            @else
+                                Seluruh <strong>1.025 Pokémon</strong> (Gen I–IX) telah lengkap terdaftar!
+                            @endif
+                        </p>
+                    @else
+                        <h3>Kanto {{ $kantoCount }}/151 · Johto {{ $johtoCount }}/100</h3>
+                        <div class="dex-progress" role="progressbar" aria-valuenow="{{ $completionPct }}" aria-valuemin="0" aria-valuemax="100">
+                            <span class="dex-progress__bar" style="width: {{ $completionPct }}%"></span>
+                        </div>
+                        <p>
+                            @if ($remainingSlot > 0)
+                                Tersisa <strong>{{ $remainingSlot }} slot Gen II</strong> (#{{ str_pad((string) ($total + 1), 4, '0', STR_PAD_LEFT) }}–#0251) siap di-import via <strong>.xlsx</strong>.
+                            @else
+                                Seluruh <strong>251 Pokémon</strong> Generasi I &amp; II telah lengkap terdaftar!
+                            @endif
+                        </p>
+                    @endif
                 </div>
             </article>
 
@@ -287,7 +305,11 @@
                             </span>
                         </div>
                         <p class="info-card__submeta">
-                            Entri ke-<strong>{{ $total }}</strong> · Target import berikutnya: <strong>{{ $nextIndexStr }}</strong>
+                            @if ($nextIndexNum <= $maxCatalog)
+                                Entri ke-<strong>{{ $total }}</strong> · Target import berikutnya: <strong>{{ $nextIndexStr }}</strong>
+                            @else
+                                Entri ke-<strong>{{ $total }}</strong> · <strong>Seluruh {{ $maxCatalog }} Pokémon Terkoleksi!</strong>
+                            @endif
                         </p>
                     @else
                         <h3>Belum Ada Data</h3>

@@ -24,20 +24,14 @@
                     <span>Made By</span>
                     <svg viewBox="0 0 24 24" aria-hidden="true" class="pill__chev"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
                 </summary>
-                <div class="trainer__menu fold-list" aria-label="Identitas Mahasiswa">
+                <div class="trainer__menu fold-list" aria-label="Identitas Kelompok">
                     <div class="fold-row" style="--fold-i: 0">
                         <div class="fold-row__inner identity-item">
-                            <span class="identity-item__label">Nama Lengkap</span>
-                            <strong class="identity-item__val">Arya Andra Diazka</strong>
+                            <span class="identity-item__label">Kelompok</span>
+                            <strong class="identity-item__val">Kelompok 13</strong>
                         </div>
                     </div>
                     <div class="fold-row" style="--fold-i: 1">
-                        <div class="fold-row__inner identity-item">
-                            <span class="identity-item__label">NIM</span>
-                            <strong class="identity-item__val identity-item__val--mono">J0404251155</strong>
-                        </div>
-                    </div>
-                    <div class="fold-row" style="--fold-i: 2">
                         <div class="fold-row__inner identity-item">
                             <span class="identity-item__label">Kelas Praktikum</span>
                             <strong class="identity-item__val">Kelas A / A2</strong>

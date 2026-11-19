@@ -12,7 +12,7 @@
 return [
 
     // Nama yang tampil pada pill merah di kanan atas navbar.
-    'trainer' => env('POKEDEX_TRAINER', 'Arya Andra Diazka'),
+    'trainer' => env('POKEDEX_TRAINER', 'Kelompok 13'),
 
     'types' => [
         'normal'   => ['label' => 'Normal',   'color' => '#999999', 'icon' => '/images/types/normal.svg',   'desc' => 'Serba bisa tanpa keunggulan elemen khusus; hanya rentan terhadap serangan Fighting dan kebal Ghost.'],

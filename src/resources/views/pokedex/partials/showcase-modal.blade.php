@@ -43,7 +43,7 @@
 
         <footer class="showcase__foot">
             <span>Gunakan ← → untuk berpindah · Esc untuk menutup</span>
-            <span>Pokedex - Arya Andra Diazka - J0404251155 - A / A2</span>
+            <span>Pokédex - Kelompok 13 - Kelas A / A2</span>
         </footer>
     </div>
 </dialog>
