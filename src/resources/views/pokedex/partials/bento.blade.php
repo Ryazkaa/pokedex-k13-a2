@@ -238,7 +238,7 @@
                     <span>{{ $completionPct }}%</span>
                 </div>
                 <div class="info-card__body">
-                    <p class="info-card__kicker">Kelengkapan Pokédex ({{ $total }} / {{ $maxCatalog }})</p>
+                    <p class="info-card__kicker">Kelengkapan Library</p>
                     @if ($maxCatalog === 1025)
                         @if ($total >= 1025)
                             <h3>Semua 9 Generasi Terdaftar (Gen I–IX)</h3>
