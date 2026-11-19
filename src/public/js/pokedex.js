@@ -304,6 +304,19 @@
     let slideOutTimeout = null;
 
     function buildBadgeHtml(types, variant = '') {
+        if (variant === 'icons' || variant === 'table') {
+            return `<span class="type-badges type-badges--icons">${types
+                .map((t) => {
+                    const key = String(t).trim().toLowerCase();
+                    const meta = STATE.types[key] || { label: t, icon: `/images/types/${key}.svg` };
+                    const iconUrl = meta.icon || `/images/types/${key}.svg`;
+                    const label = meta.label || t;
+                    return `<span class="type-icon-chip" title="${escapeHtml(label)}" aria-label="${escapeHtml(label)}">
+                        <img src="${escapeHtml(iconUrl)}" alt="${escapeHtml(label)}" width="28" height="28" loading="lazy">
+                    </span>`;
+                })
+                .join('')}</span>`;
+        }
         const cls = variant ? `type-badge type-badge--${variant}` : 'type-badge';
         return `<span class="type-badges">${types
             .map((t) => {
@@ -1232,7 +1245,7 @@
         if (scWatermark) scWatermark.textContent = padded;
         if (scEyebrow) scEyebrow.textContent = `${p.no} · ${p.generasi}`;
         if (scName) scName.textContent = p.name;
-        if (scTypes) scTypes.innerHTML = buildBadgeHtml(p.types, 'light');
+        if (scTypes) scTypes.innerHTML = buildBadgeHtml(p.types, 'icons');
         if (scLore) scLore.textContent = loreFor(p);
         updateInfoCards(p);
 

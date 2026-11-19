@@ -3,7 +3,10 @@
 @section('title', 'Pokedex')
 
 @php
-    $typeMeta = config('pokedex.types');
+    $typeMeta = collect(config('pokedex.types'))->map(function ($meta) {
+        $meta['icon'] = asset($meta['icon']);
+        return $meta;
+    })->all();
     $regionMeta = config('pokedex.regions');
     $total = $pokemons->count();
     $hero = $featured->first();
