@@ -186,6 +186,7 @@ svg { width: 1.25em; height: 1.25em; flex: none; }
     color: #fff;
     box-shadow: 0 6px 18px rgb(0 0 0 / .32);
     transition: transform .2s, filter .2s, border-color .2s, background .2s;
+    white-space: nowrap;
 }
 .pill:hover { transform: translateY(-1px); filter: brightness(1.06); border-color: rgb(236 232 225 / .35); }
 .pill--crimson { background: var(--crimson); border-color: #ff6e7a; }
@@ -664,18 +665,19 @@ svg { width: 1.25em; height: 1.25em; flex: none; }
 .topbar__inner {
     height: 100%;
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
     gap: 16px;
 }
 .topbar__left { display: flex; gap: 10px; justify-self: start; align-items: center; }
-.topbar__right { display: flex; gap: 10px; justify-self: end; align-items: center; }
+.topbar__right { display: flex; gap: 10px; justify-self: end; align-items: center; flex-shrink: 0; }
 
 /* Navigasi tengah dengan animasi Sliding Pill (merah -> pink pegas & memanjang saat berpindah) */
 .nav-links {
     position: relative;
     display: inline-flex;
     align-items: center;
+    justify-self: center;
     gap: 6px;
     padding: 5px;
     border-radius: 999px;
