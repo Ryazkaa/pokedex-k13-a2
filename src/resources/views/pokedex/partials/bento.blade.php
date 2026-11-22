@@ -9,6 +9,7 @@
     $lastPageNum = max(1, (int) ceil($total / 20));
     $nextIndexNum = ($latestPokemon?->number ?? $total) + 1;
     $nextIndexStr = $nextIndexNum <= $maxCatalog ? ('#' . str_pad((string) $nextIndexNum, 4, '0', STR_PAD_LEFT)) : 'Lengkap';
+    $isDev = Auth::check() && method_exists(Auth::user(), 'isDeveloper') && Auth::user()->isDeveloper();
 @endphp
 
 <section id="explore" class="bento section" aria-label="Explore">
@@ -78,7 +79,7 @@
     </div>
 
     {{-- Kolom 2 (Tengah): Control Panel Excel & Filter --}}
-    <div class="bento__col bento__control" id="dropZone">
+    <div class="bento__col bento__control" @if($isDev) id="dropZone" @endif>
         <div class="bento-head">
             <span class="bento-head__kicker">Kontrol Data &amp; Koleksi</span>
             <h2 class="section-title">Excel &amp; Filter</h2>
@@ -86,45 +87,75 @@
 
         <div class="bento-panel control-panel">
             <div class="excel-actions" style="grid-template-columns: 1fr; width: 100%;">
-                <form id="importForm" class="import-form" method="POST" action="{{ route('pokedex.import') }}" enctype="multipart/form-data" style="width: 100%;">
-                    @csrf
-                    <input type="file" id="importFile" name="file_excel" class="visually-hidden" tabindex="-1"
-                           accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" aria-label="Pilih file Excel">
-                    <button type="button" class="action-pill action-pill--wide" id="importTrigger" data-action="import"
-                            style="width: 100%; padding: 14px 18px; border-radius: 12px; display: flex; align-items: center; gap: 14px;">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 24px; height: 24px; flex-shrink: 0;"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                @if ($isDev)
+                    <form id="importForm" class="import-form" method="POST" action="{{ route('pokedex.import') }}" enctype="multipart/form-data" style="width: 100%;">
+                        @csrf
+                        <input type="file" id="importFile" name="file_excel" class="visually-hidden" tabindex="-1"
+                               accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" aria-label="Pilih file Excel">
+                        <button type="button" class="action-pill action-pill--wide" id="importTrigger" data-action="import"
+                                style="width: 100%; padding: 14px 18px; border-radius: 12px; display: flex; align-items: center; gap: 14px;">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 24px; height: 24px; flex-shrink: 0;"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <div style="flex: 1; text-align: left;">
+                                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 3px;">
+                                    <strong style="font-size: 0.95rem; color: #FFFFFF; font-weight: 700;">Import Pokemon untuk Database</strong>
+                                    <span style="background: rgba(225, 29, 72, 0.22); color: #F43F5E; border: 1px solid rgba(225, 29, 72, 0.45); font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase;">Fitur Developer</span>
+                                </div>
+                                <small style="color: #94A3B8; font-size: 0.78rem;">Khusus Developer · Perbarui atau tambahkan semua Pokémon terbaru ke Library (.xlsx)</small>
+                            </div>
+                        </button>
+
+                        {{-- Panel Konfirmasi Import (Hold to Import -> Checklist) --}}
+                        <div class="import-chip" id="importChip" hidden>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z M14 3v5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                            <span id="importName">file.xlsx</span>
+                            <button type="button" id="importCancel" aria-label="Batalkan file">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+                            </button>
+                        </div>
+                        <button type="button" class="action-pill action-pill--upload hold-btn" id="importSubmit" hidden>
+                            <svg class="hold-btn__perimeter" viewBox="0 0 400 56" preserveAspectRatio="none" aria-hidden="true">
+                                <rect x="2" y="2" width="396" height="52" rx="13" ry="13" pathLength="100"/>
+                            </svg>
+                            <span class="hold-btn__ring-wrap" aria-hidden="true">
+                                <svg class="hold-btn__ring" viewBox="0 0 36 36">
+                                    <circle class="hold-btn__track" cx="18" cy="18" r="15" pathLength="100"/>
+                                    <circle class="hold-btn__fill" cx="18" cy="18" r="15" pathLength="100"/>
+                                </svg>
+                                <svg class="hold-btn__icon hold-btn__icon--idle" viewBox="0 0 24 24"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 20h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                <svg class="hold-btn__icon hold-btn__icon--check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </span>
+                            <span class="hold-btn__text" data-label>Hold to Import</span>
+                        </button>
+                    </form>
+                @else
+                    {{-- Tampilan Terkunci Khusus Developer untuk Pengguna Tamu / Trainer --}}
+                    <button type="button" class="action-pill action-pill--wide is-locked" onclick="handleLockedImport()"
+                            style="width: 100%; padding: 14px 18px; border-radius: 12px; display: flex; align-items: center; gap: 14px; background: rgba(15, 23, 42, 0.7); border: 1px dashed rgba(255, 70, 85, 0.4); cursor: pointer; transition: all .2s;"
+                            title="Terkunci: Khusus 4 Akun Developer Kelompok 13">
+                        <div style="width: 38px; height: 38px; border-radius: 8px; background: rgba(255, 70, 85, 0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255, 70, 85, 0.25);">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 20px; height: 20px; color: #ff4655;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                        </div>
                         <div style="flex: 1; text-align: left;">
                             <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 3px;">
-                                <strong style="font-size: 0.95rem; color: #FFFFFF; font-weight: 700;">Import Pokemon untuk Database</strong>
-                                <span style="background: rgba(225, 29, 72, 0.22); color: #F43F5E; border: 1px solid rgba(225, 29, 72, 0.45); font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase;">Fitur Developer</span>
+                                <strong style="font-size: 0.95rem; color: #E2E8F0; font-weight: 700;">Import Pokemon untuk Database</strong>
+                                <span style="background: rgba(255, 70, 85, 0.15); color: #F43F5E; border: 1px solid rgba(255, 70, 85, 0.35); font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase;">🔒 Terkunci (Dev Only)</span>
                             </div>
-                            <small style="color: #94A3B8; font-size: 0.78rem;">Khusus Developer · Perbarui atau tambahkan semua Pokémon terbaru ke Library (.xlsx)</small>
+                            <small style="color: #94A3B8; font-size: 0.78rem;">Khusus 4 Akun Developer (Kelompok 13) · Klik untuk info &amp; login</small>
                         </div>
                     </button>
 
-                    {{-- Panel Konfirmasi Import (Hold to Import -> Checklist) --}}
-                    <div class="import-chip" id="importChip" hidden>
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z M14 3v5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-                        <span id="importName">file.xlsx</span>
-                        <button type="button" id="importCancel" aria-label="Batalkan file">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
-                        </button>
-                    </div>
-                    <button type="button" class="action-pill action-pill--upload hold-btn" id="importSubmit" hidden>
-                        <svg class="hold-btn__perimeter" viewBox="0 0 400 56" preserveAspectRatio="none" aria-hidden="true">
-                            <rect x="2" y="2" width="396" height="52" rx="13" ry="13" pathLength="100"/>
-                        </svg>
-                        <span class="hold-btn__ring-wrap" aria-hidden="true">
-                            <svg class="hold-btn__ring" viewBox="0 0 36 36">
-                                <circle class="hold-btn__track" cx="18" cy="18" r="15" pathLength="100"/>
-                                <circle class="hold-btn__fill" cx="18" cy="18" r="15" pathLength="100"/>
-                            </svg>
-                            <svg class="hold-btn__icon hold-btn__icon--idle" viewBox="0 0 24 24"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 20h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            <svg class="hold-btn__icon hold-btn__icon--check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </span>
-                        <span class="hold-btn__text" data-label>Hold to Import</span>
-                    </button>
-                </form>
+                    <script>
+                        function handleLockedImport() {
+                            @if (!Auth::check())
+                                alert("🔒 Akses Terkunci!\n\nFitur Import Master Dataset (.xlsx) hanya dapat dilakukan oleh 4 Akun Developer Kelompok 13.\n\nSilakan klik tombol 'Masuk' di navbar atas untuk beralih ke akun Developer.");
+                                const modal = document.getElementById('authModal');
+                                if (modal) modal.hidden = false;
+                            @else
+                                alert("⛔ Akses Ditolak!\n\nAnda sedang masuk sebagai {{ Auth::user()->name }} dengan Role: TRAINER.\n\nPengguna biasa hanya memiliki izin membaca (Read-Only) pada Library Pokémon. Otoritas import master data hanya dimiliki oleh akun Developer (Yanuar, Arya, Madina, Iasha).");
+                            @endif
+                        }
+                    </script>
+                @endif
             </div>
 
             {{-- Filter Generasi (Dropdown Generasi 1 - 9) --}}
@@ -179,8 +210,13 @@
             </div>
 
             <p class="drop-hint">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 16a4 4 0 0 1-.8-7.9A5.5 5.5 0 0 1 17 7a4.5 4.5 0 0 1 .5 9H7z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
-                <span>Tarik &amp; lepas file <strong>.xlsx</strong> langsung ke panel ini untuk import cepat</span>
+                @if ($isDev)
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 16a4 4 0 0 1-.8-7.9A5.5 5.5 0 0 1 17 7a4.5 4.5 0 0 1 .5 9H7z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+                    <span>Tarik &amp; lepas file <strong>.xlsx</strong> langsung ke panel ini untuk import cepat</span>
+                @else
+                    <svg viewBox="0 0 24 24" aria-hidden="true" style="color: #ff4655; width: 16px; height: 16px; flex-shrink: 0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                    <span style="color: #94A3B8;">Mode Read-Only · Fitur Import Spreadsheet khusus akun Developer</span>
+                @endif
             </p>
         </div>
     </div>

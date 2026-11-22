@@ -62,8 +62,10 @@ if (class_exists(TrainerJournalController::class)) {
 // ==============================================================================
 // BASE POKEDEX CONTROLLER
 // ==============================================================================
+use App\Http\Middleware\EnsureDeveloper;
+
 Route::controller(PokedexController::class)->prefix('pokedex')->name('pokedex.')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/export', 'export')->name('export');
-    Route::post('/import', 'import')->name('import');
+    Route::post('/import', 'import')->name('import')->middleware(EnsureDeveloper::class);
 });
