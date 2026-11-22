@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', '/pokedex');
 
 // ==============================================================================
-// MODUL 1: AUTENTIKASI & SESI TRAINER (Yanuar Dwi Putra)
+// MODUL 1: AUTENTIKASI & SESI TRAINER (Yanuar Dwi Prasetya)
 // ==============================================================================
 if (class_exists(AuthController::class)) {
     Route::middleware('guest')->group(function () {

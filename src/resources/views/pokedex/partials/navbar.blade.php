@@ -19,7 +19,7 @@
         </nav>
 
         <div class="topbar__right">
-            {{-- Status Akun Trainer / Quick Switch (Modul 1: Yanuar Dwi Putra) --}}
+            {{-- Status Akun Trainer / Quick Switch (Modul 1: Yanuar Dwi Prasetya) --}}
             @if (Auth::check())
                 <div class="pill pill--dark" style="display: inline-flex; align-items: center; gap: 8px;">
                     @if (method_exists(Auth::user(), 'isDeveloper') && Auth::user()->isDeveloper())

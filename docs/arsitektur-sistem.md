@@ -4,9 +4,9 @@
 **Tanggal Rilis:** 20 November 2026  
 **Pengembang:** Kelompok 13 — Kelas Praktikum Pemrograman Web A / A2  
 * Arya Andra Diazka (J0404251155) — *Lead Architect & DevOps*
-* Yanuar Dwi Putra (J0404251139) — *Security & Authentication Engineer*
-* Madina Dwiyana Putri (J0404251097) — *Database & Collection DataTables Engineer*
-* Iasha Irdanti (J0404251053) — *UI/UX & Interactive Journal Engineer*
+* Yanuar Dwi Prasetya (J0404251022) — *Security & Authentication Engineer*
+* Madina Dwiyana Putri (J0404251090) — *Database & Collection DataTables Engineer*
+* Iasha Irdanti (J0404251115) — *UI/UX & Interactive Journal Engineer*
 
 ---
 
@@ -66,7 +66,7 @@ Sistem membedakan dua tingkatan hak akses:
 
 | Properti | Role: `developer` | Role: `trainer` |
 |---|---|---|
-| **Daftar Akun** | Yanuar Dwi Putra, Arya Andra Diazka, Madina Dwiyana Putri, Iasha Irdanti | Pengguna umum yang mendaftar melalui formulir registrasi |
+| **Daftar Akun** | Yanuar Dwi Prasetya, Arya Andra Diazka, Madina Dwiyana Putri, Iasha Irdanti | Pengguna umum yang mendaftar melalui formulir registrasi |
 | **Identitas Visual** | Lencana merah menyala (*badge*) bertuliskan `DEVELOPER` pada navbar | Lencana hijau/biru bertuliskan `TRAINER` pada navbar |
 | **Akses Pokemon Library** | Melihat katalog master + Otoritas penuh **Import Excel (.xlsx)** dan menambah master #1026+ | Melihat katalog master (*Read-Only*) |
 | **Akses Pokédex Koleksi** | Memiliki koleksi pribadi, dapat mencatat tangkapan, dan mengekspor data | Mengelola koleksi pribadi, mencatat tangkapan, dan mengekspor data |
@@ -111,7 +111,7 @@ Sistem membedakan dua tingkatan hak akses:
 
 ## 5. Pembagian Modul & Spesifikasi Tanggung Jawab Anggota
 
-### Modul 1: Autentikasi, Manajemen Sesi, & Hak Akses Developer (Yanuar Dwi Putra)
+### Modul 1: Autentikasi, Manajemen Sesi, & Hak Akses Developer (Yanuar Dwi Prasetya)
 * **Tanggung Jawab:**
   * Menambah kolom `role`, `trainer_class`, dan `avatar_badge` pada tabel `users`.
   * Membangun `app/Http/Middleware/EnsureDeveloper.php` untuk mengunci endpoint mutasi master library.

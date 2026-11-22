@@ -4,9 +4,9 @@ Aplikasi web direktori dan pelacak koleksi Pokémon komprehensif berbasis **Lara
 
 Proyek ini dikembangkan oleh **Kelompok 13 — Kelas Praktikum Pemrograman Web A / A2 (Sekolah Vokasi IPB University)**:
 * **Arya Andra Diazka (J0404251155)** — *Lead Architect, DevOps & Master Library*
-* **Yanuar Dwi Putra (J0404251139)** — *Authentication & Developer Role Management*
-* **Madina Dwiyana Putri (J0404251097)** — *Pokédex Caught Tracker, DataTables & Export*
-* **Iasha Irdanti (J0404251053)** — *Trainer Field Notes & Quill.js WYSIWYG Journal*
+* **Yanuar Dwi Prasetya (J0404251022)** — *Authentication & Developer Role Management*
+* **Madina Dwiyana Putri (J0404251090)** — *Pokédex Caught Tracker, DataTables & Export*
+* **Iasha Irdanti (J0404251115)** — *Trainer Field Notes & Quill.js WYSIWYG Journal*
 
 ---
 
@@ -128,10 +128,10 @@ Pertemuan 999/
 
 | Anggota | Modul Utama | Luaran & Komponen yang Dihasilkan |
 |---|---|---|
-| **Yanuar Dwi Putra**<br>*(J0404251139)* | **Modul 1:** Autentikasi, Sesi, & Role Developer | Migrasi `users.role`, `EnsureDeveloper` Middleware, `AuthController`, modal login/switch account (`auth-modal.blade.php`), lencana navbar. |
+| **Yanuar Dwi Prasetya**<br>*(J0404251022)* | **Modul 1:** Autentikasi, Sesi, & Role Developer | Migrasi `users.role`, `EnsureDeveloper` Middleware, `AuthController`, modal login/switch account (`auth-modal.blade.php`), lencana navbar. |
 | **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Card 2 Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching & CI/CD deployment. |
-| **Madina Dwiyana Putri**<br>*(J0404251097)* | **Modul 3:** Pokédex Caught Tracker & Ekspor | Migrasi `trainer_catches`, model `TrainerCatch`, modal `+ Tambah Koleksi` dengan auto-fetch PokéAPI, integrasi DataTables, serta ekspor Excel & DomPDF A4. |
-| **Iasha Irdanti**<br>*(J0404251053)* | **Modul 4:** Field Notes & Jurnal Strategi Trainer | Migrasi `trainer_notes`, model `TrainerNote`, modal Jurnal Taktik dengan tanggal/lokasi tangkap, integrasi editor WYSIWYG Quill.js, sanitasi HTML. |
+| **Madina Dwiyana Putri**<br>*(J0404251090)* | **Modul 3:** Pokédex Caught Tracker & Ekspor | Migrasi `trainer_catches`, model `TrainerCatch`, modal `+ Tambah Koleksi` dengan auto-fetch PokéAPI, integrasi DataTables, serta ekspor Excel & DomPDF A4. |
+| **Iasha Irdanti**<br>*(J0404251115)* | **Modul 4:** Field Notes & Jurnal Strategi Trainer | Migrasi `trainer_notes`, model `TrainerNote`, modal Jurnal Taktik dengan tanggal/lokasi tangkap, integrasi editor WYSIWYG Quill.js, sanitasi HTML. |
 
 ---
 
