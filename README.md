@@ -55,7 +55,8 @@ Pertemuan 999/
 ├── archives/                       # Berkas arsip checkpoint rilis
 │   ├── pokedex-app(v1.0.0).zip     # Rilis base fondasi awal (Arya Andra Diazka)
 │   ├── pokedex-app(v1.0.1).zip     # Rilis perombakan konsep v1.1 & UI Bento
-│   ├── pokedex-app(v1.1.0).zip     # Rilis integrasi Modul 1: Auth & Role Developer (Yanuar Dwi Prasetya)
+│   ├── pokedex-app(v1.1.0).zip     # Rilis integrasi Modul 1: Auth & Role (Yanuar Dwi Prasetya)
+│   ├── pokedex-app(v1.1.1).zip     # Rilis refinement: Navbar & Lock Modal Import (Yanuar Dwi Prasetya & Arya Andra Diazka)
 │   └── README.md                   # Catatan rilis dan riwayat versi
 ├── datasets/                       # Dataset acuan spreadsheet (.xlsx)
 ├── docs/                           # Dokumentasi & rancangan sistem
@@ -129,8 +130,8 @@ Pertemuan 999/
 
 | Anggota | Modul Utama | Status Integrasi | Luaran & Komponen yang Dihasilkan |
 |---|---|:---:|---|
-| **Yanuar Dwi Prasetya**<br>*(J0404251022)* | **Modul 1:** Autentikasi, Sesi, & Role Developer | ✅ **Terintegrasi (v1.1.0)** | Migrasi `users.role`, `EnsureDeveloper` Middleware, `AuthController`, modal login/switch account (`auth-modal.blade.php`), lencana status navbar `DEV`/`TRAINER`. |
-| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Card 2 Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching & CI/CD deployment. |
+| **Yanuar Dwi Prasetya**<br>*(J0404251022)* | **Modul 1:** Autentikasi, Sesi, & Role Developer | ✅ **Terintegrasi (v1.1.0 / v1.1.1)** | Migrasi `users.role`, `EnsureDeveloper` Middleware, `AuthController`, modal login/switch account (`auth-modal.blade.php`), lencana status navbar `DEV`/`TRAINER`. |
+| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Card 2 Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching & CI/CD deployment. |
 | **Madina Dwiyana Putri**<br>*(J0404251090)* | **Modul 3:** Pokédex Caught Tracker & Ekspor | ⏳ **Siap Merge (Modul 3)** | Migrasi `trainer_catches`, model `TrainerCatch`, modal `+ Tambah Koleksi` dengan auto-fetch PokéAPI, integrasi DataTables, serta ekspor Excel & DomPDF A4. |
 | **Iasha Irdanti**<br>*(J0404251115)* | **Modul 4:** Field Notes & Jurnal Strategi Trainer | ⏳ **Siap Merge (Modul 4)** | Migrasi `trainer_notes`, model `TrainerNote`, modal Jurnal Taktik dengan tanggal/lokasi tangkap, integrasi editor WYSIWYG Quill.js, sanitasi HTML. |
 

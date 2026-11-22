@@ -10,7 +10,8 @@ Repositori ini menyimpan arsip kompresi (`.zip`) dari setiap pencapaian *milesto
 |---|---|---|---|---|
 | `pokedex-app(v1.0.0).zip` | `v1.0.0` | 19 November 2026 | **Arya Andra Diazka** | **Base Code & Master Foundation Pokédex:**<br>Arsip kompresi kode fondasi awal proyek yang dibangun lengkap oleh Arya Andra Diazka. Sudah mencakup implementasi **HTML5**, **CSS3 (Modern Bento Grid Glassmorphism)**, **JavaScript (ES6+)**, **PHP 8.2+**, **Laravel Framework 11**, **CRUD Database MySQL**, **Integrasi REST API (PokéAPI v2)**, serta **PhpSpreadsheet** (Import/Export catalog dasar 1.025 entitas Pokémon Gen I–IX). |
 | `pokedex-app(v1.0.1).zip` | `v1.0.1` | 20 November 2026 | **Arya Andra Diazka** | **Minor Revision & Restrukturisasi Konsep v1.1:**<br>1. **Restrukturisasi Konsep:** Pemisahan tegas antara *Pokemon Library* (katalog master baca-saja bagi trainer, import khusus Developer) dengan *Pokédex* (koleksi tangkapan trainer).<br>2. **Bento Card 2:** Filter Generasi diperbarui menjadi Dropdown interaktif Generasi 1–9 (`#bentoGenFilter`), tombol Export di Library dialihkan.<br>3. **Bento Card 3:** Label diperbarui menjadi *"Kelengkapan Library"* dengan status *"Seluruh 1025 Pokémon Terdaftar!"* (menggantikan terminologi terkoleksi).<br>4. **Navbar & Identitas:** Pembaruan Made By menjadi *Kelompok 13 / Kelas A / A2*.<br>5. **Persiapan Kolaborasi Tim:** Menyiapkan slot modul kosong di `src/` agar bersih dan siap dikerjakan oleh Yanuar, Madina, dan Iasha sesuai pembagian modul masing-masing. |
-| `pokedex-app(v1.1.0).zip` | `v1.1.0` | 22 November 2026 | **Yanuar Dwi Prasetya** & **Arya Andra Diazka** | **Milestone Integrasi Modul 1 (Autentikasi, Sesi, & Role Developer):**<br>1. **Merge Request !1:** Berhasil melakukan penggabungan fitur `feat/modul-1-auth-yanuar` ke `main` secara mulus tanpa konflik.<br>2. **Skema Basis Data:** Eksekusi migrasi kolom `role` (`developer`/`trainer`), `trainer_class`, dan `avatar_badge` pada tabel `users`.<br>3. **Role-Based Access Control:** Implementasi middleware `EnsureDeveloper` dan helper method `isDeveloper()` pada model `User`.<br>4. **Kontroler Autentikasi:** Implementasi `AuthController` dengan fitur login, register, switch account cepat 4 developer, dan logout.<br>5. **UI & Navigasi:** Modal autentikasi glassmorphism (`auth-modal.blade.php`), lencana dinamis `DEV` / `TRAINER` pada navbar Crimson Dark.<br>6. **Verifikasi:** Diuji coba lokal tanpa bug atau regresi visual (`php artisan migrate` & `serve`). |
+| `pokedex-app(v1.1.0).zip` | `v1.1.0` | 22 November 2026 | **Yanuar Dwi Prasetya** | **Milestone Integrasi Modul 1 (Autentikasi & Role Trainer):**<br>1. **Merge Request !1:** Berhasil melakukan penggabungan fitur `feat/modul-1-auth-yanuar` ke `main` secara mulus tanpa konflik.<br>2. **Skema Basis Data:** Eksekusi migrasi kolom `role` (`developer`/`trainer`), `trainer_class`, dan `avatar_badge` pada tabel `users`.<br>3. **Role-Based Access Control:** Implementasi middleware `EnsureDeveloper` dan helper method `isDeveloper()` pada model `User`.<br>4. **Kontroler Autentikasi:** Implementasi `AuthController` dengan fitur login, register, switch account cepat 4 developer, dan logout.<br>5. **UI & Navigasi:** Modal autentikasi glassmorphism (`auth-modal.blade.php`), lencana dinamis `DEV` / `TRAINER` pada navbar Crimson Dark. |
+| `pokedex-app(v1.1.1).zip` | `v1.1.1` | 23 November 2026 | **Yanuar Dwi Prasetya** & **Arya Andra Diazka** | **Refinement UI Navbar & Proteksi Modal Terkunci Khusus Developer:**<br>1. **Penyempurnaan CSS Navbar:** Memperbaiki perataan layout `.topbar__inner` (`auto 1fr auto`) dan mengunci `white-space: nowrap` pada teks nama trainer agar tidak terlipat atau menumpuk.<br>2. **Proteksi Backend Import Master:** Mengunci rute `POST /pokedex/import` dengan middleware `EnsureDeveloper`.<br>3. **Modal Popup Animasi Akses Terkunci:** Mengganti alert kaku browser dengan modal popup kustom beranimasi halus (`#devLockModal`) di tengah layar, dilengkapi ikon merah berdenyut (`lock-icon-pulse`), logo tanda silang `✕`, dan tombol 1-klik buka Switch Developer (K13).<br>4. **Kesiapan Repositori:** 100% bebas bug visual dan siap untuk penggabungan Modul 3 (Madina) dan Modul 4 (Iasha). |
 
 ---
 
@@ -48,7 +49,7 @@ Repositori ini menyimpan arsip kompresi (`.zip`) dari setiap pencapaian *milesto
 
 ### 3. Versi 1.1.0 (`pokedex-app(v1.1.0).zip`)
 * **Tanggal Rilis:** 22 November 2026
-* **Kontributor Utama:** Yanuar Dwi Prasetya (NIM: J0404251022) & Arya Andra Diazka (NIM: J0404251155)
+* **Kontributor Utama:** Yanuar Dwi Prasetya (NIM: J0404251022)
 * **Milestone Integrasi Modul 1 (Autentikasi & Manajemen Sesi Trainer):**
   * **Penggabungan Branch Fitur (Merge Request !1):**
     * Branch `feat/modul-1-auth-yanuar` resmi digabungkan (*merged*) ke dalam branch `main` melalui GitLab Merge Request dengan metode fast-forward tanpa konflik.
@@ -68,6 +69,23 @@ Repositori ini menyimpan arsip kompresi (`.zip`) dari setiap pencapaian *milesto
     * Navbar menampilkan tombol interaktif: tombol **"Masuk"** saat tamu (*guest*), atau lencana merah **`DEV`** / hijau **`TRAINER`**, nama trainer, tombol switch `⇄`, dan tombol `Logout` saat sesi aktif.
   * **Stabilitas Sistem:**
     * Seluruh rute terhubung aman (`routes/web.php`), tampilan tetap responsif dan konsisten dengan palet warna Crimson Dark, serta bebas dari bug.
+
+
+---
+
+### 4. Versi 1.1.1 (`pokedex-app(v1.1.1).zip`)
+* **Tanggal Rilis:** 23 November 2026
+* **Kontributor Utama:** Yanuar Dwi Prasetya (NIM: J0404251022) & Arya Andra Diazka (NIM: J0404251155)
+* **Penyempurnaan Antarmuka (UI Refinement) & Proteksi Ketat Fitur Developer:**
+  * **Perbaikan Navbar & Tipografi Trainer:**
+    * Mengubah pembagian grid navbar `.topbar__inner` menjadi `auto 1fr auto` sehingga kolom status akun di sebelah kanan memiliki ruang yang cukup dan tidak tertekan menyempit.
+    * Menambahkan aturan `white-space: nowrap;` pada class `.pill` dan nama trainer, sehingga teks nama panjang (seperti *Yanuar Dwi Prasetya*) tetap tertata rapi dalam satu baris horizontal sejajar dengan lencana `DEV`, tombol switch `⇄`, dan tombol `Logout`.
+  * **Proteksi Fitur Import Master Library:**
+    * Mengunci endpoint `POST /pokedex/import` menggunakan middleware `App\Http\Middleware\EnsureDeveloper::class` di backend.
+    * Menambahkan pengecekan status developer pada Bento Card 2: pengguna berstatus Trainer umum atau tamu (*guest*) tidak dapat memicu dialog file picker atau drag-and-drop file spreadsheet master.
+  * **Modal Popup Animasi Akses Terkunci (`#devLockModal`):**
+    * Menghilangkan alert bawaan browser yang kaku, menggantikannya dengan modal popup glassmorphism yang muncul beranimasi di tengah layar.
+    * Dilengkapi logo lingkaran merah berdenyut (*pulsing red glow*) dengan tanda silang perisai (`✕`), teks pemberitahuan hak akses, serta tombol 1-klik **"⚡ Buka Switch Developer (K13)"** yang langsung membuka tab pergantian akun developer.
 
 ## Petunjuk Penggunaan Berkas Arsip
 

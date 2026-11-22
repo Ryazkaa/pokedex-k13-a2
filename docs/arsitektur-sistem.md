@@ -1,8 +1,8 @@
 # Dokumen Arsitektur Sistem: Pokédex Collection Tracker & Trainer Directory
 
-**Versi Dokumen:** 1.1.0 (Modul 1 Terintegrasi)  
-**Status Rilis:** Milestone Integrasi Autentikasi & Role Developer (Selesai Di-merge)  
-**Tanggal Rilis:** 22 November 2026  
+**Versi Dokumen:** 1.1.1 (Refinement Modul 1 & Proteksi Import Terintegrasi)  
+**Status Rilis:** Refinement UI Navbar & Proteksi Fitur Developer Master Import (Selesai)  
+**Tanggal Rilis:** 23 November 2026  
 **Pengembang:** Kelompok 13 — Kelas Praktikum Pemrograman Web A / A2  
 * Arya Andra Diazka (J0404251155) — *Lead Architect & DevOps*
 * Yanuar Dwi Prasetya (J0404251022) — *Security & Authentication Engineer*
