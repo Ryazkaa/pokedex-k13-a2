@@ -1,7 +1,8 @@
 # Dokumen Arsitektur Sistem: Pokédex Collection Tracker & Trainer Directory
 
-**Versi Dokumen:** 1.1.0  
-**Tanggal Rilis:** 20 November 2026  
+**Versi Dokumen:** 1.1.0 (Modul 1 Terintegrasi)  
+**Status Rilis:** Milestone Integrasi Autentikasi & Role Developer (Selesai Di-merge)  
+**Tanggal Rilis:** 22 November 2026  
 **Pengembang:** Kelompok 13 — Kelas Praktikum Pemrograman Web A / A2  
 * Arya Andra Diazka (J0404251155) — *Lead Architect & DevOps*
 * Yanuar Dwi Prasetya (J0404251022) — *Security & Authentication Engineer*
@@ -112,11 +113,13 @@ Sistem membedakan dua tingkatan hak akses:
 ## 5. Pembagian Modul & Spesifikasi Tanggung Jawab Anggota
 
 ### Modul 1: Autentikasi, Manajemen Sesi, & Hak Akses Developer (Yanuar Dwi Prasetya)
-* **Tanggung Jawab:**
-  * Menambah kolom `role`, `trainer_class`, dan `avatar_badge` pada tabel `users`.
+* **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (Commit `45f9e19` / v1.1.0)**
+* **Tanggung Jawab & Realisasi:**
+  * Menambah kolom `role`, `trainer_class`, dan `avatar_badge` pada tabel `users` (`2026_11_22_225257_add_role_and_trainer_fields_to_users_table.php`).
   * Membangun `app/Http/Middleware/EnsureDeveloper.php` untuk mengunci endpoint mutasi master library.
   * Mengimplementasikan `app/Http/Controllers/AuthController.php` (login, register, switch-account cepat untuk 4 developer, logout).
   * Menyediakan tampilan UI partial `auth-modal.blade.php` dan indikator status pengguna pada `navbar.blade.php`.
+  * Seluruh fungsi telah diuji coba lokal (`php artisan migrate` dan `php artisan serve`) dengan hasil 100% stabil.
 
 ### Modul 2: Master Pokemon Library, Excel Import, & Cloud DevOps (Arya Andra Diazka)
 * **Tanggung Jawab:**
