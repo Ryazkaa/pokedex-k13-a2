@@ -131,7 +131,7 @@
     // Navigasi Sliding Pill (merah -> pink pegas & memanjang saat berpindah tab) + Scrollspy
     const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
     const navPill = document.getElementById('navPill');
-    const sections = ['home', 'explore', 'search']
+    const sections = ['home', 'explore', 'pokedex-caught', 'search']
         .map((id) => document.getElementById(id))
         .filter(Boolean);
 

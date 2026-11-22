@@ -2403,3 +2403,174 @@ dialog.showcase {
     color: var(--crimson);
     transform: translateY(-50%) rotate(180deg);
 }
+
+
+/* ==========================================================================
+   Modal Glassmorphism & Form Utility (Auth Modal, Caught Modal, Journal Modal)
+   ========================================================================== */
+.pkm-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+.pkm-modal[hidden] {
+    display: none !important;
+}
+.pkm-modal__backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 12, 18, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+.pkm-modal__dialog {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 480px;
+    background: #0f1923;
+    border: 1px solid rgba(255, 70, 85, 0.25);
+    border-radius: 14px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 70, 85, 0.12);
+    overflow: hidden;
+    color: #f1f5f9;
+    animation: pkmModalIn .22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes pkmModalIn {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.pkm-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.02);
+}
+.pkm-modal__title {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+    font-family: var(--font-display, sans-serif);
+}
+.pkm-modal__close {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 4px;
+    transition: color .15s;
+}
+.pkm-modal__close:hover {
+    color: #ff4655;
+}
+.pkm-modal__body {
+    padding: 20px;
+}
+.auth-tabs {
+    display: flex;
+    gap: 8px;
+    padding: 12px 20px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.auth-tab {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #94a3b8;
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all .15s;
+}
+.auth-tab:hover {
+    color: #ffffff;
+}
+.auth-tab.active {
+    color: #ff4655;
+    border-bottom-color: #ff4655;
+}
+.form-group {
+    margin-bottom: 14px;
+}
+.field-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #94a3b8;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.text-input {
+    width: 100%;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+    box-sizing: border-box;
+}
+.text-input:focus {
+    border-color: #ff4655;
+    box-shadow: 0 0 0 3px rgba(255, 70, 85, 0.15);
+}
+.switch-dev-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    color: #f1f5f9;
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: all .15s;
+}
+.switch-dev-item:hover {
+    background: rgba(255, 70, 85, 0.12);
+    border-color: rgba(255, 70, 85, 0.3);
+    color: #ffffff;
+}
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    transition: all .15s;
+}
+.btn--primary {
+    background: var(--crimson, #ff4655);
+    color: #ffffff;
+}
+.btn--primary:hover {
+    filter: brightness(1.1);
+}
+.btn--subtle {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #f1f5f9;
+}
+.btn--subtle:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+}

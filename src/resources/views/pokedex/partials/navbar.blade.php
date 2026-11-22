@@ -15,9 +15,32 @@
             <a href="#home" class="is-current">Home</a>
             <a href="#explore">Explore</a>
             <a href="#search" data-focus-search>Library</a>
+            <a href="#pokedex-caught" id="navCaughtLink">Koleksi</a>
         </nav>
 
         <div class="topbar__right">
+            {{-- Status Akun Trainer / Quick Switch (Modul 1: Yanuar Dwi Putra) --}}
+            @if (Auth::check())
+                <div class="pill pill--dark" style="display: inline-flex; align-items: center; gap: 8px;">
+                    @if (method_exists(Auth::user(), 'isDeveloper') && Auth::user()->isDeveloper())
+                        <span class="badge" style="background: var(--crimson, #ff4655); color: #fff; font-size: 0.65rem; font-weight: 800; padding: 2px 6px; border-radius: 4px; letter-spacing: 0.5px;">DEV</span>
+                    @else
+                        <span class="badge" style="background: #10b981; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 2px 6px; border-radius: 4px; letter-spacing: 0.5px;">TRAINER</span>
+                    @endif
+                    <span style="font-size: 0.82rem; font-weight: 600; color: #fff;">{{ Auth::user()->name }}</span>
+                    <button type="button" onclick="document.getElementById('authModal') ? document.getElementById('authModal').hidden = false : null" style="background: none; border: none; color: #94a3b8; cursor: pointer; padding: 0 4px; font-size: 0.85rem;" title="Ganti / Kelola Akun">⇄</button>
+                    <form action="{{ route('logout') }}" method="POST" style="display: inline; margin: 0;">
+                        @csrf
+                        <button type="submit" style="background: none; border: none; color: #ff4655; cursor: pointer; font-size: 0.75rem; font-weight: 600; padding: 0 4px;" title="Keluar">Logout</button>
+                    </form>
+                </div>
+            @else
+                <button type="button" class="pill pill--dark" onclick="document.getElementById('authModal') ? document.getElementById('authModal').hidden = false : null" style="cursor: pointer;">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+                    <span>Masuk</span>
+                </button>
+            @endif
+
             <details class="trainer" id="identityDropdown">
                 <summary class="pill pill--crimson">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5.5 19.5a6.5 6.5 0 0 1 13 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>

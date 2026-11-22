@@ -35,6 +35,8 @@
         @include('pokedex.partials.hero')
         @include('pokedex.partials.bento')
         @include('pokedex.partials.import-alert')
+        {{-- Modul 3 (Madina): Tabel Koleksi Pokédex (DataTables) --}}
+        @includeIf('pokedex.partials.caught-table')
         @include('pokedex.partials.table')
     </main>
 
@@ -44,6 +46,15 @@
     </footer>
 
     @include('pokedex.partials.showcase-modal')
+
+    {{-- Modul 1 (Yanuar): Modal Autentikasi & Quick Switch Role Trainer --}}
+    @includeIf('pokedex.partials.auth-modal')
+
+    {{-- Modul 3 (Madina): Modal Tambah Koleksi PokéAPI --}}
+    @includeIf('pokedex.partials.caught-modal')
+
+    {{-- Modul 4 (Iasha): Modal Jurnal Taktis Trainer (WYSIWYG) --}}
+    @includeIf('pokedex.partials.journal-modal')
 
     {{-- Stage Animasi Envelope Seal saat Export ke Excel selesai dikonfirmasi --}}
     <div id="envelopeOverlay" class="env-overlay" aria-hidden="true" hidden>
