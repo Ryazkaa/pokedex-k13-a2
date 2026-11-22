@@ -129,7 +129,7 @@
                     </form>
                 @else
                     {{-- Tampilan Terkunci Khusus Developer untuk Pengguna Tamu / Trainer --}}
-                    <button type="button" class="action-pill action-pill--wide is-locked" onclick="handleLockedImport()"
+                    <button type="button" class="action-pill action-pill--wide is-locked" onclick="openDevLockModal()"
                             style="width: 100%; padding: 14px 18px; border-radius: 12px; display: flex; align-items: center; gap: 14px; background: rgba(15, 23, 42, 0.7); border: 1px dashed rgba(255, 70, 85, 0.4); cursor: pointer; transition: all .2s;"
                             title="Terkunci: Khusus 4 Akun Developer Kelompok 13">
                         <div style="width: 38px; height: 38px; border-radius: 8px; background: rgba(255, 70, 85, 0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255, 70, 85, 0.25);">
@@ -144,15 +144,69 @@
                         </div>
                     </button>
 
+                    {{-- Modal Popup Animasi di Tengah: Akses Terkunci --}}
+                    <div id="devLockModal" class="pkm-modal" role="dialog" aria-modal="true" aria-labelledby="devLockTitle" hidden>
+                        <div class="pkm-modal__backdrop" onclick="closeDevLockModal()"></div>
+                        <div class="pkm-modal__dialog" style="max-width: 440px; text-align: center; padding: 32px 26px; border: 1px solid rgba(255, 70, 85, 0.45); box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 70, 85, 0.25);">
+                            <button type="button" onclick="closeDevLockModal()" style="position: absolute; right: 14px; top: 14px; background: none; border: none; font-size: 1.6rem; color: #94A3B8; cursor: pointer; line-height: 1; transition: color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94A3B8'">&times;</button>
+                            
+                            {{-- Logo Lingkaran Beranimasi Merah Berdenyut dengan Simbol X --}}
+                            <div class="lock-icon-pulse" style="width: 76px; height: 76px; border-radius: 50%; background: rgba(255, 70, 85, 0.12); border: 2.5px solid #ff4655; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                                <svg viewBox="0 0 24 24" style="width: 38px; height: 38px;" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10" stroke="#ff4655" stroke-width="2"/>
+                                    <line x1="15" y1="9" x2="9" y2="15" stroke="#ff4655" stroke-width="2.5"/>
+                                    <line x1="9" y1="9" x2="15" y2="15" stroke="#ff4655" stroke-width="2.5"/>
+                                </svg>
+                            </div>
+
+                            <h3 id="devLockTitle" style="font-size: 1.3rem; font-weight: 800; color: #FFFFFF; margin: 0 0 8px 0; letter-spacing: -0.01em;">
+                                Akses Fitur Terkunci
+                            </h3>
+                            <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 70, 85, 0.16); color: #F43F5E; border: 1px solid rgba(255, 70, 85, 0.35); font-size: 0.72rem; font-weight: 800; padding: 3px 12px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 18px;">
+                                <span>Khusus Developer Kelompok 13</span>
+                            </div>
+
+                            <p style="font-size: 0.88rem; color: #CBD5E1; line-height: 1.6; margin: 0 0 24px 0;">
+                                @if (!Auth::check())
+                                    Fitur <strong>Import Master Dataset (.xlsx)</strong> dilindungi dan hanya dapat diakses oleh <strong>4 Akun Developer</strong> (Yanuar, Arya, Madina, Iasha) untuk menjaga integritas database katalog 1.025 Pokémon.<br><br>
+                                    Silakan beralih ke akun Developer melalui menu di bawah:
+                                @else
+                                    Anda saat ini masuk sebagai <strong>{{ Auth::user()->name }}</strong> dengan status <strong>TRAINER</strong>.<br><br>
+                                    Pengguna umum berstatus Trainer hanya memiliki izin melihat katalog Pokémon (<em>Read-Only</em>). Otoritas import master data dibatasi khusus untuk 4 Developer Kelompok 13.
+                                @endif
+                            </p>
+
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <button type="button" onclick="switchToDevFromLockModal()"
+                                        class="action-pill action-pill--primary"
+                                        style="width: 100%; justify-content: center; padding: 12px; font-weight: 700; font-size: 0.88rem; border-radius: 8px;">
+                                    <span style="margin-right: 6px;">⚡</span> Buka Switch Developer (K13)
+                                </button>
+                                <button type="button" onclick="closeDevLockModal()"
+                                        class="action-pill action-pill--ghost"
+                                        style="width: 100%; justify-content: center; padding: 10px; font-weight: 600; font-size: 0.84rem; color: #94A3B8; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
+                                    Tutup
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <script>
-                        function handleLockedImport() {
-                            @if (!Auth::check())
-                                alert("🔒 Akses Terkunci!\n\nFitur Import Master Dataset (.xlsx) hanya dapat dilakukan oleh 4 Akun Developer Kelompok 13.\n\nSilakan klik tombol 'Masuk' di navbar atas untuk beralih ke akun Developer.");
-                                const modal = document.getElementById('authModal');
-                                if (modal) modal.hidden = false;
-                            @else
-                                alert("⛔ Akses Ditolak!\n\nAnda sedang masuk sebagai {{ Auth::user()->name }} dengan Role: TRAINER.\n\nPengguna biasa hanya memiliki izin membaca (Read-Only) pada Library Pokémon. Otoritas import master data hanya dimiliki oleh akun Developer (Yanuar, Arya, Madina, Iasha).");
-                            @endif
+                        function openDevLockModal() {
+                            const modal = document.getElementById('devLockModal');
+                            if (modal) modal.hidden = false;
+                        }
+                        function closeDevLockModal() {
+                            const modal = document.getElementById('devLockModal');
+                            if (modal) modal.hidden = true;
+                        }
+                        function switchToDevFromLockModal() {
+                            closeDevLockModal();
+                            const authModal = document.getElementById('authModal');
+                            if (authModal) {
+                                authModal.hidden = false;
+                                document.querySelector('[data-tab="switchTab"]')?.click();
+                            }
                         }
                     </script>
                 @endif
