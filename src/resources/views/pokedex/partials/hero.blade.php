@@ -14,10 +14,20 @@
                      data-slot="{{ $i }}"
                      data-depth="{{ min($i, 4) }}"
                      data-fact-topic="{{ $fact['topic'] }}"
+                     data-fact-topic-id="{{ $fact['topic'] }}"
+                     data-fact-topic-en="{{ $fact['topic_en'] ?? $fact['topic'] }}"
                      data-fact-title="{{ $fact['title'] }}"
+                     data-fact-title-id="{{ $fact['title'] }}"
+                     data-fact-title-en="{{ $fact['title_en'] ?? $fact['title'] }}"
                      data-fact-desc="{{ $fact['desc'] }}"
+                     data-fact-desc-id="{{ $fact['desc'] }}"
+                     data-fact-desc-en="{{ $fact['desc_en'] ?? $fact['desc'] }}"
                      data-fact-category="{{ $fact['category'] }}"
+                     data-fact-category-id="{{ $fact['category'] }}"
+                     data-fact-category-en="{{ $fact['category_en'] ?? $fact['category'] }}"
                      data-fact-source="{{ $fact['source'] }}"
+                     data-fact-source-id="{{ $fact['source'] }}"
+                     data-fact-source-en="{{ $fact['source_en'] ?? $fact['source'] }}"
                      data-fact-art="{{ $artUrl }}"
                      data-fact-name="{{ $fact['art_name'] }}"
                      data-fact-no="#{{ str_pad((string) $fact['art_num'], 4, '0', STR_PAD_LEFT) }}"
@@ -26,10 +36,10 @@
                      @if ($i !== 0) inert @endif>
                 <div class="hero__card-bg" aria-hidden="true"></div>
                 <div class="hero__text">
-                    <p class="hero__eyebrow">Fun Fact · {{ $fact['topic'] }}</p>
-                    <h2 class="hero__title hero__title--fact">{{ $fact['title'] }}</h2>
+                    <p class="hero__eyebrow"><span data-i18n="hero_eyebrow_prefix">Fun Fact</span> · <span class="hero-topic-text">{{ $fact['topic'] }}</span></p>
+                    <h2 class="hero__title hero__title--fact hero-title-text">{{ $fact['title'] }}</h2>
                     <p class="hero__lore">
-                        <span>{{ $previewText }}…</span>
+                        <span class="hero-desc-preview">{{ $previewText }}…</span>
                         <button type="button"
                                 class="hero__readmore"
                                 data-open-fact="{{ $i }}"
@@ -38,8 +48,8 @@
                         </button>
                     </p>
                     <div class="hero__meta">
-                        <span class="fact-tag">{{ $fact['category'] }}</span>
-                        <span class="hero__gen">{{ $fact['source'] }}</span>
+                        <span class="fact-tag hero-cat-text">{{ $fact['category'] }}</span>
+                        <span class="hero__gen hero-src-text">{{ $fact['source'] }}</span>
                     </div>
                 </div>
                 <img class="hero__art"
@@ -89,8 +99,8 @@
                 <p class="fact-modal__desc fact-cascade" id="factModalDesc" style="--cascade-i: 3"></p>
 
                 <div class="fact-modal__foot fact-cascade" style="--cascade-i: 4">
-                    <span class="fact-modal__hint">Tekan <kbd>Esc</kbd> atau klik di luar kartu untuk menutup</span>
-                    <button type="button" class="fact-modal__btn" data-close-dialog>Tutup</button>
+                    <span class="fact-modal__hint" data-i18n="fact_modal_hint">Tekan <kbd>Esc</kbd> atau klik di luar kartu untuk menutup</span>
+                    <button type="button" class="fact-modal__btn" data-close-dialog data-i18n="btn_close">Tutup</button>
                 </div>
             </div>
         </div>

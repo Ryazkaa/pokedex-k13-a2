@@ -2,7 +2,7 @@
 <dialog id="showcase" class="showcase" closedby="any" aria-labelledby="scName">
     <div class="showcase__inner">
         <header class="showcase__top">
-            <p class="showcase__brand"><span>Pokedex</span></p>
+            <p class="showcase__brand"><span data-i18n="sc_brand">Pokédex</span></p>
             <div class="showcase__nav">
                 <button type="button" class="sc-btn" id="scPrev" aria-label="Pokémon sebelumnya" title="Sebelumnya (←)">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -35,15 +35,15 @@
                 <p class="showcase__lore" id="scLore"></p>
 
                 <div class="gallery">
-                    <p class="gallery__label">Sprites <span aria-hidden="true">▾</span></p>
+                    <p class="gallery__label"><span data-i18n="sc_sprites_label">Sprites</span> <span aria-hidden="true">▾</span></p>
                     <div class="gallery__grid" id="scGallery"></div>
                 </div>
             </div>
         </div>
 
         <footer class="showcase__foot">
-            <span>Gunakan ← → untuk berpindah · Esc untuk menutup</span>
-            <span>Pokédex - Kelompok 13 - Kelas A / A2</span>
+            <span data-i18n="sc_nav_hint">Gunakan ← → untuk berpindah · Esc untuk menutup</span>
+            <span data-i18n="footer_team">Pokédex - Kelompok 13 - Kelas A / A2</span>
         </footer>
     </div>
 </dialog>

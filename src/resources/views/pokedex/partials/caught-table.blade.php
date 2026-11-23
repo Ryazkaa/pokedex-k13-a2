@@ -71,7 +71,7 @@
                                 {{ $catch->pokemon->tipe }}
                             </span>
                         </td>
-                        <td style="padding: 12px; font-size: 0.85rem; color: #94A3B8;">
+                        <td style="padding: 12px; font-size: 0.85rem; color: #94A3B8;" class="caught-gen-cell">
                             {{ $catch->pokemon->generasi }}
                         </td>
                         <td style="padding: 12px; font-size: 0.85rem; color: #94A3B8;" id="caught-date-val-{{ $catch->pokemon_id }}">

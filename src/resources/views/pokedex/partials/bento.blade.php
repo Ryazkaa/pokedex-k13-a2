@@ -28,20 +28,20 @@
                 </header>
                 <div class="guide-cols">
                     <div class="guide-col-item">
-                        <code>nomor_index</code>
+                        <code data-i18n="guide_col_idx">nomor_index</code>
                         <span>#0006</span>
                     </div>
                     <div class="guide-col-item">
-                        <code>nama_pokemon</code>
+                        <code data-i18n="guide_col_name">nama_pokemon</code>
                         <span>Charizard</span>
                     </div>
                     <div class="guide-col-item">
-                        <code>tipe</code>
+                        <code data-i18n="guide_col_type">tipe</code>
                         <span>Fire / Flying</span>
                     </div>
                     <div class="guide-col-item">
-                        <code>generasi</code>
-                        <span>Generasi I (Kanto)</span>
+                        <code data-i18n="guide_col_gen">generasi</code>
+                        <span data-i18n="guide_col_gen_val">Generasi I (Kanto)</span>
                     </div>
                 </div>
             </article>
@@ -162,14 +162,14 @@
                                 </svg>
                             </div>
 
-                            <h3 id="devLockTitle" style="font-size: 1.3rem; font-weight: 800; color: #FFFFFF; margin: 0 0 8px 0; letter-spacing: -0.01em;">
+                            <h3 id="devLockTitle" style="font-size: 1.3rem; font-weight: 800; color: #FFFFFF; margin: 0 0 8px 0; letter-spacing: -0.01em;" data-i18n="dev_lock_title">
                                 Akses Fitur Terkunci
                             </h3>
                             <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 70, 85, 0.16); color: #F43F5E; border: 1px solid rgba(255, 70, 85, 0.35); font-size: 0.72rem; font-weight: 800; padding: 3px 12px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 18px;">
-                                <span>Khusus Developer Kelompok 13</span>
+                                <span data-i18n="dev_lock_badge">Khusus Developer Kelompok 13</span>
                             </div>
 
-                            <p style="font-size: 0.88rem; color: #CBD5E1; line-height: 1.6; margin: 0 0 24px 0;">
+                            <p style="font-size: 0.88rem; color: #CBD5E1; line-height: 1.6; margin: 0 0 24px 0;" id="devLockDesc" data-auth="{{ Auth::check() ? '1' : '0' }}" data-name="{{ Auth::check() ? Auth::user()->name : '' }}">
                                 @if (!Auth::check())
                                     Fitur <strong>Import Master Dataset (.xlsx)</strong> dilindungi dan hanya dapat diakses oleh <strong>4 Akun Developer</strong> (Yanuar, Arya, Madina, Iasha) untuk menjaga integritas database katalog 1.025 Pokémon.<br><br>
                                     Silakan beralih ke akun Developer melalui menu di bawah:
@@ -188,7 +188,8 @@
                                 </button>
                                 <button type="button" onclick="closeDevLockModal()"
                                         class="action-pill action-pill--ghost"
-                                        style="width: 100%; justify-content: center; padding: 10px; font-weight: 600; font-size: 0.84rem; color: #94A3B8; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
+                                        style="width: 100%; justify-content: center; padding: 10px; font-weight: 600; font-size: 0.84rem; color: #94A3B8; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;"
+                                        data-i18n="btn_close">
                                     Tutup
                                 </button>
                             </div>
@@ -394,10 +395,10 @@
                                 </span>
                             @endforeach
                             <span class="top-type-pill">
-                                <span>{{ $latestPokemon->generasi }}</span>
+                                <span class="top-last-gen">{{ $latestPokemon->generasi }}</span>
                             </span>
                         </div>
-                        <p class="info-card__submeta">
+                        <p class="info-card__submeta" id="lastIndexSubmeta" data-total="{{ $total }}" data-max="{{ $maxCatalog }}" data-next="{{ $nextIndexStr }}">
                             @if ($nextIndexNum <= $maxCatalog)
                                 Entri ke-<strong>{{ $total }}</strong> · Target import berikutnya: <strong>{{ $nextIndexStr }}</strong>
                             @else

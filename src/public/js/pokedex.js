@@ -1229,6 +1229,37 @@
         ];
     }
 
+    const enLoreCache = new Map();
+    async function setEnglishLore(p) {
+        if (!scLore || !p) return;
+        if (enLoreCache.has(p.num)) {
+            scLore.textContent = enLoreCache.get(p.num);
+            return;
+        }
+
+        const fallback = `${p.name} is a ${p.types.join('/')}-type Pokémon native to the ${p.region || 'Kanto'} region.`;
+        scLore.textContent = fallback;
+
+        try {
+            const res = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${p.num}`);
+            if (!res.ok) throw new Error('Network error');
+            const data = await res.json();
+            const enEntry = data.flavor_text_entries?.find(e => e.language?.name === 'en');
+            if (enEntry && enEntry.flavor_text) {
+                const cleanText = enEntry.flavor_text
+                    .replace(/[\f\n\r\t]/g, ' ')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+                enLoreCache.set(p.num, cleanText);
+                if (currentShowcaseNo === p.no && scLore) {
+                    scLore.textContent = cleanText;
+                }
+            }
+        } catch (err) {
+            enLoreCache.set(p.num, fallback);
+        }
+    }
+
     function populateShowcase(p, dir = 0) {
         if (!p || !showcase) return;
         currentShowcaseNo = p.no;
@@ -1239,14 +1270,24 @@
             setTimeout(() => showcase.classList.remove('is-swapping'), 180);
         }
 
+        const isEn = (localStorage.getItem('pokedex_lang') || 'id') === 'en';
         const padded = String(p.num).padStart(3, '0');
         if (scNo) scNo.textContent = `#${padded}`;
         if (scTotal) scTotal.textContent = String(STATE.total || STATE.pokemons.length);
         if (scWatermark) scWatermark.textContent = padded;
-        if (scEyebrow) scEyebrow.textContent = `${p.no} · ${p.generasi}`;
+        if (scEyebrow) {
+            const genText = isEn ? (p.generasi || '').replace('Generasi ', 'Generation ') : p.generasi;
+            scEyebrow.textContent = `${p.no} · ${genText}`;
+        }
         if (scName) scName.textContent = p.name;
         if (scTypes) scTypes.innerHTML = buildBadgeHtml(p.types, 'icons');
-        if (scLore) scLore.textContent = loreFor(p);
+        if (scLore) {
+            if (isEn) {
+                setEnglishLore(p);
+            } else {
+                scLore.textContent = loreFor(p);
+            }
+        }
         updateInfoCards(p);
 
         const sources = gallerySources(p.num);
@@ -1536,6 +1577,18 @@
             btn_close: "Tutup",
             btn_open_login_menu: "Buka Menu Login / Daftar",
             hero_readmore: "(selengkapnya...)",
+            hero_eyebrow_prefix: "Fun Fact",
+            fact_modal_hint: "Tekan <kbd>Esc</kbd> atau klik di luar kartu untuk menutup",
+            dev_lock_title: "Akses Fitur Terkunci",
+            dev_lock_badge: "Khusus Developer Kelompok 13",
+            guide_col_idx: "nomor_index",
+            guide_col_name: "nama_pokemon",
+            guide_col_type: "tipe",
+            guide_col_gen: "generasi",
+            guide_col_gen_val: "Generasi I (Kanto)",
+            sc_brand: "Pokédex",
+            sc_sprites_label: "Sprites",
+            sc_nav_hint: "Gunakan ← → untuk berpindah · Esc untuk menutup",
             footer_team: "Pokédex - Kelompok 13 - Kelas A / A2",
             footer_meta: "Laravel 11 · PhpSpreadsheet · Artwork dari PokeAPI",
             tab_login: "Login",
@@ -1629,6 +1682,18 @@
             btn_close: "Close",
             btn_open_login_menu: "Open Login / Register Menu",
             hero_readmore: "(read more...)",
+            hero_eyebrow_prefix: "Fun Fact",
+            fact_modal_hint: "Press <kbd>Esc</kbd> or click outside card to close",
+            dev_lock_title: "Feature Access Locked",
+            dev_lock_badge: "Group 13 Developer Exclusive",
+            guide_col_idx: "index_number",
+            guide_col_name: "pokemon_name",
+            guide_col_type: "type",
+            guide_col_gen: "generation",
+            guide_col_gen_val: "Generation I (Kanto)",
+            sc_brand: "Pokédex",
+            sc_sprites_label: "Sprites",
+            sc_nav_hint: "Use ← → to navigate · Esc to close",
             footer_team: "Pokédex - Group 13 - Class A / A2",
             footer_meta: "Laravel 11 · PhpSpreadsheet · Artwork from PokéAPI",
             tab_login: "Login",
@@ -1707,6 +1772,7 @@
         if (!['id', 'en'].includes(lang)) lang = 'id';
         localStorage.setItem('pokedex_lang', lang);
         const dict = I18N_DICTIONARY[lang];
+        const isEn = lang === 'en';
 
         document.querySelectorAll('[data-i18n]').forEach((el) => {
             const key = el.getAttribute('data-i18n');
@@ -1734,13 +1800,171 @@
             typeFilterFirstOpt.textContent = dict.opt_all_types;
         }
 
+        // 1. Update Hero Slides & Fact Modal
+        slides.forEach((slide) => {
+            const d = slide.dataset;
+            const topic = isEn ? (d.factTopicEn || d.factTopicId) : d.factTopicId;
+            const title = isEn ? (d.factTitleEn || d.factTitleId) : d.factTitleId;
+            const desc = isEn ? (d.factDescEn || d.factDescId) : d.factDescId;
+            const cat = isEn ? (d.factCategoryEn || d.factCategoryId) : d.factCategoryId;
+            const src = isEn ? (d.factSourceEn || d.factSourceId) : d.factSourceId;
+
+            if (topic) d.factTopic = topic;
+            if (title) d.factTitle = title;
+            if (desc) d.factDesc = desc;
+            if (cat) d.factCategory = cat;
+            if (src) d.factSource = src;
+
+            const topicEl = slide.querySelector('.hero-topic-text');
+            if (topicEl && topic) topicEl.textContent = topic;
+
+            const titleEl = slide.querySelector('.hero-title-text');
+            if (titleEl && title) titleEl.textContent = title;
+
+            const descEl = slide.querySelector('.hero-desc-preview');
+            if (descEl && desc) {
+                const short = desc.length > 148 ? desc.slice(0, 148).trim() : desc;
+                descEl.textContent = short + '…';
+            }
+
+            const catEl = slide.querySelector('.hero-cat-text');
+            if (catEl && cat) catEl.textContent = cat;
+
+            const srcEl = slide.querySelector('.hero-src-text');
+            if (srcEl && src) srcEl.textContent = src;
+        });
+
+        if (factModal && factModal.open) {
+            const activeSlideEl = slides[activeSlide] || slides[0];
+            if (activeSlideEl) {
+                const d = activeSlideEl.dataset;
+                if (factModalTopic) factModalTopic.textContent = `Fun Fact · ${d.factTopic || ''}`;
+                if (factModalCategory) factModalCategory.textContent = d.factCategory || 'Fun Fact';
+                if (factModalSource) factModalSource.textContent = d.factSource || '';
+                if (factModalTitle) factModalTitle.textContent = d.factTitle || '';
+                if (factModalDesc) factModalDesc.textContent = d.factDesc || '';
+            }
+        }
+
+        // 2. Bento Card 3: Caught status count & description
         const caughtStatus = document.getElementById('caughtStatusCount');
         if (caughtStatus) {
             const count = caughtStatus.getAttribute('data-count') || caughtStatus.textContent.match(/\d+/)?.[0] || '0';
             caughtStatus.setAttribute('data-count', count);
-            caughtStatus.textContent = lang === 'en' ? `${count} of 1,025 Pokémon` : `${count} dari 1.025 Pokémon`;
+            caughtStatus.textContent = isEn ? `${count} of 1,025 Pokémon` : `${count} dari 1.025 Pokémon`;
         }
 
+        const caughtDesc = document.getElementById('caughtStatusDesc');
+        if (caughtDesc) {
+            const count = parseInt(caughtStatus?.getAttribute('data-count') || '0', 10);
+            if (isEn) {
+                caughtDesc.textContent = count > 0
+                    ? "Total Pokémon you successfully caught & recorded in your personal Pokédex."
+                    : "No catches yet. Add your first collection!";
+            } else {
+                caughtDesc.textContent = count > 0
+                    ? "Total Pokémon yang berhasil Anda tangkap & tercatat di Pokédex pribadi."
+                    : "Belum ada tangkapan. Tambahkan koleksi pertama Anda!";
+            }
+        }
+
+        document.querySelectorAll('.top-last-gen').forEach((el) => {
+            if (!el.getAttribute('data-raw-gen')) {
+                el.setAttribute('data-raw-gen', el.textContent.trim());
+            }
+            const raw = el.getAttribute('data-raw-gen');
+            el.textContent = isEn ? raw.replace('Generasi ', 'Generation ') : raw;
+        });
+
+        const submeta = document.getElementById('lastIndexSubmeta');
+        if (submeta) {
+            const total = submeta.getAttribute('data-total') || '1025';
+            const max = submeta.getAttribute('data-max') || '1025';
+            const next = submeta.getAttribute('data-next') || 'Lengkap';
+            if (Number(total) >= Number(max)) {
+                submeta.innerHTML = isEn
+                    ? `Entry #<strong>${total}</strong> · <strong>All ${max} Pokémon Registered!</strong>`
+                    : `Entri ke-<strong>${total}</strong> · <strong>Seluruh ${max} Pokémon Terdaftar!</strong>`;
+            } else {
+                submeta.innerHTML = isEn
+                    ? `Entry #<strong>${total}</strong> · Next import target: <strong>${next}</strong>`
+                    : `Entri ke-<strong>${total}</strong> · Target import berikutnya: <strong>${next}</strong>`;
+            }
+        }
+
+        const devLockDesc = document.getElementById('devLockDesc');
+        if (devLockDesc) {
+            const isAuth = devLockDesc.getAttribute('data-auth') === '1';
+            const userName = devLockDesc.getAttribute('data-name') || 'Trainer';
+            if (isEn) {
+                if (!isAuth) {
+                    devLockDesc.innerHTML = 'The <strong>Import Master Dataset (.xlsx)</strong> feature is restricted to <strong>4 Developer Accounts</strong> (Yanuar, Arya, Madina, Iasha) to protect the integrity of the 1,025 Pokémon catalog database.<br><br>Please switch to a Developer account via the menu below:';
+                } else {
+                    devLockDesc.innerHTML = `You are currently signed in as <strong>${escapeHtml(userName)}</strong> with <strong>TRAINER</strong> status.<br><br>Regular Trainer accounts have read-only catalog access. Master data import authority is strictly reserved for the 4 Group 13 Developers.`;
+                }
+            } else {
+                if (!isAuth) {
+                    devLockDesc.innerHTML = 'Fitur <strong>Import Master Dataset (.xlsx)</strong> dilindungi dan hanya dapat diakses oleh <strong>4 Akun Developer</strong> (Yanuar, Arya, Madina, Iasha) untuk menjaga integritas database katalog 1.025 Pokémon.<br><br>Silakan beralih ke akun Developer melalui menu di bawah:';
+                } else {
+                    devLockDesc.innerHTML = `Anda saat ini masuk sebagai <strong>${escapeHtml(userName)}</strong> dengan status <strong>TRAINER</strong>.<br><br>Pengguna umum berstatus Trainer hanya memiliki izin melihat katalog Pokémon (<em>Read-Only</em>). Otoritas import master data dibatasi khusus untuk 4 Developer Kelompok 13.`;
+                }
+            }
+        }
+
+        // 3. Table Rows & Generation Filter Options
+        allRows.forEach((r) => {
+            const genCell = r.querySelector('.dex-gen');
+            if (genCell) {
+                if (!genCell.getAttribute('data-raw-gen')) {
+                    genCell.setAttribute('data-raw-gen', genCell.textContent.trim());
+                }
+                const raw = genCell.getAttribute('data-raw-gen');
+                genCell.textContent = isEn ? raw.replace('Generasi ', 'Generation ') : raw;
+            }
+        });
+
+        document.querySelectorAll('.caught-gen-cell').forEach((cell) => {
+            if (!cell.getAttribute('data-raw-gen')) {
+                cell.setAttribute('data-raw-gen', cell.textContent.trim());
+            }
+            const raw = cell.getAttribute('data-raw-gen');
+            cell.textContent = isEn ? raw.replace('Generasi ', 'Generation ') : raw;
+        });
+
+        const genSelect = document.getElementById('genFilter');
+        if (genSelect) {
+            Array.from(genSelect.options).forEach((opt, idx) => {
+                if (idx === 0) {
+                    opt.textContent = isEn ? 'All generations (Gen I – IX)' : 'Semua generasi (Gen I – IX)';
+                } else {
+                    if (!opt.getAttribute('data-raw-text')) {
+                        opt.setAttribute('data-raw-text', opt.textContent.trim());
+                    }
+                    const raw = opt.getAttribute('data-raw-text');
+                    opt.textContent = isEn ? raw.replace('Generasi ', 'Generation ') : raw;
+                }
+            });
+        }
+
+        // 4. Showcase Modal (if open)
+        if (showcase && showcase.open && currentShowcaseNo) {
+            const curP = byNo.get(currentShowcaseNo);
+            if (curP) {
+                if (scEyebrow) {
+                    const genText = isEn ? (curP.generasi || '').replace('Generasi ', 'Generation ') : curP.generasi;
+                    scEyebrow.textContent = `${curP.no} · ${genText}`;
+                }
+                if (scLore) {
+                    if (isEn) {
+                        setEnglishLore(curP);
+                    } else {
+                        scLore.textContent = loreFor(curP);
+                    }
+                }
+            }
+        }
+
+        // 5. Header / Drawer language pills & flags
         const langText = document.getElementById('langCurrentText');
         if (langText) {
             langText.textContent = lang.toUpperCase();
