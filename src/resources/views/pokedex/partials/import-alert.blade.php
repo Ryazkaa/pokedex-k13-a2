@@ -46,8 +46,9 @@
                 @if ($isAuthError)
                     <button type="button" onclick="closeSessionNotificationModal(true)"
                             class="action-pill action-pill--primary"
-                            style="width: 100%; justify-content: center; padding: 12px; font-weight: 700; font-size: 0.9rem; border-radius: 8px; background: var(--crimson, #ff4655); box-shadow: 0 4px 14px rgba(255, 70, 85, 0.4); border: none; color: #fff; cursor: pointer;">
-                        <span style="margin-right: 6px;">⚡</span> Buka Menu Login / Daftar
+                            style="width: 100%; justify-content: center; padding: 12px; font-weight: 700; font-size: 0.9rem; border-radius: 8px; background: var(--crimson, #ff4655); box-shadow: 0 4px 14px rgba(255, 70, 85, 0.4); border: none; color: #fff; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                        <span data-i18n="btn_open_login_menu">Buka Menu Login / Daftar</span>
                     </button>
                 @endif
                 <button type="button" onclick="closeSessionNotificationModal()"

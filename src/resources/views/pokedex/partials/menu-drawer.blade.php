@@ -48,19 +48,21 @@
                     </div>
                 </div>
                 <div style="display: flex; gap: 8px;">
-                    <button type="button" class="action-pill" style="flex: 1; text-align: center; justify-content: center;" onclick="const d=document.getElementById('drawer'); if(d) d.close(); document.getElementById('authModal') ? document.getElementById('authModal').hidden = false : null">
-                        <span>⇄ Ganti Akun</span>
+                    <button type="button" class="action-pill" style="flex: 1; text-align: center; justify-content: center; display: inline-flex; align-items: center; gap: 6px;" onclick="const d=document.getElementById('drawer'); if(d) d.close(); document.getElementById('authModal') ? document.getElementById('authModal').hidden = false : null">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg>
+                        <span data-i18n="btn_switch_acc">Ganti Akun</span>
                     </button>
                     <form action="{{ route('logout') }}" method="POST" style="flex: 1; margin: 0;">
                         @csrf
-                        <button type="submit" class="action-pill" style="width: 100%; text-align: center; justify-content: center; color: #ff4655; border-color: rgba(255, 70, 85, 0.4);">
-                            <span>🚪 Keluar</span>
+                        <button type="submit" class="action-pill" style="width: 100%; text-align: center; justify-content: center; color: #ff4655; border-color: rgba(255, 70, 85, 0.4); display: inline-flex; align-items: center; gap: 6px;">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                            <span data-i18n="btn_logout">Keluar</span>
                         </button>
                     </form>
                 </div>
             @else
-                <button type="button" class="action-pill" style="width: 100%; text-align: center; justify-content: center; background: rgba(255, 70, 85, 0.15); border-color: #ff4655; color: #fff; font-weight: 600;" onclick="const d=document.getElementById('drawer'); if(d) d.close(); document.getElementById('authModal') ? document.getElementById('authModal').hidden = false : null">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="margin-right: 6px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+                <button type="button" class="action-pill" style="width: 100%; text-align: center; justify-content: center; background: rgba(255, 70, 85, 0.15); border-color: #ff4655; color: #fff; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;" onclick="const d=document.getElementById('drawer'); if(d) d.close(); document.getElementById('authModal') ? document.getElementById('authModal').hidden = false : null">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
                     <span data-i18n="btn_login_or_register">Masuk / Daftar Akun</span>
                 </button>
             @endif
@@ -68,11 +70,13 @@
 
         <p class="drawer__label drawer-stagger" style="--row-i: 8" data-i18n="drawer_label_lang">Bahasa / Language</p>
         <div class="drawer__actions drawer-stagger" style="--row-i: 9; display: flex; gap: 8px;">
-            <button type="button" class="chip lang-choice-btn" data-lang="id" style="flex: 1; justify-content: center; padding: 8px; font-weight: 700;">
-                🇮🇩 Indonesia
+            <button type="button" class="chip lang-choice-btn" data-lang="id" style="flex: 1; justify-content: center; padding: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+                <svg viewBox="0 0 24 16" width="18" height="12" style="border-radius: 2px; overflow: hidden; border: 1px solid rgba(255,255,255,0.25);" aria-hidden="true"><rect width="24" height="8" fill="#E70011"/><rect y="8" width="24" height="8" fill="#FFFFFF"/></svg>
+                <span>Indonesia</span>
             </button>
-            <button type="button" class="chip lang-choice-btn" data-lang="en" style="flex: 1; justify-content: center; padding: 8px; font-weight: 700;">
-                🇬🇧 English
+            <button type="button" class="chip lang-choice-btn" data-lang="en" style="flex: 1; justify-content: center; padding: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+                <svg viewBox="0 0 60 30" width="18" height="12" style="border-radius: 2px; overflow: hidden; border: 1px solid rgba(255,255,255,0.25);" aria-hidden="true"><clipPath id="uk-clip-dr"><rect width="60" height="30"/></clipPath><g clip-path="url(#uk-clip-dr)"><rect width="60" height="30" fill="#012169"/><path d="M0 0 L60 30 M60 0 L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0 L60 30 M60 0 L0 30" stroke="#C8102E" stroke-width="2"/><path d="M30 0 v30 M0 15 h60" stroke="#fff" stroke-width="10"/><path d="M30 0 v30 M0 15 h60" stroke="#C8102E" stroke-width="6"/></g></svg>
+                <span>English</span>
             </button>
         </div>
 

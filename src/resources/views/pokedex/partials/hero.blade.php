@@ -34,7 +34,7 @@
                                 class="hero__readmore"
                                 data-open-fact="{{ $i }}"
                                 aria-label="Baca selengkapnya tentang {{ $fact['title'] }}">
-                            (selengkapnya...)
+                            <span data-i18n="hero_readmore">(selengkapnya...)</span>
                         </button>
                     </p>
                     <div class="hero__meta">

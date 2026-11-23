@@ -42,6 +42,12 @@ Proyek ini dikembangkan oleh **Kelompok 13 — Kelas Praktikum Pemrograman Web A
 * **Fitur Edit Tanggal & Hapus Koleksi DataTables:** Trainer dapat mengedit tanggal tangkapan lewat modal ✏️ **Edit Tanggal** (`updateDate`) dan menghapus entri tangkapan lewat modal konfirmasi 🗑️ **Hapus** (`destroy`) tanpa merusak katalog master Library.
 * **Indikator Progres Dinamis & Centered Alert Popups:** Pengunjung tamu tidak lagi melihat total data koleksi silang ("Belum Masuk Akun" dengan tautan masuk), sementara trainer login disajikan metrik persentase (`%`), jumlah tangkapan terhadap 1.025 Pokémon, dan seluruh pesan notifikasi tampil dalam popup animasi di tengah layar.
 
+### 7. Refinement Visual & Transisi Multi-Bahasa (v1.2.4 Milestone)
+* **Format Tanggal Baku (Tanggal - Bulan - Tahun):** Koreksi teks petunjuk format tanggal penangkapan menjadi format standar Indonesia `DD/MM/YYYY`.
+* **Eliminasi Emoji ke Vektor SVG Murni:** Standardisasi seluruh ikon aksi tabel (pensil, tong sampah, catatan taktis), lencana status gembok, tombol ekspor, dan modal menjadi SVG inline murni yang tajam dan serasi dengan tema Crimson Dark.
+* **Bendera Vektor Bahasa (ID/EN) & Modal Konfirmasi:** Penggantian ikon bahasa menjadi bendera vektor Indonesia (Merah-Putih) dan Inggris (Union Jack), dilengkapi modal konfirmasi animasi (`#langConfirmModal`) sebelum pergantian bahasa.
+* **Transisi Cepat Skeleton Shimmer & Type-Reveal:** Efek transisi pemindaian cyber ultra-ringan (~280ms) dan type-reveal saat pergantian bahasa, serta penerjemahan komprehensif seluruh konten panduan dan metrik kartu.
+
 ---
 
 ## 🛠️ Tumpukan Teknologi (Tech Stack)
@@ -71,6 +77,7 @@ Pertemuan 999/
 │   ├── pokedex-app(v1.2.1).zip     # Rilis bugfix: DomPDF, Location Column, Crimson Dark Modal (Arya & Madina)
 │   ├── pokedex-app(v1.2.2).zip     # Rilis brand overhaul: Official Pokéball SVG Vector (Arya & Kelompok 13)
 │   ├── pokedex-app(v1.2.3).zip     # Rilis bilingual ID/EN, edit/delete caught date & centered alerts (Arya & K13)
+│   ├── pokedex-app(v1.2.4).zip     # Rilis pure SVG icons, vector flags, lang modal & shimmer (Arya & K13)
 │   └── README.md                   # Catatan rilis dan riwayat versi komprehensif
 ├── datasets/                       # Dataset acuan spreadsheet (.xlsx)
 ├── docs/                           # Dokumentasi & rancangan sistem

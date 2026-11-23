@@ -1443,8 +1443,11 @@
     }
 
     // =========================================================================
-    // FITUR MULTI-BAHASA (INDONESIA / ENGLISH) - v1.2.3
+    // FITUR MULTI-BAHASA (INDONESIA / ENGLISH) DENGAN SKELETON SHIMMER & POPUP KONFIRMASI - v1.2.4
     // =========================================================================
+    const FLAG_ID_SVG = `<svg viewBox="0 0 24 16" width="100%" height="100%" preserveAspectRatio="none" aria-hidden="true" style="display:block;"><rect width="24" height="8" fill="#E70011"/><rect y="8" width="24" height="8" fill="#FFFFFF"/></svg>`;
+    const FLAG_EN_SVG = `<svg viewBox="0 0 60 30" width="100%" height="100%" preserveAspectRatio="none" aria-hidden="true" style="display:block;"><clipPath id="uk-clip-dyn"><rect width="60" height="30"/></clipPath><g clip-path="url(#uk-clip-dyn)"><rect width="60" height="30" fill="#012169"/><path d="M0 0 L60 30 M60 0 L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0 L60 30 M60 0 L0 30" stroke="#C8102E" stroke-width="2"/><path d="M30 0 v30 M0 15 h60" stroke="#fff" stroke-width="10"/><path d="M30 0 v30 M0 15 h60" stroke="#C8102E" stroke-width="6"/></g></svg>`;
+
     const I18N_DICTIONARY = {
         id: {
             nav_home: "Beranda",
@@ -1459,12 +1462,51 @@
             drawer_label_account: "Akun Trainer",
             drawer_label_lang: "Bahasa / Language",
             btn_login_or_register: "Masuk / Daftar Akun",
+            btn_switch_acc: "Ganti Akun",
+            btn_logout: "Keluar",
+            btn_login: "Masuk",
+            top_made_by: "Made By",
+            id_group_lbl: "Kelompok",
+            id_group_val: "Kelompok 13",
+            id_class_lbl: "Kelas Praktikum",
+            id_class_val: "Kelas A / A2",
             guide_kicker: "Panduan PhpSpreadsheet",
             guide_title: "Format & Aturan",
+            guide_struct_title: "Struktur Excel",
+            guide_struct_badge: "4 Kolom Wajib",
+            guide_val_title: "Validasi Import",
+            guide_val_badge: "3 Status Cek",
+            rule_success_title: "Berhasil",
+            rule_success_desc: "4 kolom sesuai & nomor index baru",
+            rule_dup_title: "Ditolak (Duplikat)",
+            rule_dup_desc: "Nomor index sudah ada di database",
+            rule_invalid_title: "Tidak Valid",
+            rule_invalid_desc: "Ada kolom kosong atau data tidak cocok",
             control_kicker: "Kontrol Data & Koleksi",
             control_title: "Excel & Filter",
+            control_import_title: "Import Pokemon untuk Database",
+            control_import_btn: "Import Pokemon untuk Database",
+            badge_dev_feature: "Fitur Developer",
+            badge_locked_dev: "Terkunci (Dev Only)",
+            control_import_sub_dev: "Khusus Developer · Perbarui atau tambahkan semua Pokémon terbaru ke Library (.xlsx)",
+            control_import_sub_guest: "Khusus 4 Akun Developer (Kelompok 13) · Klik untuk info & login",
+            pill_gen_filter: "Filter Generasi",
+            opt_all_generations: "Semua Generasi (Pilih Gen 1 – 9)",
+            pill_type_filter: "Filter Tipe",
+            btn_reset_filter: "Reset filter ×",
+            drop_hint_dev: "Tarik & lepas file .xlsx langsung ke panel ini untuk import cepat",
+            drop_hint_guest: "Mode Read-Only · Fitur Import Spreadsheet khusus akun Developer",
+            btn_open_dev_switch: "Buka Switch Developer (K13)",
             stats_kicker: "Statistik Database",
             stats_title: "Progress Koleksi",
+            card_caught_kicker: "Koleksi Pokédex",
+            guest_caught_title: "Belum Masuk Akun",
+            guest_caught_desc: 'Silakan <a href="javascript:void(0)" onclick="openAuthModal(\'loginTab\')" style="color: var(--crimson, #ff4655); font-weight: 700; text-decoration: underline;">Masuk</a> atau <a href="javascript:void(0)" onclick="openAuthModal(\'registerTab\')" style="color: #38bdf8; font-weight: 700; text-decoration: underline;">Daftar</a> untuk mulai melacak progres koleksi Pokémon Anda.',
+            card_lib_kicker: "Kelengkapan Library",
+            card_lib_title: "Semua 9 Generasi Terdaftar (Gen I–IX)",
+            card_lib_desc: "Seluruh 1.025 Pokémon (Gen I–IX) telah lengkap terdaftar!",
+            card_last_kicker: "Indeks Terakhir",
+            card_last_jump: "Hal. 1 ↗",
             pokedex_kicker: "Pustaka Pokémon",
             pokedex_title: "Data Master Pokémon",
             caught_kicker: "Pokédex Collection Tracker",
@@ -1474,6 +1516,7 @@
             btn_export_excel: "Ekspor Excel",
             btn_export_pdf: "Unduh Laporan PDF",
             search_placeholder: "Cari nama atau nomor index…",
+            opt_all_types: "Semua tipe (19)",
             th_no_index: "NO INDEX",
             th_sprite: "SPRITE",
             th_pokemon_name: "NAMA POKÉMON",
@@ -1483,7 +1526,21 @@
             th_actions: "AKSI & JURNAL",
             btn_edit_date: "Tanggal",
             btn_delete: "Hapus",
-            btn_tactics: "Taktik"
+            btn_tactics: "Taktik",
+            lbl_edit_caught_at: "Tanggal Penangkapan Baru",
+            format_dmy_hint: "Format: Tanggal - Bulan - Tahun (DD/MM/YYYY)",
+            modal_edit_caught_title: "Edit Tanggal Tangkap",
+            modal_edit_caught_subtitle: "Ubah riwayat tanggal penangkapan Pokémon",
+            lbl_caught_date_format: "Tanggal Penangkapan (Tanggal - Bulan - Tahun)",
+            btn_open_account_menu: "Masuk / Buka Menu Akun",
+            btn_close: "Tutup",
+            btn_open_login_menu: "Buka Menu Login / Daftar",
+            hero_readmore: "(selengkapnya...)",
+            footer_team: "Pokédex - Kelompok 13 - Kelas A / A2",
+            footer_meta: "Laravel 11 · PhpSpreadsheet · Artwork dari PokeAPI",
+            tab_login: "Login",
+            tab_register: "Daftar",
+            tab_switch_dev: "Switch Dev (K13)"
         },
         en: {
             nav_home: "Home",
@@ -1498,12 +1555,51 @@
             drawer_label_account: "Trainer Account",
             drawer_label_lang: "Language / Bahasa",
             btn_login_or_register: "Login / Register",
+            btn_switch_acc: "Switch Account",
+            btn_logout: "Logout",
+            btn_login: "Login",
+            top_made_by: "Made By",
+            id_group_lbl: "Group",
+            id_group_val: "Group 13",
+            id_class_lbl: "Practicum Class",
+            id_class_val: "Class A / A2",
             guide_kicker: "PhpSpreadsheet Guide",
             guide_title: "Format & Rules",
+            guide_struct_title: "Excel Structure",
+            guide_struct_badge: "4 Required Columns",
+            guide_val_title: "Import Validation",
+            guide_val_badge: "3 Status Checks",
+            rule_success_title: "Success",
+            rule_success_desc: "4 valid columns & unique index number",
+            rule_dup_title: "Rejected (Duplicate)",
+            rule_dup_desc: "Index number already exists in database",
+            rule_invalid_title: "Invalid Format",
+            rule_invalid_desc: "Empty columns or mismatched data types",
             control_kicker: "Data & Collection Controls",
             control_title: "Excel & Filter",
+            control_import_title: "Import Pokemon for Database",
+            control_import_btn: "Import Pokemon for Database",
+            badge_dev_feature: "Developer Feature",
+            badge_locked_dev: "Locked (Dev Only)",
+            control_import_sub_dev: "Developer Exclusive · Update or append new Pokémon to Library (.xlsx)",
+            control_import_sub_guest: "Developer Exclusive (Group 13) · Click for info & login",
+            pill_gen_filter: "Generation Filter",
+            opt_all_generations: "All Generations (Select Gen 1 – 9)",
+            pill_type_filter: "Type Filter",
+            btn_reset_filter: "Reset filter ×",
+            drop_hint_dev: "Drag & drop .xlsx file directly into this panel for fast import",
+            drop_hint_guest: "Read-Only Mode · Spreadsheet Import is restricted to Developer accounts",
+            btn_open_dev_switch: "Open Dev Switcher (G13)",
             stats_kicker: "Database Statistics",
             stats_title: "Collection Progress",
+            card_caught_kicker: "Pokédex Collection",
+            guest_caught_title: "Not Logged In",
+            guest_caught_desc: 'Please <a href="javascript:void(0)" onclick="openAuthModal(\'loginTab\')" style="color: var(--crimson, #ff4655); font-weight: 700; text-decoration: underline;">Log In</a> or <a href="javascript:void(0)" onclick="openAuthModal(\'registerTab\')" style="color: #38bdf8; font-weight: 700; text-decoration: underline;">Register</a> to start tracking your Pokémon catch collection.',
+            card_lib_kicker: "Library Completeness",
+            card_lib_title: "All 9 Generations Registered (Gen I–IX)",
+            card_lib_desc: "All 1,025 Pokémon (Gen I–IX) are fully registered in the catalog!",
+            card_last_kicker: "Last Index",
+            card_last_jump: "Page 1 ↗",
             pokedex_kicker: "Pokémon Library",
             pokedex_title: "Pokédex Master Data",
             caught_kicker: "Pokédex Collection Tracker",
@@ -1513,6 +1609,7 @@
             btn_export_excel: "Export Excel",
             btn_export_pdf: "Download PDF Report",
             search_placeholder: "Search name or index number…",
+            opt_all_types: "All types (19)",
             th_no_index: "INDEX NO",
             th_sprite: "SPRITE",
             th_pokemon_name: "POKÉMON NAME",
@@ -1522,9 +1619,89 @@
             th_actions: "ACTIONS & JOURNAL",
             btn_edit_date: "Date",
             btn_delete: "Delete",
-            btn_tactics: "Tactics"
+            btn_tactics: "Tactics",
+            lbl_edit_caught_at: "New Capture Date",
+            format_dmy_hint: "Format: Day - Month - Year (DD/MM/YYYY)",
+            modal_edit_caught_title: "Edit Capture Date",
+            modal_edit_caught_subtitle: "Modify Pokémon capture date history",
+            lbl_caught_date_format: "Capture Date (Day - Month - Year)",
+            btn_open_account_menu: "Log In / Open Account Menu",
+            btn_close: "Close",
+            btn_open_login_menu: "Open Login / Register Menu",
+            hero_readmore: "(read more...)",
+            footer_team: "Pokédex - Group 13 - Class A / A2",
+            footer_meta: "Laravel 11 · PhpSpreadsheet · Artwork from PokéAPI",
+            tab_login: "Login",
+            tab_register: "Register",
+            tab_switch_dev: "Switch Dev (G13)"
         }
     };
+
+    let pendingTargetLang = null;
+
+    window.closeLangConfirmModal = function() {
+        const modal = document.getElementById('langConfirmModal');
+        if (modal) modal.hidden = true;
+        pendingTargetLang = null;
+    };
+
+    function requestLanguageSwitch(targetLang) {
+        const currentLang = localStorage.getItem('pokedex_lang') || 'id';
+        if (targetLang === currentLang) {
+            const drawer = document.getElementById('drawer');
+            if (drawer && drawer.open) drawer.close();
+            return;
+        }
+
+        pendingTargetLang = targetLang;
+        const modal = document.getElementById('langConfirmModal');
+        const fromFlag = document.getElementById('langConfirmFromFlag');
+        const toFlag = document.getElementById('langConfirmToFlag');
+        const titleEl = document.getElementById('langConfirmTitle');
+        const descEl = document.getElementById('langConfirmDesc');
+        const cancelBtn = document.getElementById('langConfirmBtnCancel');
+        const okBtn = document.getElementById('langConfirmBtnOk');
+
+        if (fromFlag) fromFlag.innerHTML = currentLang === 'id' ? FLAG_ID_SVG : FLAG_EN_SVG;
+        if (toFlag) toFlag.innerHTML = targetLang === 'id' ? FLAG_ID_SVG : FLAG_EN_SVG;
+
+        if (targetLang === 'en') {
+            titleEl.textContent = 'Switch Language to English?';
+            descEl.textContent = 'All interface headers, guide cards, database statistics, and interactive tables will be translated instantly.';
+            if (cancelBtn) cancelBtn.textContent = 'Cancel';
+            if (okBtn) okBtn.textContent = 'Yes, Switch to English';
+        } else {
+            titleEl.textContent = 'Ganti Bahasa ke Indonesia?';
+            descEl.textContent = 'Seluruh judul antarmuka, kartu panduan, statistik database, dan tabel interaktif akan disesuaikan ke Bahasa Indonesia.';
+            if (cancelBtn) cancelBtn.textContent = 'Batal';
+            if (okBtn) okBtn.textContent = 'Ya, Ganti ke Indonesia';
+        }
+
+        const drawer = document.getElementById('drawer');
+        if (drawer && drawer.open) drawer.close();
+
+        if (modal) modal.hidden = false;
+    }
+
+    function applyLanguageWithShimmer(lang) {
+        const main = document.getElementById('main') || document.body;
+        main.classList.remove('lang-shimmer-active');
+        void main.offsetWidth; // trigger reflow
+        main.classList.add('lang-shimmer-active');
+
+        setLanguage(lang);
+
+        document.querySelectorAll('[data-i18n]').forEach((el) => {
+            el.classList.remove('type-revealed');
+            void el.offsetWidth;
+            el.classList.add('type-revealed');
+        });
+
+        setTimeout(() => {
+            main.classList.remove('lang-shimmer-active');
+            document.querySelectorAll('.type-revealed').forEach(el => el.classList.remove('type-revealed'));
+        }, 350);
+    }
 
     function setLanguage(lang) {
         if (!['id', 'en'].includes(lang)) lang = 'id';
@@ -1534,7 +1711,11 @@
         document.querySelectorAll('[data-i18n]').forEach((el) => {
             const key = el.getAttribute('data-i18n');
             if (dict[key]) {
-                el.textContent = dict[key];
+                if (dict[key].includes('<')) {
+                    el.innerHTML = dict[key];
+                } else {
+                    el.textContent = dict[key];
+                }
             }
         });
 
@@ -1543,9 +1724,31 @@
             searchInput.placeholder = dict.search_placeholder;
         }
 
+        const bentoGenFirstOpt = document.querySelector('#bentoGenFilter option[value=""]');
+        if (bentoGenFirstOpt && dict.opt_all_generations) {
+            bentoGenFirstOpt.textContent = dict.opt_all_generations;
+        }
+
+        const typeFilterFirstOpt = document.querySelector('#typeFilter option[value=""]');
+        if (typeFilterFirstOpt && dict.opt_all_types) {
+            typeFilterFirstOpt.textContent = dict.opt_all_types;
+        }
+
+        const caughtStatus = document.getElementById('caughtStatusCount');
+        if (caughtStatus) {
+            const count = caughtStatus.getAttribute('data-count') || caughtStatus.textContent.match(/\d+/)?.[0] || '0';
+            caughtStatus.setAttribute('data-count', count);
+            caughtStatus.textContent = lang === 'en' ? `${count} of 1,025 Pokémon` : `${count} dari 1.025 Pokémon`;
+        }
+
         const langText = document.getElementById('langCurrentText');
         if (langText) {
             langText.textContent = lang.toUpperCase();
+        }
+
+        const flagContainer = document.getElementById('langFlagContainer');
+        if (flagContainer) {
+            flagContainer.innerHTML = lang === 'id' ? FLAG_ID_SVG : FLAG_EN_SVG;
         }
 
         document.querySelectorAll('.lang-choice-btn').forEach((btn) => {
@@ -1566,16 +1769,26 @@
         langToggleBtn.addEventListener('click', () => {
             const current = localStorage.getItem('pokedex_lang') || 'id';
             const next = current === 'id' ? 'en' : 'id';
-            setLanguage(next);
+            requestLanguageSwitch(next);
         });
     }
 
     document.querySelectorAll('.lang-choice-btn').forEach((btn) => {
         btn.addEventListener('click', () => {
             const lang = btn.getAttribute('data-lang');
-            setLanguage(lang);
+            requestLanguageSwitch(lang);
         });
     });
+
+    const btnExecute = document.getElementById('btnExecuteLangSwitch');
+    if (btnExecute) {
+        btnExecute.addEventListener('click', () => {
+            if (pendingTargetLang) {
+                applyLanguageWithShimmer(pendingTargetLang);
+                window.closeLangConfirmModal();
+            }
+        });
+    }
 
     const savedLang = localStorage.getItem('pokedex_lang') || 'id';
     setLanguage(savedLang);

@@ -28,12 +28,14 @@
                 </button>
             @endauth
             <a href="{{ route('pokedex.exportExcel') }}" class="btn btn--subtle"
-               style="background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 10px 16px; border-radius: 8px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 6px;">
-                <span>📊</span> <span data-i18n="btn_export_excel">Ekspor Excel</span>
+               style="background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 10px 16px; border-radius: 8px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                <span data-i18n="btn_export_excel">Ekspor Excel</span>
             </a>
             <a href="{{ route('pokedex.exportPdf') }}" class="btn btn--subtle"
-               style="background: rgba(239, 68, 68, 0.15); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.3); padding: 10px 16px; border-radius: 8px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 6px;">
-                <span>📄</span> <span data-i18n="btn_export_pdf">Unduh Laporan PDF</span>
+               style="background: rgba(239, 68, 68, 0.15); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.3); padding: 10px 16px; border-radius: 8px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M10 12h2a2 2 0 0 1 0 4h-2v-4z"/></svg>
+                <span data-i18n="btn_export_pdf">Unduh Laporan PDF</span>
             </a>
         </div>
     </div>
@@ -80,23 +82,26 @@
                                 {{-- Tombol Edit Tanggal --}}
                                 <button type="button" class="btn btn--subtle"
                                         onclick="openEditCaughtDateModal('{{ $catch->pokemon_id }}', '{{ addslashes($catch->pokemon->nama_pokemon) }}', '{{ $catch->caught_at ? $catch->caught_at->format('Y-m-d') : date('Y-m-d') }}', '{{ $catch->pokemon->sprite_url }}')"
-                                        style="padding: 4px 8px; font-size: 0.76rem; border-radius: 6px; background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.35); cursor: pointer;"
+                                        style="padding: 4px 8px; font-size: 0.76rem; border-radius: 6px; background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.35); cursor: pointer; display: inline-flex; align-items: center; gap: 4px;"
                                         title="Edit Tanggal Penangkapan">
-                                    ✏️ <span data-i18n="btn_edit_date">Tanggal</span>
+                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                                    <span data-i18n="btn_edit_date">Tanggal</span>
                                 </button>
                                 {{-- Tombol Hapus Koleksi --}}
                                 <button type="button" class="btn btn--subtle"
                                         onclick="confirmDeleteCaught('{{ $catch->pokemon_id }}', '{{ addslashes($catch->pokemon->nama_pokemon) }}', '{{ $catch->pokemon->sprite_url }}')"
-                                        style="padding: 4px 8px; font-size: 0.76rem; border-radius: 6px; background: rgba(239, 68, 68, 0.15); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.35); cursor: pointer;"
+                                        style="padding: 4px 8px; font-size: 0.76rem; border-radius: 6px; background: rgba(239, 68, 68, 0.15); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.35); cursor: pointer; display: inline-flex; align-items: center; gap: 4px;"
                                         title="Hapus Tangkapan dari Pokédex">
-                                    🗑️ <span data-i18n="btn_delete">Hapus</span>
+                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                    <span data-i18n="btn_delete">Hapus</span>
                                 </button>
                                 {{-- Tombol Jurnal Taktik --}}
                                 <button type="button" class="btn btn--subtle"
                                         onclick="if(typeof openJournalModal === 'function'){ openJournalModal('{{ $catch->pokemon_id }}', '{{ addslashes($catch->pokemon->nama_pokemon) }}', '{{ $catch->pokemon->sprite_url }}'); } else { alert('Modul Jurnal Trainer segera hadir!'); }"
-                                        style="padding: 4px 8px; font-size: 0.76rem; border-radius: 6px; background: rgba(56, 189, 248, 0.15); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.35); cursor: pointer;"
+                                        style="padding: 4px 8px; font-size: 0.76rem; border-radius: 6px; background: rgba(56, 189, 248, 0.15); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.35); cursor: pointer; display: inline-flex; align-items: center; gap: 4px;"
                                         title="Buka Catatan Jurnal Taktik">
-                                    📝 <span data-i18n="btn_tactics">Taktik</span>
+                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                                    <span data-i18n="btn_tactics">Taktik</span>
                                 </button>
                             </div>
                         </td>
@@ -118,11 +123,13 @@
     <div class="pkm-modal__backdrop" onclick="closeEditCaughtDateModal()"></div>
     <div class="pkm-modal__dialog" style="max-width: 440px; background: #0f1923; color: #f1f5f9; border-radius: 14px; overflow: hidden; border: 1px solid rgba(245, 158, 11, 0.4); box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(245, 158, 11, 0.2); animation: pkmModalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
         <div class="pkm-modal__header" style="display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); background: rgba(245, 158, 11, 0.08);">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="font-size: 1.3rem;">✏️</span>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="width: 34px; height: 34px; border-radius: 8px; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#FBBF24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                </div>
                 <div>
-                    <h3 id="editCaughtDateTitle" style="margin: 0; font-size: 1.1rem; font-weight: 700; color: #ffffff;">Edit Tanggal Tangkap</h3>
-                    <p style="margin: 2px 0 0 0; font-size: 0.76rem; color: #94a3b8;">Ubah riwayat tanggal penangkapan Pokémon</p>
+                    <h3 id="editCaughtDateTitle" style="margin: 0; font-size: 1.1rem; font-weight: 700; color: #ffffff;" data-i18n="modal_edit_caught_title">Edit Tanggal Tangkap</h3>
+                    <p style="margin: 2px 0 0 0; font-size: 0.76rem; color: #94a3b8;" data-i18n="modal_edit_caught_subtitle">Ubah riwayat tanggal penangkapan Pokémon</p>
                 </div>
             </div>
             <button type="button" onclick="closeEditCaughtDateModal()" style="background: none; border: none; font-size: 1.5rem; color: #94a3b8; cursor: pointer;">&times;</button>
@@ -140,12 +147,12 @@
             </div>
 
             <div class="form-group" style="margin-bottom: 20px;">
-                <label for="editCaughtAtInput" style="display: block; font-size: 0.78rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
+                <label for="editCaughtAtInput" style="display: block; font-size: 0.78rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;" data-i18n="lbl_edit_caught_at">
                     Tanggal Penangkapan Baru
                 </label>
                 <input type="date" id="editCaughtAtInput" required
                        class="text-input" style="width: 100%; box-sizing: border-box; padding: 10px 14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 8px; color: #ffffff; font-size: 1rem; outline: none; color-scheme: dark;">
-                <small style="display: block; margin-top: 6px; font-size: 0.74rem; color: #94a3b8;">Format: Tahun - Bulan - Tanggal</small>
+                <small style="display: block; margin-top: 6px; font-size: 0.74rem; color: #94a3b8;" data-i18n="format_dmy_hint">Format: Tanggal - Bulan - Tahun (DD/MM/YYYY)</small>
             </div>
 
             <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 16px;">

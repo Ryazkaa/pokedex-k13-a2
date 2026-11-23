@@ -123,7 +123,7 @@ Sistem membedakan dua tingkatan hak akses:
   * Modal popup peringatan akses terkunci (`#devLockModal`) beranimasi di tengah layar.
 
 ### Modul 2: Master Pokemon Library, Excel Import, & Cloud DevOps (Arya Andra Diazka)
-* **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (v1.0.1 / v1.1.1 / v1.2.1 / v1.2.2 / v1.2.3)**
+* **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (v1.0.1 / v1.1.1 / v1.2.1 / v1.2.2 / v1.2.3 / v1.2.4)**
 * **Tanggung Jawab:**
   * Mengelola katalog master 1.025 Pokémon pada `app/Http/Controllers/PokemonLibraryController.php`.
   * Menangani validasi berkas spreadsheet 4 kolom wajib (`nomor_index`, `nama_pokemon`, `tipe`, `generasi`) via `PhpSpreadsheet`.
@@ -136,9 +136,15 @@ Sistem membedakan dua tingkatan hak akses:
     * Menyelaraskan seluruh judul navigasi dan bagian ke dalam Bahasa Indonesia baku (`Beranda`, `Eksplorasi`, `Koleksi`, `Pustaka`) serta memperbaiki urutan pil navbar agar sesuai urutan tata letak komponen.
     * Mengubah banner sticky alert sesi in-page menjadi modal popup animasi di tengah layar (`#sessionNotificationModal`).
     * Merestrukturisasi menu drawer: menghilangkan fitur usang Excel/filter cepat dan menyajikan panel kontrol akun trainer serta switcher bahasa.
+  * **Penyempurnaan Rilis v1.2.4:**
+    * Eliminasi seluruh emoji bawaan sistem menjadi ikon vektor SVG inline murni yang tajam.
+    * Penerapan bendera vektor SVG resmi (Indonesia Merah-Putih & UK Union Jack) untuk pengalih bahasa.
+    * Pembuatan modal konfirmasi pergantian bahasa interaktif (`#langConfirmModal`).
+    * Implementasi efek animasi transisi cyber scanline shimmer (`.lang-shimmer-active`) dan type-reveal pada pergantian bahasa.
+    * Penerjemahan komprehensif ke seluruh kartu panduan, status validasi, dan kontrol data.
 
 ### Modul 3: Pokédex Caught Tracker, DataTables, & Ekspor PDF/Excel (Madina Dwiyana Putri)
-* **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (Merge Request !3 / v1.2.0, v1.2.1 & v1.2.3)**
+* **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (Merge Request !3 / v1.2.0, v1.2.1, v1.2.3 & v1.2.4)**
 * **Tanggung Jawab & Realisasi:**
   * Merancang tabel `trainer_catches` dan model Eloquent `TrainerCatch.php`.
   * Mengembangkan kontroler `app/Http/Controllers/PokedexCatchController.php` untuk penyimpanan, penghapusan, favorit, pembaruan tanggal, dan ekspor.
@@ -154,6 +160,9 @@ Sistem membedakan dua tingkatan hak akses:
     * Penambahan aksi **✏️ Tanggal** pada tabel koleksi dengan modal edit tanggal (`#editCaughtDateModal`) dan endpoint `POST /pokedex/caught/{pokemonId}/date` (`updateDate`).
     * Penambahan aksi **🗑️ Hapus** dengan modal konfirmasi peringatan cyber merah (`#deleteCaughtModal`) dan endpoint `DELETE /pokedex/caught/{pokemonId}` (`destroy`).
     * Mengatasi bug tampilan tamu pada Kartu 1 Bento Grid: tamu melihat status "Belum Masuk Akun" dengan tautan masuk, sedangkan trainer terautentikasi melihat rasio tangkapan ("X dari 1.025"), lencana persentase emerald (`%`), dan bar kemajuan visual.
+  * **Penyempurnaan Refinement v1.2.4:**
+    * Perbaikan label format tanggal penangkapan menjadi format baku `Tanggal - Bulan - Tahun (DD/MM/YYYY)`.
+    * Penggantian ikon emoji aksi tabel (`✏️`, `🗑️`, `📝`) dan toolbar (`📊`, `📄`) menjadi vektor SVG presisi.
 
 ### Modul 4: Jurnal Taktik & Catatan Lapangan Trainer (Iasha Irdanti)
 * **Status Integrasi:** ⏳ **Siap Merge (Modul 4)**

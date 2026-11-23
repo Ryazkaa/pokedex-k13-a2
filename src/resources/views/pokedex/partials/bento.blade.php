@@ -23,8 +23,8 @@
         <div class="bento-panel guide-panel">
             <article class="guide-block">
                 <header class="guide-block__head">
-                    <h3 class="guide-card__title">Struktur Excel</h3>
-                    <span class="guide-card__badge">4 Kolom Wajib</span>
+                    <h3 class="guide-card__title" data-i18n="guide_struct_title">Struktur Excel</h3>
+                    <span class="guide-card__badge" data-i18n="guide_struct_badge">4 Kolom Wajib</span>
                 </header>
                 <div class="guide-cols">
                     <div class="guide-col-item">
@@ -48,29 +48,29 @@
 
             <article class="guide-block">
                 <header class="guide-block__head">
-                    <h3 class="guide-card__title">Validasi Import</h3>
-                    <span class="guide-card__badge">3 Status Cek</span>
+                    <h3 class="guide-card__title" data-i18n="guide_val_title">Validasi Import</h3>
+                    <span class="guide-card__badge" data-i18n="guide_val_badge">3 Status Cek</span>
                 </header>
                 <ul class="guide-card__rules">
                     <li class="rule--ok">
                         <span class="rule__dot" aria-hidden="true"></span>
                         <div>
-                            <strong>Berhasil</strong>
-                            <span>4 kolom sesuai &amp; nomor index baru</span>
+                            <strong data-i18n="rule_success_title">Berhasil</strong>
+                            <span data-i18n="rule_success_desc">4 kolom sesuai &amp; nomor index baru</span>
                         </div>
                     </li>
                     <li class="rule--dup">
                         <span class="rule__dot" aria-hidden="true"></span>
                         <div>
-                            <strong>Ditolak (Duplikat)</strong>
-                            <span>Nomor index sudah ada di database</span>
+                            <strong data-i18n="rule_dup_title">Ditolak (Duplikat)</strong>
+                            <span data-i18n="rule_dup_desc">Nomor index sudah ada di database</span>
                         </div>
                     </li>
                     <li class="rule--bad">
                         <span class="rule__dot" aria-hidden="true"></span>
                         <div>
-                            <strong>Tidak Valid</strong>
-                            <span>Ada kolom kosong atau data tidak cocok</span>
+                            <strong data-i18n="rule_invalid_title">Tidak Valid</strong>
+                            <span data-i18n="rule_invalid_desc">Ada kolom kosong atau data tidak cocok</span>
                         </div>
                     </li>
                 </ul>
@@ -137,10 +137,13 @@
                         </div>
                         <div style="flex: 1; text-align: left;">
                             <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 3px;">
-                                <strong style="font-size: 0.95rem; color: #E2E8F0; font-weight: 700;">Import Pokemon untuk Database</strong>
-                                <span style="background: rgba(255, 70, 85, 0.15); color: #F43F5E; border: 1px solid rgba(255, 70, 85, 0.35); font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase;">🔒 Terkunci (Dev Only)</span>
+                                <strong style="font-size: 0.95rem; color: #E2E8F0; font-weight: 700;" data-i18n="control_import_btn">Import Pokemon untuk Database</strong>
+                                <span style="background: rgba(255, 70, 85, 0.15); color: #F43F5E; border: 1px solid rgba(255, 70, 85, 0.35); font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 4px;">
+                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                    <span data-i18n="badge_locked_dev">Terkunci (Dev Only)</span>
+                                </span>
                             </div>
-                            <small style="color: #94A3B8; font-size: 0.78rem;">Khusus 4 Akun Developer (Kelompok 13) · Klik untuk info &amp; login</small>
+                            <small style="color: #94A3B8; font-size: 0.78rem;" data-i18n="control_import_sub_guest">Khusus 4 Akun Developer (Kelompok 13) · Klik untuk info &amp; login</small>
                         </div>
                     </button>
 
@@ -179,8 +182,9 @@
                             <div style="display: flex; flex-direction: column; gap: 10px;">
                                 <button type="button" onclick="switchToDevFromLockModal()"
                                         class="action-pill action-pill--primary"
-                                        style="width: 100%; justify-content: center; padding: 12px; font-weight: 700; font-size: 0.88rem; border-radius: 8px;">
-                                    <span style="margin-right: 6px;">⚡</span> Buka Switch Developer (K13)
+                                        style="width: 100%; justify-content: center; padding: 12px; font-weight: 700; font-size: 0.88rem; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px;">
+                                    <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                                    <span data-i18n="btn_open_dev_switch">Buka Switch Developer (K13)</span>
                                 </button>
                                 <button type="button" onclick="closeDevLockModal()"
                                         class="action-pill action-pill--ghost"
@@ -215,15 +219,15 @@
             {{-- Filter Generasi (Dropdown Generasi 1 - 9) --}}
             <div class="control-group">
                 <div class="control-group__head">
-                    <p class="pill-label">Filter Generasi</p>
-                    <button type="button" class="btn-reset-inline" id="resetGenPill" data-reset-gen hidden>
+                    <p class="pill-label" data-i18n="pill_gen_filter">Filter Generasi</p>
+                    <button type="button" class="btn-reset-inline" id="resetGenPill" data-reset-gen hidden data-i18n="btn_reset_filter">
                         Reset filter ×
                     </button>
                 </div>
                 <div class="gen-dropdown-wrap">
                     <label class="bento-select-wrap">
                         <select id="bentoGenFilter" class="bento-select" aria-label="Pilih Generasi Pokémon">
-                            <option value="">Semua Generasi (Pilih Gen 1 – 9)</option>
+                            <option value="" data-i18n="opt_all_generations">Semua Generasi (Pilih Gen 1 – 9)</option>
                             <option value="Generasi I (Kanto)">Gen 1 · Kanto (#0001 – #0151)</option>
                             <option value="Generasi II (Johto)">Gen 2 · Johto (#0152 – #0251)</option>
                             <option value="Generasi III (Hoenn)">Gen 3 · Hoenn (#0252 – #0386)</option>
@@ -244,8 +248,8 @@
             {{-- Filter Tipe Elemen (18 tipe standar + 1 tipe khusus Stellar = 19 tipe + logo resmi) --}}
             <div class="control-group">
                 <div class="control-group__head">
-                    <p class="pill-label">Filter Tipe</p>
-                    <button type="button" class="btn-reset-inline" id="resetPill" data-reset-type hidden>
+                    <p class="pill-label" data-i18n="pill_type_filter">Filter Tipe</p>
+                    <button type="button" class="btn-reset-inline" id="resetPill" data-reset-type hidden data-i18n="btn_reset_filter">
                         Reset filter ×
                     </button>
                 </div>
@@ -266,10 +270,10 @@
             <p class="drop-hint">
                 @if ($isDev)
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 16a4 4 0 0 1-.8-7.9A5.5 5.5 0 0 1 17 7a4.5 4.5 0 0 1 .5 9H7z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
-                    <span>Tarik &amp; lepas file <strong>.xlsx</strong> langsung ke panel ini untuk import cepat</span>
+                    <span data-i18n="drop_hint_dev">Tarik &amp; lepas file <strong>.xlsx</strong> langsung ke panel ini untuk import cepat</span>
                 @else
                     <svg viewBox="0 0 24 24" aria-hidden="true" style="color: #ff4655; width: 16px; height: 16px; flex-shrink: 0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-                    <span style="color: #94A3B8;">Mode Read-Only · Fitur Import Spreadsheet khusus akun Developer</span>
+                    <span style="color: #94A3B8;" data-i18n="drop_hint_guest">Mode Read-Only · Fitur Import Spreadsheet khusus akun Developer</span>
                 @endif
             </p>
         </div>
@@ -294,9 +298,9 @@
                         <span>{{ $caughtPct }}%</span>
                     </div>
                     <div class="info-card__body">
-                        <p class="info-card__kicker">Koleksi Pokédex</p>
-                        <h3>{{ $userCatchesCount }} dari 1.025 Pokémon</h3>
-                        <p>{{ $userCatchesCount > 0 ? "Total Pokémon yang berhasil Anda tangkap & tercatat di Pokédex pribadi." : "Belum ada tangkapan. Tambahkan koleksi pertama Anda!" }}</p>
+                        <p class="info-card__kicker" data-i18n="card_caught_kicker">Koleksi Pokédex</p>
+                        <h3 id="caughtStatusCount">{{ $userCatchesCount }} dari 1.025 Pokémon</h3>
+                        <p id="caughtStatusDesc">{{ $userCatchesCount > 0 ? "Total Pokémon yang berhasil Anda tangkap & tercatat di Pokédex pribadi." : "Belum ada tangkapan. Tambahkan koleksi pertama Anda!" }}</p>
                         <div style="height: 4px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; margin-top: 8px;">
                             <div style="height: 100%; width: {{ max(1, $caughtPct) }}%; background: #10b981; border-radius: 999px; transition: width 0.4s ease;"></div>
                         </div>
@@ -310,9 +314,9 @@
                         </svg>
                     </div>
                     <div class="info-card__body">
-                        <p class="info-card__kicker">Koleksi Pokédex</p>
-                        <h3 style="color: #f1f5f9;">Belum Masuk Akun</h3>
-                        <p style="color: #94A3B8;">
+                        <p class="info-card__kicker" data-i18n="card_caught_kicker">Koleksi Pokédex</p>
+                        <h3 style="color: #f1f5f9;" data-i18n="guest_caught_title">Belum Masuk Akun</h3>
+                        <p style="color: #94A3B8;" data-i18n="guest_caught_desc">
                             Silakan <a href="javascript:void(0)" onclick="openAuthModal('loginTab')" style="color: var(--crimson, #ff4655); font-weight: 700; text-decoration: underline;">Masuk</a> atau <a href="javascript:void(0)" onclick="openAuthModal('registerTab')" style="color: #38bdf8; font-weight: 700; text-decoration: underline;">Daftar</a> untuk mulai melacak progres koleksi Pokémon Anda.
                         </p>
                     </div>
@@ -325,17 +329,17 @@
                     <span>{{ $completionPct }}%</span>
                 </div>
                 <div class="info-card__body">
-                    <p class="info-card__kicker">Kelengkapan Library</p>
+                    <p class="info-card__kicker" data-i18n="card_lib_kicker">Kelengkapan Library</p>
                     @if ($maxCatalog === 1025)
                         @if ($total >= 1025)
-                            <h3>Semua 9 Generasi Terdaftar (Gen I–IX)</h3>
+                            <h3 data-i18n="card_lib_title">Semua 9 Generasi Terdaftar (Gen I–IX)</h3>
                         @else
                             <h3>{{ $generasiList->count() }} Generasi Terdata · {{ $total }}/1025</h3>
                         @endif
                         <div class="dex-progress" role="progressbar" aria-valuenow="{{ $completionPct }}" aria-valuemin="0" aria-valuemax="100">
                             <span class="dex-progress__bar" style="width: {{ $completionPct }}%"></span>
                         </div>
-                        <p>
+                        <p data-i18n="card_lib_desc">
                             @if ($remainingSlot > 0)
                                 Tersisa <strong>{{ $remainingSlot }} Pokémon</strong> dari total 1.025 Pokémon siap di-import via <strong>.xlsx</strong>.
                             @else
@@ -374,8 +378,8 @@
                 </div>
                 <div class="info-card__body">
                     <div class="info-card__head-row">
-                        <p class="info-card__kicker">Indeks Terakhir</p>
-                        <span class="info-card__jump-badge">Hal. {{ $lastPageNum }} ↗</span>
+                        <p class="info-card__kicker" data-i18n="card_last_kicker">Indeks Terakhir</p>
+                        <span class="info-card__jump-badge" data-i18n="card_last_jump">Hal. {{ $lastPageNum }} ↗</span>
                     </div>
                     @if ($latestPokemon)
                         <h3>{{ $latestPokemon->nomor_index }} · {{ $latestPokemon->nama_pokemon }}</h3>

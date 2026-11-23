@@ -93,8 +93,8 @@
 
             {{-- Field 5: Tanggal Penangkapan (Default: Hari ini, Dapat diedit) --}}
             <div class="form-group" style="margin-bottom: 16px;">
-                <label class="field-label" for="apiDexCaughtAt" style="display: block; font-size: 0.78rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">
-                    Tanggal Penangkapan (Tahun - Bulan - Tanggal)
+                <label class="field-label" for="apiDexCaughtAt" style="display: block; font-size: 0.78rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;" data-i18n="lbl_caught_date_format">
+                    Tanggal Penangkapan (Tanggal - Bulan - Tahun)
                 </label>
                 <input type="date" id="apiDexCaughtAt" name="caught_at" required
                        class="text-input" style="width: 100%; box-sizing: border-box; padding: 10px 14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 8px; color: #ffffff; font-size: 0.95rem; outline: none; color-scheme: dark;">
@@ -170,13 +170,14 @@
         <div style="display: flex; flex-direction: column; gap: 10px;">
             <button type="button" onclick="closeCaughtAuthPromptModal(true)"
                     class="action-pill action-pill--primary"
-                    style="width: 100%; justify-content: center; padding: 12px; font-weight: 700; font-size: 0.9rem; border-radius: 8px; background: var(--crimson, #ff4655); box-shadow: 0 4px 14px rgba(255, 70, 85, 0.4); border: none; color: #fff; cursor: pointer;">
-                <span style="margin-right: 6px;">⚡</span> Masuk / Buka Menu Akun
+                    style="width: 100%; justify-content: center; padding: 12px; font-weight: 700; font-size: 0.9rem; border-radius: 8px; background: var(--crimson, #ff4655); box-shadow: 0 4px 14px rgba(255, 70, 85, 0.4); border: none; color: #fff; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                <span data-i18n="btn_open_account_menu">Masuk / Buka Menu Akun</span>
             </button>
             <button type="button" onclick="closeCaughtAuthPromptModal(true)"
                     class="action-pill action-pill--ghost"
                     style="width: 100%; justify-content: center; padding: 10px; font-weight: 600; font-size: 0.84rem; color: #94A3B8; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; cursor: pointer;">
-                Tutup
+                <span data-i18n="btn_close">Tutup</span>
             </button>
         </div>
     </div>

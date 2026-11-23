@@ -13,9 +13,12 @@
         </div>
 
         <div class="auth-tabs">
-            <button type="button" class="auth-tab active" data-tab="loginTab">Login</button>
-            <button type="button" class="auth-tab" data-tab="registerTab">Daftar</button>
-            <button type="button" class="auth-tab" data-tab="switchTab">⚡ Switch Dev (K13)</button>
+            <button type="button" class="auth-tab active" data-tab="loginTab" data-i18n="tab_login">Login</button>
+            <button type="button" class="auth-tab" data-tab="registerTab" data-i18n="tab_register">Daftar</button>
+            <button type="button" class="auth-tab" data-tab="switchTab" style="display: inline-flex; align-items: center; justify-content: center; gap: 4px;">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                <span data-i18n="tab_switch_dev">Switch Dev (K13)</span>
+            </button>
         </div>
 
         <div class="pkm-modal__body">
