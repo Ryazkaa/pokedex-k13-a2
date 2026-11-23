@@ -1,7 +1,7 @@
 # Dokumen Arsitektur Sistem: Pokédex Collection Tracker & Trainer Directory
 
-**Versi Dokumen:** 1.2.2 (Brand Visual Identity Overhaul & Standardisasi Pokéball SVG)  
-**Status Rilis:** Identitas Visual Resmi Pokéball & Modul 3 Terintegrasi Penuh (Selesai)  
+**Versi Dokumen:** 1.2.4 (Format Tanggal Baku, Vektor SVG Murni, Bendera Vektor ID/EN, Modal Konfirmasi & Lokalisasi Bilingual Penuh)  
+**Status Rilis:** Rilis Produksi v1.2.4 (Selesai)  
 **Tanggal Rilis:** 23 November 2026  
 **Pengembang:** Kelompok 13 — Kelas Praktikum Pemrograman Web A / A2  
 * Arya Andra Diazka (J0404251155) — *Lead Architect & DevOps*
@@ -142,6 +142,11 @@ Sistem membedakan dua tingkatan hak akses:
     * Pembuatan modal konfirmasi pergantian bahasa interaktif (`#langConfirmModal`).
     * Implementasi efek animasi transisi cyber scanline shimmer (`.lang-shimmer-active`) dan type-reveal pada pergantian bahasa.
     * Penerjemahan komprehensif ke seluruh kartu panduan, status validasi, dan kontrol data.
+    * **Lokalisasi Menyeluruh (Deep Translation):**
+      * Seluruh 20 Fun Facts dunia Pokémon di `config/pokedex.php` dilengkapi versi Bahasa Inggris (`title_en`, `desc_en`, `topic_en`, `category_en`, `source_en`) sehingga preview slide, kartu pop-up, tombol `(read more...)` / `Close`, dan petunjuk keyboard berganti dinamis.
+      * Kolom struktur panduan Excel Bento Grid (`index_number`, `pokemon_name`, `type`, `generation`), deskripsi status koleksi trainer, dan status entri indeks terakhir (`Entry #1025 · All 1,025 Pokémon Registered!`).
+      * Kolom nilai Generasi pada baris tabel Master Library & Caught Tracker (`Generation I (Kanto)` s.d. `Generation IX (Paldea)`) serta opsi dropdown filter generasi.
+      * Showcase Modal: subheader generasi (`#0001 · Generation I (Kanto)`), integrasi *asynchronous English flavor text fetching* dari PokéAPI (dengan in-memory cache) + fallback deskripsi bahasa Inggris, label sprites, footer navigasi (`Use ← → to navigate · Esc to close`), dan identitas kelompok (`Pokédex - Group 13 - Class A / A2`).
 
 ### Modul 3: Pokédex Caught Tracker, DataTables, & Ekspor PDF/Excel (Madina Dwiyana Putri)
 * **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (Merge Request !3 / v1.2.0, v1.2.1, v1.2.3 & v1.2.4)**
