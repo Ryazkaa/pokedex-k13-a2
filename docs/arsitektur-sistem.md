@@ -123,7 +123,7 @@ Sistem membedakan dua tingkatan hak akses:
   * Modal popup peringatan akses terkunci (`#devLockModal`) beranimasi di tengah layar.
 
 ### Modul 2: Master Pokemon Library, Excel Import, & Cloud DevOps (Arya Andra Diazka)
-* **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (v1.0.1 / v1.1.1 / v1.2.1 / v1.2.2)**
+* **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (v1.0.1 / v1.1.1 / v1.2.1 / v1.2.2 / v1.2.3)**
 * **Tanggung Jawab:**
   * Mengelola katalog master 1.025 Pokémon pada `app/Http/Controllers/PokemonLibraryController.php`.
   * Menangani validasi berkas spreadsheet 4 kolom wajib (`nomor_index`, `nama_pokemon`, `tipe`, `generasi`) via `PhpSpreadsheet`.
@@ -131,12 +131,17 @@ Sistem membedakan dua tingkatan hak akses:
   * Mengatur arsitektur repositori Git, branching strategy, continuous integration (CI/CD), serta deployment server produksi.
   * Membantu penyelesaian bugfix dan polishing rilis `v1.2.1` bersama Madina.
   * Melakukan perombakan identitas brand visual (Official Pokéball SVG Vector) pada rilis `v1.2.2`.
+  * **Penyempurnaan Rilis v1.2.3:**
+    * Mengimplementasikan sistem kamus multi-bahasa sisi klien (`localStorage`) dengan tombol pengalih bilingual (`🌐 ID` / `EN`) di bilah navigasi dan menu drawer.
+    * Menyelaraskan seluruh judul navigasi dan bagian ke dalam Bahasa Indonesia baku (`Beranda`, `Eksplorasi`, `Koleksi`, `Pustaka`) serta memperbaiki urutan pil navbar agar sesuai urutan tata letak komponen.
+    * Mengubah banner sticky alert sesi in-page menjadi modal popup animasi di tengah layar (`#sessionNotificationModal`).
+    * Merestrukturisasi menu drawer: menghilangkan fitur usang Excel/filter cepat dan menyajikan panel kontrol akun trainer serta switcher bahasa.
 
 ### Modul 3: Pokédex Caught Tracker, DataTables, & Ekspor PDF/Excel (Madina Dwiyana Putri)
-* **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (Merge Request !3 / v1.2.0 & v1.2.1)**
+* **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (Merge Request !3 / v1.2.0, v1.2.1 & v1.2.3)**
 * **Tanggung Jawab & Realisasi:**
   * Merancang tabel `trainer_catches` dan model Eloquent `TrainerCatch.php`.
-  * Mengembangkan kontroler `app/Http/Controllers/PokedexCatchController.php` untuk penyimpanan, penghapusan, favorit, dan ekspor.
+  * Mengembangkan kontroler `app/Http/Controllers/PokedexCatchController.php` untuk penyimpanan, penghapusan, favorit, pembaruan tanggal, dan ekspor.
   * Membangun modal **"+ Tambah Koleksi"** (`caught-modal.blade.php`) lengkap dengan tombol interaktif **"⚡ Ambil PokéAPI"** yang mengisi form secara instan via asynchronous fetch.
   * Membangun tabel koleksi berbasis **DataTables** dengan tombol *Ekspor Excel* dan *Unduh Laporan PDF* via `barryvdh/laravel-dompdf`.
   * **Penyempurnaan Bugfix v1.2.1 (Bersama Arya):**
@@ -144,6 +149,11 @@ Sistem membedakan dua tingkatan hak akses:
     * Resolusi missing column `location` via migrasi `2026_11_23_000001_ensure_location_in_trainer_catches_table.php`.
     * Redesain modal Tambah Koleksi menjadi Crimson Dark Glassmorphism dengan animasi dan hologram preview.
     * Pembuatan modal popup peringatan autentikasi di tengah layar yang otomatis membuka menu akun saat ditutup.
+  * **Penyempurnaan Manajemen Koleksi v1.2.3:**
+    * Input tanggal penangkapan kustom (`caught_at`) dengan tanggal hari ini sebagai default, tersimpan ke basis data MySQL.
+    * Penambahan aksi **✏️ Tanggal** pada tabel koleksi dengan modal edit tanggal (`#editCaughtDateModal`) dan endpoint `POST /pokedex/caught/{pokemonId}/date` (`updateDate`).
+    * Penambahan aksi **🗑️ Hapus** dengan modal konfirmasi peringatan cyber merah (`#deleteCaughtModal`) dan endpoint `DELETE /pokedex/caught/{pokemonId}` (`destroy`).
+    * Mengatasi bug tampilan tamu pada Kartu 1 Bento Grid: tamu melihat status "Belum Masuk Akun" dengan tautan masuk, sedangkan trainer terautentikasi melihat rasio tangkapan ("X dari 1.025"), lencana persentase emerald (`%`), dan bar kemajuan visual.
 
 ### Modul 4: Jurnal Taktik & Catatan Lapangan Trainer (Iasha Irdanti)
 * **Status Integrasi:** ⏳ **Siap Merge (Modul 4)**

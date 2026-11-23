@@ -1441,4 +1441,142 @@
             "'": '&#39;',
         }[c]));
     }
+
+    // =========================================================================
+    // FITUR MULTI-BAHASA (INDONESIA / ENGLISH) - v1.2.3
+    // =========================================================================
+    const I18N_DICTIONARY = {
+        id: {
+            nav_home: "Beranda",
+            nav_explore: "Eksplorasi",
+            nav_caught: "Koleksi",
+            nav_library: "Pustaka",
+            nav_home_sub: "Fun Facts Pokémon",
+            nav_explore_sub: "Kontrol Data & Statistik",
+            nav_caught_sub: "Pokédex Caught Tracker",
+            nav_library_sub: "Tabel Data Pokédex",
+            drawer_label_nav: "Navigasi",
+            drawer_label_account: "Akun Trainer",
+            drawer_label_lang: "Bahasa / Language",
+            btn_login_or_register: "Masuk / Daftar Akun",
+            guide_kicker: "Panduan PhpSpreadsheet",
+            guide_title: "Format & Aturan",
+            control_kicker: "Kontrol Data & Koleksi",
+            control_title: "Excel & Filter",
+            stats_kicker: "Statistik Database",
+            stats_title: "Progress Koleksi",
+            pokedex_kicker: "Pustaka Pokémon",
+            pokedex_title: "Data Master Pokémon",
+            caught_kicker: "Pokédex Collection Tracker",
+            caught_title: "Koleksi Tangkapan Trainer",
+            caught_subtitle: "Daftar Pokémon yang berhasil Anda tangkap di lapangan, lengkap dengan lokasi dan catatan strategi.",
+            btn_add_collection: "Tambah Koleksi",
+            btn_export_excel: "Ekspor Excel",
+            btn_export_pdf: "Unduh Laporan PDF",
+            search_placeholder: "Cari nama atau nomor index…",
+            th_no_index: "NO INDEX",
+            th_sprite: "SPRITE",
+            th_pokemon_name: "NAMA POKÉMON",
+            th_type: "TIPE",
+            th_generation: "GENERASI",
+            th_caught_date: "TANGGAL TANGKAP",
+            th_actions: "AKSI & JURNAL",
+            btn_edit_date: "Tanggal",
+            btn_delete: "Hapus",
+            btn_tactics: "Taktik"
+        },
+        en: {
+            nav_home: "Home",
+            nav_explore: "Explore",
+            nav_caught: "Collection",
+            nav_library: "Library",
+            nav_home_sub: "Pokémon Fun Facts",
+            nav_explore_sub: "Data Controls & Stats",
+            nav_caught_sub: "Pokédex Caught Tracker",
+            nav_library_sub: "Pokédex Master Table",
+            drawer_label_nav: "Navigation",
+            drawer_label_account: "Trainer Account",
+            drawer_label_lang: "Language / Bahasa",
+            btn_login_or_register: "Login / Register",
+            guide_kicker: "PhpSpreadsheet Guide",
+            guide_title: "Format & Rules",
+            control_kicker: "Data & Collection Controls",
+            control_title: "Excel & Filter",
+            stats_kicker: "Database Statistics",
+            stats_title: "Collection Progress",
+            pokedex_kicker: "Pokémon Library",
+            pokedex_title: "Pokédex Master Data",
+            caught_kicker: "Pokédex Collection Tracker",
+            caught_title: "Trainer Catch Collection",
+            caught_subtitle: "List of Pokémon you caught in the wild, complete with capture date, location, and tactics.",
+            btn_add_collection: "Add Collection",
+            btn_export_excel: "Export Excel",
+            btn_export_pdf: "Download PDF Report",
+            search_placeholder: "Search name or index number…",
+            th_no_index: "INDEX NO",
+            th_sprite: "SPRITE",
+            th_pokemon_name: "POKÉMON NAME",
+            th_type: "TYPE",
+            th_generation: "GENERATION",
+            th_caught_date: "CAUGHT DATE",
+            th_actions: "ACTIONS & JOURNAL",
+            btn_edit_date: "Date",
+            btn_delete: "Delete",
+            btn_tactics: "Tactics"
+        }
+    };
+
+    function setLanguage(lang) {
+        if (!['id', 'en'].includes(lang)) lang = 'id';
+        localStorage.setItem('pokedex_lang', lang);
+        const dict = I18N_DICTIONARY[lang];
+
+        document.querySelectorAll('[data-i18n]').forEach((el) => {
+            const key = el.getAttribute('data-i18n');
+            if (dict[key]) {
+                el.textContent = dict[key];
+            }
+        });
+
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput && dict.search_placeholder) {
+            searchInput.placeholder = dict.search_placeholder;
+        }
+
+        const langText = document.getElementById('langCurrentText');
+        if (langText) {
+            langText.textContent = lang.toUpperCase();
+        }
+
+        document.querySelectorAll('.lang-choice-btn').forEach((btn) => {
+            if (btn.getAttribute('data-lang') === lang) {
+                btn.style.borderColor = '#ff4655';
+                btn.style.color = '#ff4655';
+                btn.style.background = 'rgba(255, 70, 85, 0.15)';
+            } else {
+                btn.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                btn.style.color = '#94a3b8';
+                btn.style.background = 'transparent';
+            }
+        });
+    }
+
+    const langToggleBtn = document.getElementById('langToggleBtn');
+    if (langToggleBtn) {
+        langToggleBtn.addEventListener('click', () => {
+            const current = localStorage.getItem('pokedex_lang') || 'id';
+            const next = current === 'id' ? 'en' : 'id';
+            setLanguage(next);
+        });
+    }
+
+    document.querySelectorAll('.lang-choice-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const lang = btn.getAttribute('data-lang');
+            setLanguage(lang);
+        });
+    });
+
+    const savedLang = localStorage.getItem('pokedex_lang') || 'id';
+    setLanguage(savedLang);
 })();

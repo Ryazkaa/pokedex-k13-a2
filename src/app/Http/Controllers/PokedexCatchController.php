@@ -26,8 +26,9 @@ class PokedexCatchController extends Controller
             'nama_pokemon' => ['required', 'string', 'max:100'],
             'tipe_1'       => ['required', 'string', 'max:50'],
             'tipe_2'       => ['nullable', 'string', 'max:50'],
-'generasi'     => ['required', 'string', 'max:100'],
+            'generasi'     => ['required', 'string', 'max:100'],
             'sprite_url'   => ['nullable', 'string'],
+            'caught_at'    => ['nullable', 'date'],
         ]);
 
         // Format nomor indeks (#0001)
@@ -53,6 +54,8 @@ class PokedexCatchController extends Controller
             ]
         );
 
+        $caughtDate = !empty($validated['caught_at']) ? \Carbon\Carbon::parse($validated['caught_at']) : now();
+
         // Tambahkan ke koleksi trainer aktif
         $catch = TrainerCatch::firstOrCreate(
             [
@@ -60,16 +63,52 @@ class PokedexCatchController extends Controller
                 'pokemon_id' => $pokemon->id,
             ],
             [
-                'caught_at'   => now(),
+                'caught_at'   => $caughtDate,
                 'location'    => 'Wild Encounter',
                 'is_favorite' => false,
             ]
         );
 
+        if (!$catch->wasRecentlyCreated && !empty($validated['caught_at'])) {
+            $catch->update(['caught_at' => $caughtDate]);
+        }
+
         return response()->json([
             'success' => true,
             'message' => "{$pokemon->nama_pokemon} berhasil ditambahkan ke Pokédex Koleksi Anda!",
             'pokemon' => $pokemon
+        ]);
+    }
+
+    /**
+     * Update tanggal penangkapan Pokémon dalam koleksi trainer.
+     */
+    public function updateDate(Request $request, $pokemonId)
+    {
+        if (!Auth::check()) {
+            return response()->json(['success' => false, 'message' => 'Silakan login terlebih dahulu.'], 401);
+        }
+
+        $validated = $request->validate([
+            'caught_at' => ['required', 'date'],
+        ]);
+
+        $catch = TrainerCatch::where('user_id', Auth::id())
+            ->where('pokemon_id', $pokemonId)
+            ->first();
+
+        if (!$catch) {
+            return response()->json(['success' => false, 'message' => 'Data Pokémon tidak ditemukan dalam koleksi Anda.'], 404);
+        }
+
+        $newDate = \Carbon\Carbon::parse($validated['caught_at']);
+        $catch->update(['caught_at' => $newDate]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Tanggal penangkapan berhasil diperbarui!',
+            'caught_at_formatted' => $newDate->translatedFormat('d M Y'),
+            'caught_at_raw' => $newDate->format('Y-m-d'),
         ]);
     }
 

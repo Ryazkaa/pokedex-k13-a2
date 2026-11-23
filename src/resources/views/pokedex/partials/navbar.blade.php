@@ -12,13 +12,18 @@
 
         <nav class="nav-links" id="navLinks" aria-label="Navigasi utama">
             <span class="nav-pill" id="navPill" aria-hidden="true"></span>
-            <a href="#home" class="is-current">Home</a>
-            <a href="#explore">Explore</a>
-            <a href="#search" data-focus-search>Library</a>
-            <a href="#pokedex-caught" id="navCaughtLink">Koleksi</a>
+            <a href="#home" class="is-current" data-i18n="nav_home">Beranda</a>
+            <a href="#explore" data-i18n="nav_explore">Eksplorasi</a>
+            <a href="#pokedex-caught" id="navCaughtLink" data-i18n="nav_caught">Koleksi</a>
+            <a href="#search" data-focus-search data-i18n="nav_library">Pustaka</a>
         </nav>
 
         <div class="topbar__right">
+            {{-- Tombol Switch Bahasa ID / EN --}}
+            <button type="button" class="pill pill--dark" id="langToggleBtn" title="Ganti Bahasa (Indonesia / English)" style="cursor: pointer; padding: 0.5rem 0.85rem; font-weight: 700; white-space: nowrap;">
+                <span style="font-size: 0.95rem; margin-right: 2px;">🌐</span>
+                <span id="langCurrentText">ID</span>
+            </button>
             {{-- Status Akun Trainer / Quick Switch (Modul 1: Yanuar Dwi Prasetya) --}}
             @if (Auth::check())
                 <div class="pill pill--dark" style="display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; flex-shrink: 0; padding: 0.5rem 0.9rem;">

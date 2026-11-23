@@ -91,7 +91,16 @@
                 </select>
             </div>
 
-            {{-- Field 5: URL Sprite (Otomatis) --}}
+            {{-- Field 5: Tanggal Penangkapan (Default: Hari ini, Dapat diedit) --}}
+            <div class="form-group" style="margin-bottom: 16px;">
+                <label class="field-label" for="apiDexCaughtAt" style="display: block; font-size: 0.78rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">
+                    Tanggal Penangkapan (Tahun - Bulan - Tanggal)
+                </label>
+                <input type="date" id="apiDexCaughtAt" name="caught_at" required
+                       class="text-input" style="width: 100%; box-sizing: border-box; padding: 10px 14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 8px; color: #ffffff; font-size: 0.95rem; outline: none; color-scheme: dark;">
+            </div>
+
+            {{-- Field 6: URL Sprite (Otomatis) --}}
             <div class="form-group" style="margin-bottom: 16px;">
                 <label class="field-label" for="apiDexSprite" style="display: block; font-size: 0.78rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">
                     URL Sprite (Otomatis terisi dari PokéAPI)
@@ -191,7 +200,13 @@
 window.openAddCaughtModal = function() {
     @auth
         const modal = document.getElementById('addCaughtModal');
-        if (modal) modal.hidden = false;
+        if (modal) {
+            modal.hidden = false;
+            const caughtInput = document.getElementById('apiDexCaughtAt');
+            if (caughtInput && !caughtInput.value) {
+                caughtInput.value = new Date().toISOString().split('T')[0];
+            }
+        }
     @else
         window.openCaughtAuthPromptModal();
     @endauth
@@ -261,6 +276,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const previewSub = document.getElementById('apiDexPreviewSub');
     const previewBox = document.getElementById('apiDexPreviewBox');
     const form = document.getElementById('formAddCaught');
+    const inputCaughtAt = document.getElementById('apiDexCaughtAt');
+
+    if (inputCaughtAt && !inputCaughtAt.value) {
+        inputCaughtAt.value = new Date().toISOString().split('T')[0];
+    }
 
     // Auto-fetch data dari PokéAPI v2
     if (btnFetch) {

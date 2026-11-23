@@ -36,6 +36,12 @@ Proyek ini dikembangkan oleh **Kelompok 13 — Kelas Praktikum Pemrograman Web A
 ### 5. Brand Visual Identity (Official Pokéball SVG Integration)
 * **Favicon & Logo Navbar Resmi:** Penggantian ikon kawat (*wireframe*) menjadi vektor Pokéball resmi (kubah merah `#FF1C1C`, kubah putih `#FFFFFF` beraksen bayangan `#DFDFDF`, sabuk hitam, dan tombol pusat putih) lengkap dengan animasi rotasi mikro pada bilah navigasi.
 
+### 6. Harmonisasi Bahasa Indonesia & Multi-Language Switcher (v1.2.3 Milestone)
+* **Bilingual Switcher (ID / EN):** Tombol pengalih bahasa interaktif pada navbar (`🌐 ID` / `EN`) dan bilah menu drawer yang menyimpan preferensi secara instan di `localStorage`. Judul dan label navigasi diselaraskan ke dalam Bahasa Indonesia baku (`Beranda`, `Eksplorasi`, `Koleksi`, `Pustaka`).
+* **Input Tanggal Penangkapan Kustom (`caught_at`):** Form Tambah Koleksi PokéAPI dilengkapi input tanggal penangkapan fleksibel (default tanggal hari ini `YYYY-MM-DD`, dapat diubah) yang tersimpan ke basis data MySQL.
+* **Fitur Edit Tanggal & Hapus Koleksi DataTables:** Trainer dapat mengedit tanggal tangkapan lewat modal ✏️ **Edit Tanggal** (`updateDate`) dan menghapus entri tangkapan lewat modal konfirmasi 🗑️ **Hapus** (`destroy`) tanpa merusak katalog master Library.
+* **Indikator Progres Dinamis & Centered Alert Popups:** Pengunjung tamu tidak lagi melihat total data koleksi silang ("Belum Masuk Akun" dengan tautan masuk), sementara trainer login disajikan metrik persentase (`%`), jumlah tangkapan terhadap 1.025 Pokémon, dan seluruh pesan notifikasi tampil dalam popup animasi di tengah layar.
+
 ---
 
 ## 🛠️ Tumpukan Teknologi (Tech Stack)
@@ -64,6 +70,7 @@ Pertemuan 999/
 │   ├── pokedex-app(v1.2.0).zip     # Rilis integrasi Modul 3: Caught Tracker & DataTables (Madina Dwiyana Putri)
 │   ├── pokedex-app(v1.2.1).zip     # Rilis bugfix: DomPDF, Location Column, Crimson Dark Modal (Arya & Madina)
 │   ├── pokedex-app(v1.2.2).zip     # Rilis brand overhaul: Official Pokéball SVG Vector (Arya & Kelompok 13)
+│   ├── pokedex-app(v1.2.3).zip     # Rilis bilingual ID/EN, edit/delete caught date & centered alerts (Arya & K13)
 │   └── README.md                   # Catatan rilis dan riwayat versi komprehensif
 ├── datasets/                       # Dataset acuan spreadsheet (.xlsx)
 ├── docs/                           # Dokumentasi & rancangan sistem

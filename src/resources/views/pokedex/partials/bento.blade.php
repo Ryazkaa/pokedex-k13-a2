@@ -16,8 +16,8 @@
     {{-- Kolom 1 (Kiri): Panduan Format & Validasi Excel --}}
     <div class="bento__col bento__artworks">
         <div class="bento-head">
-            <span class="bento-head__kicker">Panduan PhpSpreadsheet</span>
-            <h2 class="section-title"><a href="#search">Format &amp; Aturan <span aria-hidden="true">›</span></a></h2>
+            <span class="bento-head__kicker" data-i18n="guide_kicker">Panduan PhpSpreadsheet</span>
+            <h2 class="section-title"><a href="#search"><span data-i18n="guide_title">Format &amp; Aturan</span> <span aria-hidden="true">›</span></a></h2>
         </div>
 
         <div class="bento-panel guide-panel">
@@ -81,8 +81,8 @@
     {{-- Kolom 2 (Tengah): Control Panel Excel & Filter --}}
     <div class="bento__col bento__control" @if($isDev) id="dropZone" @endif>
         <div class="bento-head">
-            <span class="bento-head__kicker">Kontrol Data &amp; Koleksi</span>
-            <h2 class="section-title">Excel &amp; Filter</h2>
+            <span class="bento-head__kicker" data-i18n="control_kicker">Kontrol Data &amp; Koleksi</span>
+            <h2 class="section-title" data-i18n="control_title">Excel &amp; Filter</h2>
         </div>
 
         <div class="bento-panel control-panel">
@@ -278,29 +278,45 @@
     {{-- Kolom 3 (Kanan): Statistik & Progress Koleksi Real-Time --}}
     <div class="bento__col bento__info-col" aria-live="polite">
         <div class="bento-head">
-            <span class="bento-head__kicker">Statistik Database</span>
-            <h2 class="section-title">Progress Koleksi</h2>
+            <span class="bento-head__kicker" data-i18n="stats_kicker">Statistik Database</span>
+            <h2 class="section-title" data-i18n="stats_title">Progress Koleksi</h2>
         </div>
 
         <div class="bento__info">
             {{-- Kartu 1: Koleksi Pokédex (Integrasi Modul Madina Dwiyana Putri) --}}
             @php
                 $userCatchesCount = Auth::check() ? \App\Models\TrainerCatch::where('user_id', Auth::id())->count() : 0;
+                $caughtPct = $userCatchesCount > 0 ? min(100, round(($userCatchesCount / 1025) * 100, 1)) : 0;
             @endphp
             <article class="info-card">
-                <div class="info-card__icon info-card__icon--stats">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V11m7 9V5m7 15v-6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
-                </div>
-                <div class="info-card__body">
-                    <p class="info-card__kicker">Koleksi Pokédex</p>
-                    @if (Auth::check())
-                        <h3>{{ $userCatchesCount }} Pokémon</h3>
-                        <p>Total Pokémon tersimpan di koleksi pribadi Anda.</p>
-                    @else
-                        <h3>{{ \App\Models\TrainerCatch::count() }} Total Terdata</h3>
-                        <p>Masuk sebagai Trainer untuk melacak dan menambah tangkapan Pokémon.</p>
-                    @endif
-                </div>
+                @if (Auth::check())
+                    <div class="info-card__icon info-card__icon--progress" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);">
+                        <span>{{ $caughtPct }}%</span>
+                    </div>
+                    <div class="info-card__body">
+                        <p class="info-card__kicker">Koleksi Pokédex</p>
+                        <h3>{{ $userCatchesCount }} dari 1.025 Pokémon</h3>
+                        <p>{{ $userCatchesCount > 0 ? "Total Pokémon yang berhasil Anda tangkap & tercatat di Pokédex pribadi." : "Belum ada tangkapan. Tambahkan koleksi pertama Anda!" }}</p>
+                        <div style="height: 4px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; margin-top: 8px;">
+                            <div style="height: 100%; width: {{ max(1, $caughtPct) }}%; background: #10b981; border-radius: 999px; transition: width 0.4s ease;"></div>
+                        </div>
+                    </div>
+                @else
+                    <div class="info-card__icon info-card__icon--stats" style="background: rgba(255, 70, 85, 0.12); border: 1px solid rgba(255, 70, 85, 0.25); color: #ff4655;">
+                        <svg viewBox="0 0 24 24" style="width: 22px; height: 22px;" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            <circle cx="12" cy="16" r="1.5" fill="#ff4655"/>
+                        </svg>
+                    </div>
+                    <div class="info-card__body">
+                        <p class="info-card__kicker">Koleksi Pokédex</p>
+                        <h3 style="color: #f1f5f9;">Belum Masuk Akun</h3>
+                        <p style="color: #94A3B8;">
+                            Silakan <a href="javascript:void(0)" onclick="openAuthModal('loginTab')" style="color: var(--crimson, #ff4655); font-weight: 700; text-decoration: underline;">Masuk</a> atau <a href="javascript:void(0)" onclick="openAuthModal('registerTab')" style="color: #38bdf8; font-weight: 700; text-decoration: underline;">Daftar</a> untuk mulai melacak progres koleksi Pokémon Anda.
+                        </p>
+                    </div>
+                @endif
             </article>
 
             {{-- Kartu 2: Kelengkapan Pokédex (Responsif 251 atau 1025) --}}

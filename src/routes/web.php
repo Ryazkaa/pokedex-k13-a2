@@ -40,6 +40,7 @@ if (class_exists(PokemonLibraryController::class)) {
 // ==============================================================================
 if (class_exists(PokedexCatchController::class)) {
     Route::post('/pokedex/caught', [PokedexCatchController::class, 'store'])->name('pokedex.catch.store');
+    Route::post('/pokedex/caught/{pokemonId}/date', [PokedexCatchController::class, 'updateDate'])->name('pokedex.catch.updateDate');
     Route::delete('/pokedex/caught/{pokemonId}', [PokedexCatchController::class, 'destroy'])->name('pokedex.caught.destroy');
     Route::post('/pokedex/toggle-favorite/{pokemonId}', [PokedexCatchController::class, 'toggleFavorite'])->name('pokedex.toggleFavorite');
     Route::get('/pokedex/export-excel', [PokedexCatchController::class, 'exportExcel'])->name('pokedex.exportExcel');

@@ -2,8 +2,8 @@
 <section id="search" class="pokedex section" aria-labelledby="pokedexTitle">
     <div class="pokedex__head">
         <div>
-            <p class="section-kicker">Pokemon Library</p>
-            <h2 id="pokedexTitle" class="section-title section-title--lg">Data Pokemon</h2>
+            <p class="section-kicker" data-i18n="pokedex_kicker">Pustaka Pokémon</p>
+            <h2 id="pokedexTitle" class="section-title section-title--lg" data-i18n="pokedex_title">Data Master Pokémon</h2>
         </div>
         <p class="pokedex__count" aria-live="polite">Menampilkan <strong id="resultCount">{{ $total }}</strong> dari {{ $total }} Pokémon</p>
     </div>
@@ -46,10 +46,10 @@
         <table class="dex-table">
             <thead>
                 <tr>
-                    <th scope="col" aria-sort="ascending"><button type="button" data-sort="num">Nomor Index <span class="sort-ind" aria-hidden="true"></span></button></th>
-                    <th scope="col" aria-sort="none"><button type="button" data-sort="name">Nama Pokémon <span class="sort-ind" aria-hidden="true"></span></button></th>
-                    <th scope="col" aria-sort="none"><button type="button" data-sort="tipe">Tipe <span class="sort-ind" aria-hidden="true"></span></button></th>
-                    <th scope="col" aria-sort="none"><button type="button" data-sort="gen">Generasi <span class="sort-ind" aria-hidden="true"></span></button></th>
+                    <th scope="col" aria-sort="ascending"><button type="button" data-sort="num"><span data-i18n="th_no_index">Nomor Index</span> <span class="sort-ind" aria-hidden="true"></span></button></th>
+                    <th scope="col" aria-sort="none"><button type="button" data-sort="name"><span data-i18n="th_pokemon_name">Nama Pokémon</span> <span class="sort-ind" aria-hidden="true"></span></button></th>
+                    <th scope="col" aria-sort="none"><button type="button" data-sort="tipe"><span data-i18n="th_type">Tipe</span> <span class="sort-ind" aria-hidden="true"></span></button></th>
+                    <th scope="col" aria-sort="none"><button type="button" data-sort="gen"><span data-i18n="th_generation">Generasi</span> <span class="sort-ind" aria-hidden="true"></span></button></th>
                     <th scope="col" class="col-arrow"><span class="visually-hidden">Aksi</span></th>
                 </tr>
             </thead>
