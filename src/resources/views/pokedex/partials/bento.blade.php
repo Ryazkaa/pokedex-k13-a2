@@ -283,15 +283,23 @@
         </div>
 
         <div class="bento__info">
-            {{-- Kartu 1: Koleksi Pokédex (Integrasi Modul Madina) --}}
+            {{-- Kartu 1: Koleksi Pokédex (Integrasi Modul Madina Dwiyana Putri) --}}
+            @php
+                $userCatchesCount = Auth::check() ? \App\Models\TrainerCatch::where('user_id', Auth::id())->count() : 0;
+            @endphp
             <article class="info-card">
                 <div class="info-card__icon info-card__icon--stats">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V11m7 9V5m7 15v-6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
                 </div>
                 <div class="info-card__body">
                     <p class="info-card__kicker">Koleksi Pokédex</p>
-                    <h3>N/A</h3>
-                    <p>Menunggu integrasi modul Pokédex Caught Tracker (Madina Dwiyana Putri).</p>
+                    @if (Auth::check())
+                        <h3>{{ $userCatchesCount }} Pokémon</h3>
+                        <p>Total Pokémon tersimpan di koleksi pribadi Anda.</p>
+                    @else
+                        <h3>{{ \App\Models\TrainerCatch::count() }} Total Terdata</h3>
+                        <p>Masuk sebagai Trainer untuk melacak dan menambah tangkapan Pokémon.</p>
+                    @endif
                 </div>
             </article>
 

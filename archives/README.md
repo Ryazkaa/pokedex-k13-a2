@@ -12,6 +12,8 @@ Repositori ini menyimpan arsip kompresi (`.zip`) dari setiap pencapaian *milesto
 | `pokedex-app(v1.0.1).zip` | `v1.0.1` | 20 November 2026 | **Arya Andra Diazka** | **Minor Revision & Restrukturisasi Konsep v1.1:**<br>1. **Restrukturisasi Konsep:** Pemisahan tegas antara *Pokemon Library* (katalog master baca-saja bagi trainer, import khusus Developer) dengan *Pokédex* (koleksi tangkapan trainer).<br>2. **Bento Card 2:** Filter Generasi diperbarui menjadi Dropdown interaktif Generasi 1–9 (`#bentoGenFilter`), tombol Export di Library dialihkan.<br>3. **Bento Card 3:** Label diperbarui menjadi *"Kelengkapan Library"* dengan status *"Seluruh 1025 Pokémon Terdaftar!"* (menggantikan terminologi terkoleksi).<br>4. **Navbar & Identitas:** Pembaruan Made By menjadi *Kelompok 13 / Kelas A / A2*.<br>5. **Persiapan Kolaborasi Tim:** Menyiapkan slot modul kosong di `src/` agar bersih dan siap dikerjakan oleh Yanuar, Madina, dan Iasha sesuai pembagian modul masing-masing. |
 | `pokedex-app(v1.1.0).zip` | `v1.1.0` | 22 November 2026 | **Yanuar Dwi Prasetya** | **Milestone Integrasi Modul 1 (Autentikasi & Role Trainer):**<br>1. **Merge Request !1:** Berhasil melakukan penggabungan fitur `feat/modul-1-auth-yanuar` ke `main` secara mulus tanpa konflik.<br>2. **Skema Basis Data:** Eksekusi migrasi kolom `role` (`developer`/`trainer`), `trainer_class`, dan `avatar_badge` pada tabel `users`.<br>3. **Role-Based Access Control:** Implementasi middleware `EnsureDeveloper` dan helper method `isDeveloper()` pada model `User`.<br>4. **Kontroler Autentikasi:** Implementasi `AuthController` dengan fitur login, register, switch account cepat 4 developer, dan logout.<br>5. **UI & Navigasi:** Modal autentikasi glassmorphism (`auth-modal.blade.php`), lencana dinamis `DEV` / `TRAINER` pada navbar Crimson Dark. |
 | `pokedex-app(v1.1.1).zip` | `v1.1.1` | 23 November 2026 | **Yanuar Dwi Prasetya** & **Arya Andra Diazka** | **Refinement UI Navbar & Proteksi Modal Terkunci Khusus Developer:**<br>1. **Penyempurnaan CSS Navbar:** Memperbaiki perataan layout `.topbar__inner` (`auto 1fr auto`) dan mengunci `white-space: nowrap` pada teks nama trainer agar tidak terlipat atau menumpuk.<br>2. **Proteksi Backend Import Master:** Mengunci rute `POST /pokedex/import` dengan middleware `EnsureDeveloper`.<br>3. **Modal Popup Animasi Akses Terkunci:** Mengganti alert kaku browser dengan modal popup kustom beranimasi halus (`#devLockModal`) di tengah layar, dilengkapi ikon merah berdenyut (`lock-icon-pulse`), logo tanda silang `✕`, dan tombol 1-klik buka Switch Developer (K13).<br>4. **Kesiapan Repositori:** 100% bebas bug visual dan siap untuk penggabungan Modul 3 (Madina) dan Modul 4 (Iasha). |
+| `pokedex-app(v1.2.0).zip` | `v1.2.0` | 23 November 2026 | **Madina Dwiyana Putri** | **Milestone Integrasi Modul 3 (Pokédex Caught Tracker, PokéAPI, DataTables & Ekspor):**<br>1. **Merge Request !3:** Berhasil melakukan penggabungan branch `feat/modul-3-caught-madina` ke `main` via GitLab.<br>2. **Skema Basis Data:** Migrasi tabel `trainer_catches` dan model `TrainerCatch` untuk menyimpan relasi penangkapan Pokémon oleh pengguna.<br>3. **Integrasi PokéAPI v2:** Modal form Tambah Koleksi dengan fitur auto-fetch data nomor indeks, nama, tipe 1 & 2, generasi, dan URL sprite.<br>4. **Tabel DataTables:** Menampilkan katalog koleksi tangkapan dengan pencarian instan, sorting kolom, dan pagination dinamis.<br>5. **Ekspor Spreadsheet (.xlsx):** Menghasilkan file Excel rekap koleksi trainer menggunakan pustaka `PhpSpreadsheet`.<br>*(Catatan: Rilis v1.2.0 ini merupakan checkpoint original hasil merge Madina sebelum perbaikan bug v1.2.1).* |
+| `pokedex-app(v1.2.1).zip` | `v1.2.1` | 23 November 2026 | **Arya Andra Diazka** & **Madina Dwiyana Putri** | **Bugfix & Visual Overhaul (DomPDF, Skema Location, Crimson Dark Modal & Auth Popup):**<br>1. **Instalasi Paket DomPDF (Bug 2 Solved):** Mengintegrasikan paket `barryvdh/laravel-dompdf` (v3.1.2) ke dalam `src/composer.json` dan direktori `vendor/`, memperbaiki kegagalan fatal saat mencetak laporan PDF berstandar A4.<br>2. **Resolusi Kolom 'location' (Bug 4 Solved):** Menyempurnakan migrasi `trainer_catches` dan menambahkan migrasi `2026_11_23_000001_ensure_location_in_trainer_catches_table.php` sehingga penyimpanan tangkapan Pokémon bebas dari SQL exception `Column not found: 1054`.<br>3. **Redesain Crimson Dark Modal Tambah Koleksi (Bug 1 Solved):** Mengganti tampilan modal form yang sebelumnya putih polos (`#ffffff`) menjadi estetika futuristik **Crimson Dark Glassmorphism** (`#0f1923`) dengan aksen merah cyber (`#ff4655`), input gelap, hologram card preview sprite interaktif, dan animasi masuk `pkmModalIn`.<br>4. **Modal Popup Animasi Akses Terkunci di Tengah (Bug 3 Solved):** Mengganti alert browser pada pengunjung tamu dengan popup modal beranimasi di tengah layar (`#caughtAuthPromptModal`) berikon gembok merah berdenyut. Saat ditutup, modal ini secara otomatis membuka menu akun (`#authModal`) yang memuat tab Login, Daftar, dan DevKit (Switch Dev Kelompok 13).<br>5. **Statistik Bento Dinamis:** Menghubungkan Kartu 1 Bento Grid dengan query real-time total Pokémon yang berhasil dikoleksi trainer aktif. |
 
 ---
 
@@ -67,9 +69,6 @@ Repositori ini menyimpan arsip kompresi (`.zip`) dari setiap pencapaian *milesto
   * **Penyempurnaan UI & Integrasi Visual:**
     * Menambahkan modal autentikasi (`resources/views/pokedex/partials/auth-modal.blade.php`) dengan desain *dark glassmorphism*.
     * Navbar menampilkan tombol interaktif: tombol **"Masuk"** saat tamu (*guest*), atau lencana merah **`DEV`** / hijau **`TRAINER`**, nama trainer, tombol switch `⇄`, dan tombol `Logout` saat sesi aktif.
-  * **Stabilitas Sistem:**
-    * Seluruh rute terhubung aman (`routes/web.php`), tampilan tetap responsif dan konsisten dengan palet warna Crimson Dark, serta bebas dari bug.
-
 
 ---
 
@@ -87,25 +86,61 @@ Repositori ini menyimpan arsip kompresi (`.zip`) dari setiap pencapaian *milesto
     * Menghilangkan alert bawaan browser yang kaku, menggantikannya dengan modal popup glassmorphism yang muncul beranimasi di tengah layar.
     * Dilengkapi logo lingkaran merah berdenyut (*pulsing red glow*) dengan tanda silang perisai (`✕`), teks pemberitahuan hak akses, serta tombol 1-klik **"⚡ Buka Switch Developer (K13)"** yang langsung membuka tab pergantian akun developer.
 
+---
+
+### 5. Versi 1.2.0 (`pokedex-app(v1.2.0).zip`)
+* **Tanggal Rilis:** 23 November 2026
+* **Kontributor Utama:** Madina Dwiyana Putri (NIM: J0404251090)
+* **Milestone Integrasi Modul 3 (Pokédex Caught Tracker, DataTables, & Ekspor):**
+  * **Penggabungan Fitur (Merge Request !3):**
+    * Branch `feat/modul-3-caught-madina` digabungkan ke branch utama `main` via GitLab.
+  * **Skema Tabel Tangkapan (`trainer_catches`):**
+    * Migrasi tabel `trainer_catches` dan model `App\Models\TrainerCatch` dengan relasi `belongsTo` ke `User` dan `Pokemon`.
+  * **Kontroler Koleksi (`App\Http\Controllers\PokedexCatchController`):**
+    * Menyediakan endpoint `store`, `destroy`, `toggleFavorite`, `exportExcel`, dan `exportPdf`.
+  * **Integrasi PokéAPI v2:**
+    * Modal Tambah Koleksi dengan pengisian otomatis nomor indeks, nama, tipe, dan URL sprite dari endpoint publik PokéAPI.
+  * **Tabel Interaktif DataTables:**
+    * Menampilkan koleksi Pokémon trainer dengan fitur sorting, pencarian, dan pagination.
+  * **Status Rilis:**
+    * Berkas rilis ini mencerminkan snapshot kode awal hasil penggabungan Madina sebelum penyempurnaan bugfix v1.2.1.
+
+---
+
+### 6. Versi 1.2.1 (`pokedex-app(v1.2.1).zip`)
+* **Tanggal Rilis:** 23 November 2026
+* **Kontributor Utama:** Arya Andra Diazka (NIM: J0404251155) & Madina Dwiyana Putri (NIM: J0404251090)
+* **Penyelesaian 4 Isu Bugfix & Redesain Visual Premium:**
+  1. **Bug 1 Solved (Redesain Modal Tambah Koleksi):**
+     * Tampilan modal form yang sebelumnya berlatar belakang putih polos `#ffffff` dirombak total menjadi **Crimson Dark Glassmorphism** (`#0f1923`) berbingkai merah cyber (`#ff4655`).
+     * Form dilengkapi label cyber kicker, input dan dropdown bertema gelap, tombol aksi Ambil PokéAPI berikon petir, hologram box preview sprite interaktif, dan animasi masuk lembut `pkmModalIn`.
+  2. **Bug 2 Solved (Pustaka Barryvdh DomPDF):**
+     * Memasang paket `barryvdh/laravel-dompdf` (v3.1.2) ke direktori `vendor/` dan `composer.json` sehingga ekspor PDF berformat A4 portrait (`pokedex.reports.pokedex-pdf`) berfungsi sempurna tanpa kendala `Class Pdf not found`.
+  3. **Bug 3 Solved (Modal Popup Peringatan Autentikasi di Tengah):**
+     * Menghilangkan alert bawaan browser saat pengguna belum login mencoba menambah koleksi tangkapan.
+     * Menggantikannya dengan modal popup beranimasi di tengah layar (`#caughtAuthPromptModal`) dengan ikon gembok merah berdenyut (`lock-icon-pulse`).
+     * Saat popup ini ditutup atau diklik tombolnya, antarmuka langsung membuka `#authModal` yang menyajikan tiga pilihan akun: **Login**, **Daftar**, dan **Switch Dev Kelompok 13**.
+  4. **Bug 4 Solved (Resolusi Missing Column 'location'):**
+     * Mengatasi galat SQL `Unknown column 'location' in 'field list'` dengan memperbarui skema migrasi dan menambahkan migrasi `2026_11_23_000001_ensure_location_in_trainer_catches_table.php`.
+     * Seluruh operasi penambahan koleksi Pokémon berhasil tersimpan mulus ke dalam basis data MySQL.
+
+---
+
 ## Petunjuk Penggunaan Berkas Arsip
 
 Jika ingin menjalankan atau mereproduksi salah satu versi arsip:
-1. Ekstrak berkas zip target (misal `pokedex-app(v1.0.1).zip`) ke dalam folder lokal.
+1. Ekstrak berkas zip target (misal `pokedex-app(v1.2.1).zip`) ke dalam folder lokal.
 2. Salin berkas lingkungan:
    ```bash
    copy .env.example .env
    ```
-3. Pasang dependensi PHP dan Node.js:
+3. Konfigurasikan kredensial basis data MySQL pada `.env`.
+4. Jalankan migrasi basis data:
    ```bash
-   composer install
-   npm install
-   ```
-4. Buat kunci aplikasi dan jalankan migrasi basis data:
-   ```bash
-   php artisan key:generate
    php artisan migrate
    ```
 5. Jalankan server lokal:
    ```bash
    php artisan serve
    ```
+   Akses aplikasi pada: `http://127.0.0.1:8000/pokedex`

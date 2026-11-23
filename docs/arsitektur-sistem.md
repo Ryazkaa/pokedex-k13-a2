@@ -1,7 +1,7 @@
 # Dokumen Arsitektur Sistem: Pokédex Collection Tracker & Trainer Directory
 
-**Versi Dokumen:** 1.1.1 (Refinement Modul 1 & Proteksi Import Terintegrasi)  
-**Status Rilis:** Refinement UI Navbar & Proteksi Fitur Developer Master Import (Selesai)  
+**Versi Dokumen:** 1.2.1 (Integrasi Penuh Modul 3: Pokédex Caught Tracker, DataTables, & DomPDF Ekspor)  
+**Status Rilis:** Milestone Modul 3 Terintegrasi & 100% Bebas Bug (Selesai)  
 **Tanggal Rilis:** 23 November 2026  
 **Pengembang:** Kelompok 13 — Kelas Praktikum Pemrograman Web A / A2  
 * Arya Andra Diazka (J0404251155) — *Lead Architect & DevOps*
@@ -41,7 +41,7 @@ Aplikasi **Pokédex Collection Tracker & Trainer Directory** mengadopsi pola des
 
 ---
 
-## 2. Pemisahan Konsep Inti (Core Concept Distinction v1.1)
+## 2. Pemisahan Konsep Inti (Core Concept Distinction v1.2)
 
 Untuk mencegah kerancuan data dan memenuhi persyaratan proyek perkuliahan secara elegan, aplikasi memisahkan sistem menjadi dua domain utama:
 
@@ -54,10 +54,11 @@ Untuk mencegah kerancuan data dan memenuhi persyaratan proyek perkuliahan secara
 ### 2.2. Pokédex (Trainer Caught Tracker & Interactive Collection)
 * **Karakteristik:** Direktori tangkapan aktif (*caught collection*) milik akun trainer yang sedang login.
 * **Fitur Utama:**
-  1. **Modal "+ Tambah Koleksi" (Integrasi PokéAPI):** Trainer dapat menambahkan Pokémon yang berhasil ditangkap dengan memasukkan nomor indeks, menekan tombol **"Ambil PokéAPI"** (data nama, tipe utama, tipe sekunder, generasi, dan preview sprite terisi otomatis), lalu menyimpan ke koleksi pribadi.
+  1. **Modal "+ Tambah Koleksi" (Integrasi PokéAPI v2):** Trainer dapat menambahkan Pokémon yang berhasil ditangkap dengan memasukkan nomor indeks, menekan tombol **"⚡ Ambil PokéAPI"** (data nama, tipe utama, tipe sekunder, generasi, dan preview sprite terisi otomatis), lalu menyimpan ke koleksi pribadi.
   2. **Tabel Interaktif DataTables:** Menampilkan daftar Pokémon yang telah dikoleksi dengan fitur pencarian kilat, pagination dinamis, multi-column sorting, dan tombol aksi cepat.
-  3. **Ekspor Multi-Format:** Mendukung ekspor koleksi ke **Excel (.xlsx)** dan cetak dokumen resmi **PDF berstandar A4 (DomPDF)**.
-  4. **Jurnal Taktik & Catatan Lapangan (WYSIWYG):** Setiap Pokémon dalam koleksi dapat dilengkapi dengan informasi tanggal tangkap, lokasi penangkapan (misal *Route 102*, *Viridian Forest*), serta analisis strategi bertarung menggunakan teks berformat kaya (Quill.js WYSIWYG).
+  3. **Ekspor Multi-Format:** Mendukung ekspor koleksi ke **Excel (.xlsx)** via PhpSpreadsheet dan cetak dokumen resmi **PDF berstandar A4** via Barryvdh DomPDF.
+  4. **Proteksi Akses Tamu (Centered Auth Popup):** Ketika pengguna belum login mencoba menambah koleksi, sistem memunculkan popup beranimasi di tengah layar berikon gembok merah berdenyut, yang jika ditutup langsung membuka modal Login/Daftar/DevKit.
+  5. **Jurnal Taktik & Catatan Lapangan (WYSIWYG):** Setiap Pokémon dalam koleksi dapat dilengkapi dengan informasi tanggal tangkap, lokasi penangkapan (misal *Route 102*, *Viridian Forest*), serta analisis strategi bertarung menggunakan teks berformat kaya (Quill.js WYSIWYG).
 
 ---
 
@@ -68,7 +69,7 @@ Sistem membedakan dua tingkatan hak akses:
 | Properti | Role: `developer` | Role: `trainer` |
 |---|---|---|
 | **Daftar Akun** | Yanuar Dwi Prasetya, Arya Andra Diazka, Madina Dwiyana Putri, Iasha Irdanti | Pengguna umum yang mendaftar melalui formulir registrasi |
-| **Identitas Visual** | Lencana merah menyala (*badge*) bertuliskan `DEVELOPER` pada navbar | Lencana hijau/biru bertuliskan `TRAINER` pada navbar |
+| **Identitas Visual** | Lencana merah menyala (*badge*) bertuliskan `DEV` pada navbar | Lencana hijau bertuliskan `TRAINER` pada navbar |
 | **Akses Pokemon Library** | Melihat katalog master + Otoritas penuh **Import Excel (.xlsx)** dan menambah master #1026+ | Melihat katalog master (*Read-Only*) |
 | **Akses Pokédex Koleksi** | Memiliki koleksi pribadi, dapat mencatat tangkapan, dan mengekspor data | Mengelola koleksi pribadi, mencatat tangkapan, dan mengekspor data |
 | **Perlindungan Rute** | Dilindungi oleh middleware `EnsureDeveloper` | Dilindungi oleh autentikasi sesi umum |
@@ -104,8 +105,8 @@ Sistem membedakan dua tingkatan hak akses:
 │ location (varchar 150)    │   │ content (longtext - WYSIWYG)    │
 │ is_favorite (boolean)     │   │ caught_date (date, nullable)    │
 │ created_at / updated_at   │   │ caught_location (varchar 150)   │
-└───────────────────────────┘   │ created_at / updated_at         │
-                                └─────────────────────────────────┘
+│ created_at / updated_at   │   │ created_at / updated_at         │
+└───────────────────────────┘   └─────────────────────────────────┘
 ```
 
 ---
@@ -113,29 +114,38 @@ Sistem membedakan dua tingkatan hak akses:
 ## 5. Pembagian Modul & Spesifikasi Tanggung Jawab Anggota
 
 ### Modul 1: Autentikasi, Manajemen Sesi, & Hak Akses Developer (Yanuar Dwi Prasetya)
-* **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (Commit `45f9e19` / v1.1.0)**
+* **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (Commit `45f9e19` / v1.1.0 & v1.1.1)**
 * **Tanggung Jawab & Realisasi:**
   * Menambah kolom `role`, `trainer_class`, dan `avatar_badge` pada tabel `users` (`2026_11_22_225257_add_role_and_trainer_fields_to_users_table.php`).
   * Membangun `app/Http/Middleware/EnsureDeveloper.php` untuk mengunci endpoint mutasi master library.
   * Mengimplementasikan `app/Http/Controllers/AuthController.php` (login, register, switch-account cepat untuk 4 developer, logout).
   * Menyediakan tampilan UI partial `auth-modal.blade.php` dan indikator status pengguna pada `navbar.blade.php`.
-  * Seluruh fungsi telah diuji coba lokal (`php artisan migrate` dan `php artisan serve`) dengan hasil 100% stabil.
+  * Modal popup peringatan akses terkunci (`#devLockModal`) beranimasi di tengah layar.
 
 ### Modul 2: Master Pokemon Library, Excel Import, & Cloud DevOps (Arya Andra Diazka)
+* **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (v1.0.1 / v1.1.1 / v1.2.1)**
 * **Tanggung Jawab:**
   * Mengelola katalog master 1.025 Pokémon pada `app/Http/Controllers/PokemonLibraryController.php`.
   * Menangani validasi berkas spreadsheet 4 kolom wajib (`nomor_index`, `nama_pokemon`, `tipe`, `generasi`) via `PhpSpreadsheet`.
   * Merancang antarmuka Bento Grid (`bento.blade.php`) dengan Dropdown Filter Generasi 1–9 (`#bentoGenFilter`) dan kartu statistik *Kelengkapan Library*.
   * Mengatur arsitektur repositori Git, branching strategy, continuous integration (CI/CD), serta deployment server produksi.
+  * Membantu penyelesaian bugfix dan polishing rilis `v1.2.1` bersama Madina.
 
 ### Modul 3: Pokédex Caught Tracker, DataTables, & Ekspor PDF/Excel (Madina Dwiyana Putri)
-* **Tanggung Jawab:**
+* **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (Merge Request !3 / v1.2.0 & v1.2.1)**
+* **Tanggung Jawab & Realisasi:**
   * Merancang tabel `trainer_catches` dan model Eloquent `TrainerCatch.php`.
-  * Mengembangkan kontroler `app/Http/Controllers/PokedexCatchController.php`.
-  * Membangun modal **"+ Tambah Koleksi"** (`caught-modal.blade.php`) lengkap dengan tombol interaktif **"Ambil PokéAPI"** yang mengisi form secara instan via asynchronous fetch.
+  * Mengembangkan kontroler `app/Http/Controllers/PokedexCatchController.php` untuk penyimpanan, penghapusan, favorit, dan ekspor.
+  * Membangun modal **"+ Tambah Koleksi"** (`caught-modal.blade.php`) lengkap dengan tombol interaktif **"⚡ Ambil PokéAPI"** yang mengisi form secara instan via asynchronous fetch.
   * Membangun tabel koleksi berbasis **DataTables** dengan tombol *Ekspor Excel* dan *Unduh Laporan PDF* via `barryvdh/laravel-dompdf`.
+  * **Penyempurnaan Bugfix v1.2.1 (Bersama Arya):**
+    * Pemasangan paket `barryvdh/laravel-dompdf` (v3.1.2) di vendor.
+    * Resolusi missing column `location` via migrasi `2026_11_23_000001_ensure_location_in_trainer_catches_table.php`.
+    * Redesain modal Tambah Koleksi menjadi Crimson Dark Glassmorphism dengan animasi dan hologram preview.
+    * Pembuatan modal popup peringatan autentikasi di tengah layar yang otomatis membuka menu akun saat ditutup.
 
 ### Modul 4: Jurnal Taktik & Catatan Lapangan Trainer (Iasha Irdanti)
+* **Status Integrasi:** ⏳ **Siap Merge (Modul 4)**
 * **Tanggung Jawab:**
   * Merancang tabel `trainer_notes` dan model `TrainerNote.php`.
   * Mengembangkan kontroler `app/Http/Controllers/TrainerJournalController.php` dengan pembersih XSS / HTML sanitizer.

@@ -10,7 +10,7 @@ Proyek ini dikembangkan oleh **Kelompok 13 — Kelas Praktikum Pemrograman Web A
 
 ---
 
-## 🌟 Sorotan Fitur Utama (v1.1 Concept Overhaul)
+## 🌟 Sorotan Fitur Utama (v1.2 Release Milestone)
 
 ### 1. Pokemon Library (Master Catalog 1.025 Pokémon)
 * **Katalog Lengkap Generasi I–IX:** Menyajikan data 1.025 Pokémon resmi dari wilayah Kanto hingga Paldea dengan 19 tipe elemen (18 standar + 1 Stellar).
@@ -18,11 +18,12 @@ Proyek ini dikembangkan oleh **Kelompok 13 — Kelas Praktikum Pemrograman Web A
 * **Dropdown Filter Generasi 1–9:** Fitur filter interaktif `<select id="bentoGenFilter">` untuk menyaring Pokémon berdasarkan rentang generasi (#0001–#0151 s.d. #0906–#1025).
 * **Import Master Dataset (.xlsx):** Khusus pengguna berstatus `developer`, tersedia panel import spreadsheet untuk memperbarui database master atau menambah Pokémon baru (#1026+).
 
-### 2. Pokédex (Trainer Caught Tracker)
-* **Pelacakan Koleksi Pribadi:** Trainer mencatat Pokémon yang telah berhasil ditangkap di lapangan.
-* **Modal "+ Tambah Koleksi" (Integrasi PokéAPI):** Form penambahan tangkapan dengan tombol **"Ambil PokéAPI"** yang secara otomatis mengunduh nama, tipe utama, tipe sekunder, generasi, dan preview sprite resmi secara asinkron.
-* **DataTables Collection View:** Tabel data canggih dengan pencarian instan, pengurutan kolom, dan pagination dinamis.
+### 2. Pokédex (Trainer Caught Tracker & DataTables)
+* **Pelacakan Koleksi Pribadi:** Trainer mencatat Pokémon yang berhasil ditangkap di lapangan secara terstruktur.
+* **Modal "+ Tambah Koleksi" (Integrasi PokéAPI):** Form penambahan tangkapan bertema Crimson Dark dengan tombol **"⚡ Ambil PokéAPI"** yang secara otomatis mengunduh nama, tipe utama, tipe sekunder, generasi, dan preview sprite resmi secara asinkron.
+* **DataTables Collection View:** Tabel data interaktif dengan pencarian instan, pengurutan kolom, dan pagination dinamis.
 * **Ekspor Multi-Format:** Ekspor daftar koleksi tangkapan ke berkas **Microsoft Excel (.xlsx)** dan cetak dokumen resmi **PDF berstandar A4** dengan pustaka DomPDF.
+* **Proteksi Akses Tamu (Centered Auth Popup):** Pengunjung tamu yang mencoba menambah koleksi disambut dengan modal popup beranimasi di tengah layar berikon gembok merah berdenyut, yang langsung mengarahkan ke tab Login, Registrasi, atau Switch Dev Kelompok 13.
 
 ### 3. Jurnal Taktik & Catatan Lapangan (Trainer Field Notes)
 * **Catatan Tangkapan Lapangan:** Mencatat tanggal penangkapan (*caught date*) dan lokasi penangkapan (*caught location*, misal *Route 102*, *Viridian Forest*).
@@ -56,8 +57,10 @@ Pertemuan 999/
 │   ├── pokedex-app(v1.0.0).zip     # Rilis base fondasi awal (Arya Andra Diazka)
 │   ├── pokedex-app(v1.0.1).zip     # Rilis perombakan konsep v1.1 & UI Bento
 │   ├── pokedex-app(v1.1.0).zip     # Rilis integrasi Modul 1: Auth & Role (Yanuar Dwi Prasetya)
-│   ├── pokedex-app(v1.1.1).zip     # Rilis refinement: Navbar & Lock Modal Import (Yanuar Dwi Prasetya & Arya Andra Diazka)
-│   └── README.md                   # Catatan rilis dan riwayat versi
+│   ├── pokedex-app(v1.1.1).zip     # Rilis refinement: Navbar & Lock Modal Import (Yanuar & Arya)
+│   ├── pokedex-app(v1.2.0).zip     # Rilis integrasi Modul 3: Caught Tracker & DataTables (Madina Dwiyana Putri)
+│   ├── pokedex-app(v1.2.1).zip     # Rilis bugfix: DomPDF, Location Column, Crimson Dark Modal (Arya & Madina)
+│   └── README.md                   # Catatan rilis dan riwayat versi komprehensif
 ├── datasets/                       # Dataset acuan spreadsheet (.xlsx)
 ├── docs/                           # Dokumentasi & rancangan sistem
 │   └── arsitektur-sistem.md        # Dokumen rancangan arsitektur lengkap
@@ -131,8 +134,8 @@ Pertemuan 999/
 | Anggota | Modul Utama | Status Integrasi | Luaran & Komponen yang Dihasilkan |
 |---|---|:---:|---|
 | **Yanuar Dwi Prasetya**<br>*(J0404251022)* | **Modul 1:** Autentikasi, Sesi, & Role Developer | ✅ **Terintegrasi (v1.1.0 / v1.1.1)** | Migrasi `users.role`, `EnsureDeveloper` Middleware, `AuthController`, modal login/switch account (`auth-modal.blade.php`), lencana status navbar `DEV`/`TRAINER`. |
-| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Card 2 Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching & CI/CD deployment. |
-| **Madina Dwiyana Putri**<br>*(J0404251090)* | **Modul 3:** Pokédex Caught Tracker & Ekspor | ⏳ **Siap Merge (Modul 3)** | Migrasi `trainer_catches`, model `TrainerCatch`, modal `+ Tambah Koleksi` dengan auto-fetch PokéAPI, integrasi DataTables, serta ekspor Excel & DomPDF A4. |
+| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1 / v1.2.1)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Card 2 Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching & CI/CD deployment, serta asistensi integrasi v1.2.1. |
+| **Madina Dwiyana Putri**<br>*(J0404251090)* | **Modul 3:** Pokédex Caught Tracker, DataTables, & Ekspor | ✅ **Terintegrasi (v1.2.0 / v1.2.1)** | Migrasi `trainer_catches`, model `TrainerCatch`, modal `+ Tambah Koleksi` dengan auto-fetch PokéAPI, integrasi DataTables, serta ekspor Excel & DomPDF A4. |
 | **Iasha Irdanti**<br>*(J0404251115)* | **Modul 4:** Field Notes & Jurnal Strategi Trainer | ⏳ **Siap Merge (Modul 4)** | Migrasi `trainer_notes`, model `TrainerNote`, modal Jurnal Taktik dengan tanggal/lokasi tangkap, integrasi editor WYSIWYG Quill.js, sanitasi HTML. |
 
 ---

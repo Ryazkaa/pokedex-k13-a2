@@ -15,10 +15,18 @@
 
         {{-- Toolbar Tombol Aksi --}}
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <button type="button" class="btn btn--primary" onclick="document.getElementById('addCaughtModal').hidden = false"
-                    style="background: #2563EB; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; display: flex; align-items: center; gap: 6px;">
-                <span>+</span> Tambah Koleksi
-            </button>
+            @auth
+                <button type="button" class="btn btn--primary" onclick="openAddCaughtModal()"
+                        style="background: var(--crimson, #ff4655); border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 14px rgba(255, 70, 85, 0.35); cursor: pointer; color: #fff;">
+                    <span style="font-size: 1.1rem; line-height: 1;">+</span> Tambah Koleksi
+                </button>
+            @else
+                <button type="button" class="btn btn--primary" onclick="openCaughtAuthPromptModal()"
+                        style="background: var(--crimson, #ff4655); border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 14px rgba(255, 70, 85, 0.35); cursor: pointer; color: #fff;"
+                        title="Perlu Login untuk Tambah Koleksi">
+                    <span style="font-size: 1.1rem; line-height: 1;">+</span> Tambah Koleksi
+                </button>
+            @endauth
             <a href="{{ route('pokedex.exportExcel') }}" class="btn btn--subtle"
                style="background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 10px 16px; border-radius: 8px; font-weight: 600; text-decoration: none;">
                 📊 Ekspor Excel
