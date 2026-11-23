@@ -2,9 +2,9 @@
 <header class="topbar" id="topbar">
     <div class="topbar__inner shell">
         <div class="topbar__left">
-            <a href="#home" class="brand-logo" aria-label="Pokedex — kembali ke atas">
+            <a href="#home" class="brand-logo" aria-label="Pokédex — kembali ke atas">
                 <span class="brand-logo__icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M2.5 12h7m5 0h7" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 11.5a9 9 0 0 1 18 0" fill="currentColor" opacity=".35"/></svg>
+                    <img src="{{ asset('images/pokeball.svg') }}" alt="Pokédex" width="36" height="36">
                 </span>
                 <span class="brand-logo__text">Pokédex</span>
             </a>

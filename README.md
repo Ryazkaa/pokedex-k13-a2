@@ -33,6 +33,9 @@ Proyek ini dikembangkan oleh **Kelompok 13 — Kelas Praktikum Pemrograman Web A
 * **Role Developer vs Trainer:** 4 anggota tim (Yanuar, Arya, Madina, Iasha) ditetapkan sebagai `developer` dengan lencana visual merah, berhak melakukan import master library. Pengguna umum berstatus `trainer` mengelola koleksi pribadi tanpa dapat mengubah katalog master.
 * **Fitur Quick Switch Trainer:** Pengalihan akun instan untuk kemudahan demonstrasi dan evaluasi tugas praktikum.
 
+### 5. Brand Visual Identity (Official Pokéball SVG Integration)
+* **Favicon & Logo Navbar Resmi:** Penggantian ikon kawat (*wireframe*) menjadi vektor Pokéball resmi (kubah merah `#FF1C1C`, kubah putih `#FFFFFF` beraksen bayangan `#DFDFDF`, sabuk hitam, dan tombol pusat putih) lengkap dengan animasi rotasi mikro pada bilah navigasi.
+
 ---
 
 ## 🛠️ Tumpukan Teknologi (Tech Stack)
@@ -60,6 +63,7 @@ Pertemuan 999/
 │   ├── pokedex-app(v1.1.1).zip     # Rilis refinement: Navbar & Lock Modal Import (Yanuar & Arya)
 │   ├── pokedex-app(v1.2.0).zip     # Rilis integrasi Modul 3: Caught Tracker & DataTables (Madina Dwiyana Putri)
 │   ├── pokedex-app(v1.2.1).zip     # Rilis bugfix: DomPDF, Location Column, Crimson Dark Modal (Arya & Madina)
+│   ├── pokedex-app(v1.2.2).zip     # Rilis brand overhaul: Official Pokéball SVG Vector (Arya & Kelompok 13)
 │   └── README.md                   # Catatan rilis dan riwayat versi komprehensif
 ├── datasets/                       # Dataset acuan spreadsheet (.xlsx)
 ├── docs/                           # Dokumentasi & rancangan sistem
@@ -69,6 +73,9 @@ Pertemuan 999/
 │   ├── config/                     # Konfigurasi sistem
 │   ├── database/                   # Migrations & Seeders
 │   ├── public/                     # Aset statis (SVG icons, sprite, CSS, JS)
+│   │   ├── images/pokeball.svg     # Logo Pokéball SVG vektor resmi
+│   │   ├── favicon.svg             # Favicon Pokéball SVG peramban
+│   │   └── favicon.ico             # Favicon Pokéball ICO peramban
 │   ├── resources/views/pokedex/    # Template Blade & partial modular
 │   └── routes/web.php              # Pemetaan rute per modul anggota
 └── README.md                       # Dokumentasi utama repositori
@@ -134,7 +141,7 @@ Pertemuan 999/
 | Anggota | Modul Utama | Status Integrasi | Luaran & Komponen yang Dihasilkan |
 |---|---|:---:|---|
 | **Yanuar Dwi Prasetya**<br>*(J0404251022)* | **Modul 1:** Autentikasi, Sesi, & Role Developer | ✅ **Terintegrasi (v1.1.0 / v1.1.1)** | Migrasi `users.role`, `EnsureDeveloper` Middleware, `AuthController`, modal login/switch account (`auth-modal.blade.php`), lencana status navbar `DEV`/`TRAINER`. |
-| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1 / v1.2.1)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Card 2 Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching & CI/CD deployment, serta asistensi integrasi v1.2.1. |
+| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1 / v1.2.1 / v1.2.2)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Card 2 Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching, identitas brand Pokéball resmi, dan CI/CD. |
 | **Madina Dwiyana Putri**<br>*(J0404251090)* | **Modul 3:** Pokédex Caught Tracker, DataTables, & Ekspor | ✅ **Terintegrasi (v1.2.0 / v1.2.1)** | Migrasi `trainer_catches`, model `TrainerCatch`, modal `+ Tambah Koleksi` dengan auto-fetch PokéAPI, integrasi DataTables, serta ekspor Excel & DomPDF A4. |
 | **Iasha Irdanti**<br>*(J0404251115)* | **Modul 4:** Field Notes & Jurnal Strategi Trainer | ⏳ **Siap Merge (Modul 4)** | Migrasi `trainer_notes`, model `TrainerNote`, modal Jurnal Taktik dengan tanggal/lokasi tangkap, integrasi editor WYSIWYG Quill.js, sanitasi HTML. |
 

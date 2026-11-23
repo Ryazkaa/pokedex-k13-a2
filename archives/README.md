@@ -14,6 +14,7 @@ Repositori ini menyimpan arsip kompresi (`.zip`) dari setiap pencapaian *milesto
 | `pokedex-app(v1.1.1).zip` | `v1.1.1` | 23 November 2026 | **Yanuar Dwi Prasetya** & **Arya Andra Diazka** | **Refinement UI Navbar & Proteksi Modal Terkunci Khusus Developer:**<br>1. **Penyempurnaan CSS Navbar:** Memperbaiki perataan layout `.topbar__inner` (`auto 1fr auto`) dan mengunci `white-space: nowrap` pada teks nama trainer agar tidak terlipat atau menumpuk.<br>2. **Proteksi Backend Import Master:** Mengunci rute `POST /pokedex/import` dengan middleware `EnsureDeveloper`.<br>3. **Modal Popup Animasi Akses Terkunci:** Mengganti alert kaku browser dengan modal popup kustom beranimasi halus (`#devLockModal`) di tengah layar, dilengkapi ikon merah berdenyut (`lock-icon-pulse`), logo tanda silang `✕`, dan tombol 1-klik buka Switch Developer (K13).<br>4. **Kesiapan Repositori:** 100% bebas bug visual dan siap untuk penggabungan Modul 3 (Madina) dan Modul 4 (Iasha). |
 | `pokedex-app(v1.2.0).zip` | `v1.2.0` | 23 November 2026 | **Madina Dwiyana Putri** | **Milestone Integrasi Modul 3 (Pokédex Caught Tracker, PokéAPI, DataTables & Ekspor):**<br>1. **Merge Request !3:** Berhasil melakukan penggabungan branch `feat/modul-3-caught-madina` ke `main` via GitLab.<br>2. **Skema Basis Data:** Migrasi tabel `trainer_catches` dan model `TrainerCatch` untuk menyimpan relasi penangkapan Pokémon oleh pengguna.<br>3. **Integrasi PokéAPI v2:** Modal form Tambah Koleksi dengan fitur auto-fetch data nomor indeks, nama, tipe 1 & 2, generasi, dan URL sprite.<br>4. **Tabel DataTables:** Menampilkan katalog koleksi tangkapan dengan pencarian instan, sorting kolom, dan pagination dinamis.<br>5. **Ekspor Spreadsheet (.xlsx):** Menghasilkan file Excel rekap koleksi trainer menggunakan pustaka `PhpSpreadsheet`.<br>*(Catatan: Rilis v1.2.0 ini merupakan checkpoint original hasil merge Madina sebelum perbaikan bug v1.2.1).* |
 | `pokedex-app(v1.2.1).zip` | `v1.2.1` | 23 November 2026 | **Arya Andra Diazka** & **Madina Dwiyana Putri** | **Bugfix & Visual Overhaul (DomPDF, Skema Location, Crimson Dark Modal & Auth Popup):**<br>1. **Instalasi Paket DomPDF (Bug 2 Solved):** Mengintegrasikan paket `barryvdh/laravel-dompdf` (v3.1.2) ke dalam `src/composer.json` dan direktori `vendor/`, memperbaiki kegagalan fatal saat mencetak laporan PDF berstandar A4.<br>2. **Resolusi Kolom 'location' (Bug 4 Solved):** Menyempurnakan migrasi `trainer_catches` dan menambahkan migrasi `2026_11_23_000001_ensure_location_in_trainer_catches_table.php` sehingga penyimpanan tangkapan Pokémon bebas dari SQL exception `Column not found: 1054`.<br>3. **Redesain Crimson Dark Modal Tambah Koleksi (Bug 1 Solved):** Mengganti tampilan modal form yang sebelumnya putih polos (`#ffffff`) menjadi estetika futuristik **Crimson Dark Glassmorphism** (`#0f1923`) dengan aksen merah cyber (`#ff4655`), input gelap, hologram card preview sprite interaktif, dan animasi masuk `pkmModalIn`.<br>4. **Modal Popup Animasi Akses Terkunci di Tengah (Bug 3 Solved):** Mengganti alert browser pada pengunjung tamu dengan popup modal beranimasi di tengah layar (`#caughtAuthPromptModal`) berikon gembok merah berdenyut. Saat ditutup, modal ini secara otomatis membuka menu akun (`#authModal`) yang memuat tab Login, Daftar, dan DevKit (Switch Dev Kelompok 13).<br>5. **Statistik Bento Dinamis:** Menghubungkan Kartu 1 Bento Grid dengan query real-time total Pokémon yang berhasil dikoleksi trainer aktif. |
+| `pokedex-app(v1.2.2).zip` | `v1.2.2` | 23 November 2026 | **Arya Andra Diazka** & **Kelompok 13** | **Brand Visual Identity Overhaul (Official Pokéball SVG Vector Integration):**<br>1. **Pembaruan Favicon Peramban:** Memperbarui `favicon.svg` dan `favicon.ico` menjadi vektor Pokéball resmi (kubah merah `#FF1C1C`, kubah putih `#FFFFFF` berbayangan halus `#DFDFDF`, sabuk hitam, dan tombol pusat putih).<br>2. **Penyempurnaan Logo Navbar Kiri Atas:** Mengganti ikon brand navbar (`brand-logo__icon`) menjadi Pokéball SVG bundar yang presisi tanpa bingkai kotak merah yang kaku, dilengkapi efek interaksi hover rotasi 20 derajat.<br>3. **Standardisasi Ikon Seluruh Komponen:** Mengganti seluruh ikon kawat (*wireframe*) Pokéball pada modal Tambah Koleksi (`caught-modal.blade.php`), placeholder preview sprite, modal autentikasi (`auth-modal.blade.php`), status kosong tabel (`table.blade.php`), dan kartu Bento Grid menjadi ikon Pokéball SVG resmi. |
 
 ---
 
@@ -126,10 +127,23 @@ Repositori ini menyimpan arsip kompresi (`.zip`) dari setiap pencapaian *milesto
 
 ---
 
+### 7. Versi 1.2.2 (`pokedex-app(v1.2.2).zip`)
+* **Tanggal Rilis:** 23 November 2026
+* **Kontributor Utama:** Arya Andra Diazka (NIM: J0404251155) & Kelompok 13
+* **Penyempurnaan Identitas Brand Visual (Official Pokéball SVG Vector Asset):**
+  1. **Favicon Resmi Browser (`favicon.svg` & `favicon.ico`):**
+     * Mengganti ikon favicon kotak menjadi logo bundar Pokéball vektor resmi dengan kubah atas merah (`#FF1C1C`), kubah bawah putih (`#FFFFFF`) beraksen bayangan lembut (`#DFDFDF`), sabuk hitam pekat, serta tombol pusat putih presisi.
+  2. **Logo Brand Navbar Kiri Atas:**
+     * Ikon brand utama pada bilah navigasi diperbarui menampilkan Pokéball SVG resmi yang proporsional (tanpa kotak pembungkus merah kaku), dilengkapi efek visual *micro-interaction* berupa rotasi halus 20 derajat dan pembesaran skala saat kursor diarahkan (*hover*).
+  3. **Standardisasi Ikon Seluruh Antarmuka:**
+     * Menyeragamkan seluruh ikon Pokéball pada modal Tambah Koleksi (`caught-modal.blade.php`), placeholder *preview sprite* Pokémon, modal manajemen akun (`auth-modal.blade.php`), status kosong tabel katalog (`table.blade.php`), dan kartu ringkasan Bento Grid.
+
+---
+
 ## Petunjuk Penggunaan Berkas Arsip
 
 Jika ingin menjalankan atau mereproduksi salah satu versi arsip:
-1. Ekstrak berkas zip target (misal `pokedex-app(v1.2.1).zip`) ke dalam folder lokal.
+1. Ekstrak berkas zip target (misal `pokedex-app(v1.2.2).zip`) ke dalam folder lokal.
 2. Salin berkas lingkungan:
    ```bash
    copy .env.example .env

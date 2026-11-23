@@ -1,7 +1,7 @@
 # Dokumen Arsitektur Sistem: Pokédex Collection Tracker & Trainer Directory
 
-**Versi Dokumen:** 1.2.1 (Integrasi Penuh Modul 3: Pokédex Caught Tracker, DataTables, & DomPDF Ekspor)  
-**Status Rilis:** Milestone Modul 3 Terintegrasi & 100% Bebas Bug (Selesai)  
+**Versi Dokumen:** 1.2.2 (Brand Visual Identity Overhaul & Standardisasi Pokéball SVG)  
+**Status Rilis:** Identitas Visual Resmi Pokéball & Modul 3 Terintegrasi Penuh (Selesai)  
 **Tanggal Rilis:** 23 November 2026  
 **Pengembang:** Kelompok 13 — Kelas Praktikum Pemrograman Web A / A2  
 * Arya Andra Diazka (J0404251155) — *Lead Architect & DevOps*
@@ -123,13 +123,14 @@ Sistem membedakan dua tingkatan hak akses:
   * Modal popup peringatan akses terkunci (`#devLockModal`) beranimasi di tengah layar.
 
 ### Modul 2: Master Pokemon Library, Excel Import, & Cloud DevOps (Arya Andra Diazka)
-* **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (v1.0.1 / v1.1.1 / v1.2.1)**
+* **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (v1.0.1 / v1.1.1 / v1.2.1 / v1.2.2)**
 * **Tanggung Jawab:**
   * Mengelola katalog master 1.025 Pokémon pada `app/Http/Controllers/PokemonLibraryController.php`.
   * Menangani validasi berkas spreadsheet 4 kolom wajib (`nomor_index`, `nama_pokemon`, `tipe`, `generasi`) via `PhpSpreadsheet`.
   * Merancang antarmuka Bento Grid (`bento.blade.php`) dengan Dropdown Filter Generasi 1–9 (`#bentoGenFilter`) dan kartu statistik *Kelengkapan Library*.
   * Mengatur arsitektur repositori Git, branching strategy, continuous integration (CI/CD), serta deployment server produksi.
   * Membantu penyelesaian bugfix dan polishing rilis `v1.2.1` bersama Madina.
+  * Melakukan perombakan identitas brand visual (Official Pokéball SVG Vector) pada rilis `v1.2.2`.
 
 ### Modul 3: Pokédex Caught Tracker, DataTables, & Ekspor PDF/Excel (Madina Dwiyana Putri)
 * **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (Merge Request !3 / v1.2.0 & v1.2.1)**

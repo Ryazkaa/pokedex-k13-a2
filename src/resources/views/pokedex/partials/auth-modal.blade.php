@@ -4,8 +4,8 @@
     <div class="pkm-modal__dialog">
         <div class="pkm-modal__header">
             <div style="display: flex; align-items: center; gap: 10px;">
-                <span class="brand-logo__icon" style="width: 24px; height: 24px; display: inline-flex;">
-                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M2.5 12h7m5 0h7" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                <span class="brand-logo__icon" style="width: 28px; height: 28px; display: inline-flex;">
+                    <img src="{{ asset('images/pokeball.svg') }}" alt="Pokédex" width="26" height="26">
                 </span>
                 <h3 id="authModalTitle" class="pkm-modal__title">Manajemen Akun Trainer</h3>
             </div>

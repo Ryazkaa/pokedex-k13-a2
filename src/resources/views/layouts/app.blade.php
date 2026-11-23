@@ -9,6 +9,7 @@
     <title>@yield('title', 'Pokedex')</title>
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}?v={{ filemtime(public_path('favicon.svg')) }}">
     <link rel="shortcut icon" href="{{ asset('favicon.svg') }}?v={{ filemtime(public_path('favicon.svg')) }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/pokeball.png') }}">
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link rel="stylesheet" href="https://fonts.bunny.net/css?family=chakra-petch:600,700|jetbrains-mono:500,600,700|plus-jakarta-sans:400,500,600,700,800&display=swap">

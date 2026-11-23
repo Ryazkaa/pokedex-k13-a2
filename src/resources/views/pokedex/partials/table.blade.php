@@ -79,7 +79,7 @@
 
         {{-- Empty state: database kosong --}}
         <div class="table-empty" id="emptyState" @if ($total > 0) hidden @endif>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M2.5 12h7m5 0h7" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+            <img src="{{ asset('images/pokeball.svg') }}" alt="Pokéball" width="56" height="56" style="opacity: 0.65; margin-bottom: 12px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));">
             <p><strong>Belum ada Pokémon.</strong> Import file .xlsx untuk memulai.</p>
             <button type="button" class="action-pill action-pill--primary" data-action="import">Import Excel</button>
         </div>

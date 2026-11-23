@@ -7,8 +7,8 @@
         {{-- Header Modal --}}
         <div class="pkm-modal__header" style="display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); background: rgba(255, 70, 85, 0.06);">
             <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(255, 70, 85, 0.15); border: 1px solid rgba(255, 70, 85, 0.35); display: flex; align-items: center; justify-content: center; color: #ff4655;">
-                    <svg viewBox="0 0 24 24" style="width: 22px; height: 22px;"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M2.5 12h7m5 0h7" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                <div style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                    <img src="{{ asset('images/pokeball.svg') }}" alt="Pokédex" width="34" height="34" style="filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));">
                 </div>
                 <div>
                     <h3 id="addCaughtTitle" style="margin: 0; font-size: 1.15rem; font-weight: 700; color: #ffffff; letter-spacing: -0.01em;">Tambah Koleksi Pokédex</h3>
@@ -105,9 +105,7 @@
             <div id="apiDexPreviewBox" style="border: 1.5px dashed rgba(255, 70, 85, 0.35); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 16px; margin-bottom: 22px; background: radial-gradient(circle at center, rgba(255, 70, 85, 0.08) 0%, rgba(15, 25, 35, 0.6) 100%); transition: all 0.3s;">
                 <div style="width: 58px; height: 58px; border-radius: 10px; background: rgba(0, 0, 0, 0.35); border: 1px solid rgba(255, 255, 255, 0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                     <img id="apiDexPreviewImg" src="" alt="Preview" style="width: 52px; height: 52px; image-rendering: pixelated; display: none; filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.6));">
-                    <svg id="apiDexPlaceholderIcon" viewBox="0 0 24 24" style="width: 28px; height: 28px; color: #64748b;" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <circle cx="12" cy="12" r="9"/><path d="M3 12h6m6 0h6"/><circle cx="12" cy="12" r="3"/>
-                    </svg>
+                    <img id="apiDexPlaceholderIcon" src="{{ asset('images/pokeball.svg') }}" alt="Pokéball" style="width: 34px; height: 34px; opacity: 0.65; filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5));">
                 </div>
                 <div style="flex: 1; text-align: left;">
                     <div id="apiDexPreviewTitle" style="font-size: 0.92rem; font-weight: 700; color: #ffffff; margin-bottom: 2px;">Preview Sprite Pokémon</div>
