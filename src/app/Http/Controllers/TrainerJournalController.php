@@ -45,7 +45,18 @@ class TrainerJournalController extends Controller
     public function store(Request $request, $pokemonId)
     {
         if (!Auth::check()) {
-            return response()->json(['success' => false, 'message' => 'Silakan login terlebih dahulu.'], 401);
+            return response()->json([
+                'success' => false,
+                'message' => 'Silakan masuk atau daftar akun Trainer terlebih dahulu untuk menyimpan catatan taktis.'
+            ], 401);
+        }
+
+        $pokemon = Pokemon::find($pokemonId);
+        if (!$pokemon) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data Pokémon tidak ditemukan di database.'
+            ], 404);
         }
 
         $validated = $request->validate([
@@ -55,29 +66,34 @@ class TrainerJournalController extends Controller
             'caught_location' => ['nullable', 'string', 'max:150'],
         ]);
 
-        // Sanitasi HTML Anti-XSS (mengizinkan tag aman untuk formatting teks)
+        // Sanitasi HTML Anti-XSS (mengizinkan tag aman untuk format tulisan)
         $cleanContent = strip_tags(
             $validated['content'] ?? '',
             '<p><br><strong><em><u><ol><ul><li><blockquote><h1><h2><h3>'
         );
 
+        $caughtDate = !empty($validated['caught_date']) ? $validated['caught_date'] : null;
+        $caughtLocation = !empty($validated['caught_location']) ? trim($validated['caught_location']) : 'Wild Route';
+        $title = !empty($validated['title']) ? trim($validated['title']) : 'Catatan Taktis: ' . $pokemon->nama_pokemon;
+
         $note = TrainerNote::updateOrCreate(
             [
                 'user_id'    => Auth::id(),
-                'pokemon_id' => $pokemonId,
+                'pokemon_id' => $pokemon->id,
             ],
             [
-                'title'           => $validated['title'] ?: 'Catatan Taktis Pertarungan',
+                'title'           => $title,
                 'content'         => $cleanContent,
-                'caught_date'     => $validated['caught_date'] ?: null,
-                'caught_location' => $validated['caught_location'] ?: 'Wild Encounter',
+                'caught_date'     => $caughtDate,
+                'caught_location' => $caughtLocation,
             ]
         );
 
         return response()->json([
-            'success' => true,
-            'message' => 'Jurnal taktik dan catatan lapangan berhasil disimpan!',
-            'note'    => $note,
+            'success'      => true,
+            'message'      => 'Jurnal taktis dan strategi bertarung untuk ' . $pokemon->nama_pokemon . ' berhasil disimpan!',
+            'pokemon_name' => $pokemon->nama_pokemon,
+            'note'         => $note,
         ]);
     }
 
@@ -87,16 +103,21 @@ class TrainerJournalController extends Controller
     public function destroy($pokemonId)
     {
         if (!Auth::check()) {
-            return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
+            return response()->json([
+                'success' => false,
+                'message' => 'Silakan login terlebih dahulu.'
+            ], 401);
         }
 
-        TrainerNote::where('user_id', Auth::id())
+        $pokemon = Pokemon::find($pokemonId);
+        $deleted = TrainerNote::where('user_id', Auth::id())
             ->where('pokemon_id', $pokemonId)
             ->delete();
 
         return response()->json([
-            'success' => true,
-            'message' => 'Catatan jurnal berhasil dihapus.',
+            'success'      => true,
+            'message'      => 'Catatan jurnal taktis ' . ($pokemon ? $pokemon->nama_pokemon : '') . ' berhasil dihapus dari Pokédex Anda.',
+            'pokemon_name' => $pokemon ? $pokemon->nama_pokemon : null,
         ]);
     }
 }

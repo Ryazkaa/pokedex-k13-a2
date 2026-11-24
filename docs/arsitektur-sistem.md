@@ -1,7 +1,7 @@
 # Dokumen Arsitektur Sistem: Pokédex Collection Tracker & Trainer Directory
 
-**Versi Dokumen:** 1.3.0 (Milestone Integrasi Penuh Seluruh 4 Modul Tim, Jurnal Taktis Quill.js WYSIWYG, dan Catatan Lapangan Trainer)
-**Status Rilis:** Rilis Produksi v1.3.0 (Final - 100% Seluruh Modul Terintegrasi)
+**Versi Dokumen:** 1.3.1 (Bugfix Skema Basis Data Jurnal, Eliminasi Emoji ke SVG Murni & Centered Modal Feedback)
+**Status Rilis:** Rilis Produksi v1.3.1 (Selesai & Stabil - 100% Terintegrasi)
 **Tanggal Rilis:** 24 November 2026
 **Pengembang:** Kelompok 13 — Kelas Praktikum Pemrograman Web A / A2  
 * Arya Andra Diazka (J0404251155) — *Lead Architect & DevOps*
@@ -170,10 +170,14 @@ Sistem membedakan dua tingkatan hak akses:
     * Penggantian ikon emoji aksi tabel (`✏️`, `🗑️`, `📝`) dan toolbar (`📊`, `📄`) menjadi vektor SVG presisi.
 
 ### Modul 4: Jurnal Taktik & Catatan Lapangan Trainer (Iasha Irdanti)
-* **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (Merge Request !4 / Commit 806a3aa & d80031c / v1.3.0)**
+* **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (Merge Request !4 / Commit 806a3aa, d80031c & v1.3.1)**
 * **Tanggung Jawab & Realisasi:**
-  * Merancang skema tabel `trainer_notes` (`2026_11_20_000003_create_trainer_notes_table.php`) dan model Eloquent `App\Models\TrainerNote.php` dengan relasi `belongsTo` ke `User` dan `Pokemon`.
+  * Merancang skema tabel `trainer_notes` (`2026_11_20_000003_create_trainer_notes_table.php` & `2026_11_24_000001_ensure_fields_in_trainer_notes_table.php`) dan model Eloquent `App\Models\TrainerNote.php` dengan relasi `belongsTo` ke `User` dan `Pokemon`.
   * Mengembangkan kontroler `app/Http/Controllers/TrainerJournalController.php` dengan validasi request, isolasi data catatan per akun, dan sanitasi HTML Anti-XSS (`strip_tags` whitelist).
   * Membangun modal interaktif Jurnal Taktik (`journal-modal.blade.php`) dengan field *Tanggal Tangkap*, *Lokasi Penangkapan*, *Judul Strategi*, serta editor teks kaya **Quill.js WYSIWYG**.
-  * Harmonisasi visual: eliminasi seluruh emoji sistem pada modal jurnal dan migrasi ke ikon vektor SVG inline murni, serta penyesuaian CSS tema gelap untuk toolbar dan container editor Quill.
-  * Menghubungkan jurnal taktis langsung dengan entri koleksi Pokémon trainer pada tombol aksi tabel DataTables serta integrasi kamus multi-bahasa (ID/EN).
+  * **Penyempurnaan Bugfix & Visual v1.3.1 (Bersama Arya):**
+    * Resolusi fatal SQL exception `Unknown column 'caught_date'` via migrasi pelengkap skema basis data.
+    * Harmonisasi visual total: eliminasi seluruh emoji bawaan sistem menjadi ikon vektor SVG inline murni, serta penyesuaian CSS tema gelap Crimson Cyber Glassmorphism.
+    * Pembuatan modal popup feedback di tengah layar (`#journalFeedbackModal`) menggantikan browser alert untuk notifikasi simpan berhasil maupun peringatan belum login.
+    * Menghubungkan jurnal taktis langsung dengan entri koleksi Pokémon trainer pada tombol aksi tabel DataTables serta integrasi kamus multi-bahasa (ID/EN).
+

@@ -48,9 +48,11 @@ Proyek ini dikembangkan oleh **Kelompok 13 — Kelas Praktikum Pemrograman Web A
 * **Bendera Vektor Bahasa (ID/EN) & Modal Konfirmasi:** Penggantian ikon bahasa menjadi bendera vektor Indonesia (Merah-Putih) dan Inggris (Union Jack), dilengkapi modal konfirmasi animasi (`#langConfirmModal`) sebelum pergantian bahasa.
 * **Transisi Cepat Skeleton Shimmer & Type-Reveal:** Efek transisi pemindaian cyber ultra-ringan (~280ms) dan type-reveal saat pergantian bahasa, serta penerjemahan komprehensif seluruh konten panduan dan metrik kartu.
 
-### 8. Jurnal Taktis Trainer & Catatan Lapangan WYSIWYG (v1.3.0 Milestone Final)
+### 8. Jurnal Taktis Trainer & Catatan Lapangan WYSIWYG (v1.3.0 & v1.3.1 Milestone)
 * **Editor WYSIWYG Quill.js Bertema Gelap:** Modal Jurnal Taktis (`#journalModal`) terhubung langsung ke setiap Pokémon yang terkoleksi, menyajikan editor teks kaya (*bold, italic, list, blockquote*) dengan proteksi anti-XSS (`strip_tags`) untuk menyusun strategi bertarung.
-* **Metadata Lapangan Lengkap:** Pencatatan lokasi penangkapan (*caught location*) dan tanggal penangkapan fleksibel.
+* **Metadata Lapangan Lengkap & Skema DB Aman (v1.3.1):** Pencatatan lokasi penangkapan (*caught location*) dan tanggal penangkapan fleksibel dengan migrasi kolom basis data terproteksi.
+* **Eliminasi Total Emoji & Desain Crimson Dark:** Mengganti seluruh emoji sistem dengan ikon vektor SVG inline murni dan memadukannya dengan gaya Crimson Dark Cyber Glassmorphism.
+* **Modal Popup Notifikasi Feedback:** Mengganti alert bawaan browser dengan modal popup beranimasi di tengah layar (`#journalFeedbackModal`) untuk konfirmasi simpan, hapus, maupun proteksi autentikasi.
 * **Integrasi Penuh 4 Modul Tim (100% Selesai):** Seluruh modul anggota Kelompok 13 (Modul 1: Yanuar, Modul 2: Arya, Modul 3: Madina, Modul 4: Iasha) kini telah terintegrasi penuh ke dalam basis kode utama.
 
 ---
@@ -84,6 +86,7 @@ Pertemuan 999/
 │   ├── pokedex-app(v1.2.3).zip     # Rilis bilingual ID/EN, edit/delete caught date & centered alerts (Arya & K13)
 │   ├── pokedex-app(v1.2.4).zip     # Rilis pure SVG icons, vector flags, lang modal & shimmer (Arya & K13)
 │   ├── pokedex-app(v1.3.0).zip     # Rilis integrasi Modul 4: Jurnal Taktik & Quill.js WYSIWYG (Iasha Irdanti)
+│   ├── pokedex-app(v1.3.1).zip     # Rilis bugfix jurnal: Skema DB, SVG murni & popup feedback (Arya & K13)
 │   └── README.md                   # Catatan rilis dan riwayat versi komprehensif
 ├── datasets/                       # Dataset acuan spreadsheet (.xlsx)
 ├── docs/                           # Dokumentasi & rancangan sistem
@@ -161,7 +164,7 @@ Pertemuan 999/
 | Anggota | Modul Utama | Status Integrasi | Luaran & Komponen yang Dihasilkan |
 |---|---|:---:|---|
 | **Yanuar Dwi Prasetya**<br>*(J0404251022)* | **Modul 1:** Autentikasi, Sesi, & Role Developer | ✅ **Terintegrasi (v1.1.0 / v1.1.1)** | Migrasi `users.role`, `EnsureDeveloper` Middleware, `AuthController`, modal login/switch account (`auth-modal.blade.php`), lencana status navbar `DEV`/`TRAINER`. |
-| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1 / v1.2.1 / v1.2.2 / v1.2.3 / v1.2.4)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Card 2 Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching, identitas brand Pokéball resmi, sistem bilingual (ID/EN) menyeluruh, dan CI/CD. |
+| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1 / v1.2.1 / v1.2.2 / v1.2.3 / v1.2.4 / v1.3.1)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Card 2 Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching, identitas brand Pokéball resmi, sistem bilingual (ID/EN) menyeluruh, dan CI/CD. |
 | **Madina Dwiyana Putri**<br>*(J0404251090)* | **Modul 3:** Pokédex Caught Tracker, DataTables, & Ekspor | ✅ **Terintegrasi (v1.2.0 / v1.2.1)** | Migrasi `trainer_catches`, model `TrainerCatch`, modal `+ Tambah Koleksi` dengan auto-fetch PokéAPI, integrasi DataTables, serta ekspor Excel & DomPDF A4. |
 | **Iasha Irdanti**<br>*(J0404251115)* | **Modul 4:** Field Notes & Jurnal Strategi Trainer | ✅ **Terintegrasi (v1.3.0)** | Migrasi `trainer_notes`, model `TrainerNote`, modal Jurnal Taktik dengan tanggal/lokasi tangkap, integrasi editor WYSIWYG Quill.js, sanitasi HTML. |
 

@@ -15,7 +15,7 @@ return new class extends Migration
             Schema::create('trainer_notes', function (Blueprint $table) {
                 $table->id();
                 $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-                $table->foreignId('pokemon_id')->constrained('pokemon')->cascadeOnDelete();
+                $table->foreignId('pokemon_id')->constrained('pokemons')->cascadeOnDelete();
                 $table->string('title', 255)->nullable()->default('Catatan Taktis Pertarungan');
                 $table->longText('content')->nullable();
                 $table->date('caught_date')->nullable();
@@ -23,6 +23,15 @@ return new class extends Migration
                 $table->timestamps();
 
                 $table->unique(['user_id', 'pokemon_id']);
+            });
+        } else {
+            Schema::table('trainer_notes', function (Blueprint $table) {
+                if (!Schema::hasColumn('trainer_notes', 'caught_date')) {
+                    $table->date('caught_date')->nullable()->after('content');
+                }
+                if (!Schema::hasColumn('trainer_notes', 'caught_location')) {
+                    $table->string('caught_location', 150)->nullable()->default('Wild Route')->after('caught_date');
+                }
             });
         }
     }
