@@ -4,7 +4,7 @@
 
 @php
     $typeMeta = collect(config('pokedex.types'))->map(function ($meta) {
-        $meta['icon'] = asset($meta['icon']);
+        $meta['icon'] = app()->environment('production') ? secure_asset($meta['icon']) : asset($meta['icon']);
         return $meta;
     })->all();
     $regionMeta = config('pokedex.regions');
@@ -154,5 +154,5 @@
     <script>
         window.POKEDEX = @json($clientPayload);
     </script>
-    <script src="{{ asset('js/pokedex.js') }}?v={{ filemtime(public_path('js/pokedex.js')) }}" defer></script>
+    <script src="{{ app()->environment('production') ? secure_asset('js/pokedex.js') : asset('js/pokedex.js') }}?v={{ filemtime(public_path('js/pokedex.js')) }}" defer></script>
 @endpush
