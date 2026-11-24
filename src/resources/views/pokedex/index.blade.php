@@ -154,5 +154,5 @@
     <script>
         window.POKEDEX = @json($clientPayload);
     </script>
-    <script src="{{ app()->environment('production') ? secure_asset('js/pokedex.js') : asset('js/pokedex.js') }}?v={{ filemtime(public_path('js/pokedex.js')) }}" defer></script>
+    <script src="{{ app()->environment('production') ? secure_asset('js/pokedex.js') : asset('js/pokedex.js') }}?v={{ file_exists(public_path('js/pokedex.js')) ? filemtime(public_path('js/pokedex.js')) : '1.3.1' }}" defer></script>
 @endpush

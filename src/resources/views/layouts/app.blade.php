@@ -8,8 +8,8 @@
     <meta name="theme-color" content="#0f1923">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>@yield('title', 'Pokedex')</title>
-    <link rel="icon" type="image/svg+xml" href="{{ app()->environment('production') ? secure_asset('favicon.svg') : asset('favicon.svg') }}?v={{ filemtime(public_path('favicon.svg')) }}">
-    <link rel="shortcut icon" href="{{ app()->environment('production') ? secure_asset('favicon.svg') : asset('favicon.svg') }}?v={{ filemtime(public_path('favicon.svg')) }}">
+    <link rel="icon" type="image/svg+xml" href="{{ app()->environment('production') ? secure_asset('favicon.svg') : asset('favicon.svg') }}?v={{ file_exists(public_path('favicon.svg')) ? filemtime(public_path('favicon.svg')) : '1.3.1' }}">
+    <link rel="shortcut icon" href="{{ app()->environment('production') ? secure_asset('favicon.svg') : asset('favicon.svg') }}?v={{ file_exists(public_path('favicon.svg')) ? filemtime(public_path('favicon.svg')) : '1.3.1' }}">
     <link rel="apple-touch-icon" href="{{ app()->environment('production') ? secure_asset('images/pokeball.png') : asset('images/pokeball.png') }}">
 
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://raw.githubusercontent.com">
     @stack('head')
 
-    <link rel="stylesheet" href="{{ app()->environment('production') ? secure_asset('css/pokedex.css') : asset('css/pokedex.css') }}?v={{ filemtime(public_path('css/pokedex.css')) }}">
+    <link rel="stylesheet" href="{{ app()->environment('production') ? secure_asset('css/pokedex.css') : asset('css/pokedex.css') }}?v={{ file_exists(public_path('css/pokedex.css')) ? filemtime(public_path('css/pokedex.css')) : '1.3.1' }}">
 </head>
 <body>
     {{-- Latar Pokédex modern berpola geometris halus --}}
