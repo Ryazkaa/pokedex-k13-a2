@@ -1,8 +1,8 @@
 # Dokumen Arsitektur Sistem: Pokédex Collection Tracker & Trainer Directory
 
-**Versi Dokumen:** 1.2.4 (Format Tanggal Baku, Vektor SVG Murni, Bendera Vektor ID/EN, Modal Konfirmasi & Lokalisasi Bilingual Penuh)  
-**Status Rilis:** Rilis Produksi v1.2.4 (Selesai)  
-**Tanggal Rilis:** 23 November 2026  
+**Versi Dokumen:** 1.3.0 (Milestone Integrasi Penuh Seluruh 4 Modul Tim, Jurnal Taktis Quill.js WYSIWYG, dan Catatan Lapangan Trainer)
+**Status Rilis:** Rilis Produksi v1.3.0 (Final - 100% Seluruh Modul Terintegrasi)
+**Tanggal Rilis:** 24 November 2026
 **Pengembang:** Kelompok 13 — Kelas Praktikum Pemrograman Web A / A2  
 * Arya Andra Diazka (J0404251155) — *Lead Architect & DevOps*
 * Yanuar Dwi Prasetya (J0404251022) — *Security & Authentication Engineer*
@@ -170,9 +170,10 @@ Sistem membedakan dua tingkatan hak akses:
     * Penggantian ikon emoji aksi tabel (`✏️`, `🗑️`, `📝`) dan toolbar (`📊`, `📄`) menjadi vektor SVG presisi.
 
 ### Modul 4: Jurnal Taktik & Catatan Lapangan Trainer (Iasha Irdanti)
-* **Status Integrasi:** ⏳ **Siap Merge (Modul 4)**
-* **Tanggung Jawab:**
-  * Merancang tabel `trainer_notes` dan model `TrainerNote.php`.
-  * Mengembangkan kontroler `app/Http/Controllers/TrainerJournalController.php` dengan pembersih XSS / HTML sanitizer.
-  * Membangun modal interaktif Jurnal Taktik (`journal-modal.blade.php`) dengan field *Tanggal Tangkap*, *Lokasi Tangkap*, serta editor teks kaya **Quill.js WYSIWYG**.
-  * Menghubungkan jurnal taktis langsung dengan entri koleksi Pokémon trainer.
+* **Status Integrasi:** ✅ **SELESAI & TERINTEGRASI (Merge Request !4 / Commit 806a3aa & d80031c / v1.3.0)**
+* **Tanggung Jawab & Realisasi:**
+  * Merancang skema tabel `trainer_notes` (`2026_11_20_000003_create_trainer_notes_table.php`) dan model Eloquent `App\Models\TrainerNote.php` dengan relasi `belongsTo` ke `User` dan `Pokemon`.
+  * Mengembangkan kontroler `app/Http/Controllers/TrainerJournalController.php` dengan validasi request, isolasi data catatan per akun, dan sanitasi HTML Anti-XSS (`strip_tags` whitelist).
+  * Membangun modal interaktif Jurnal Taktik (`journal-modal.blade.php`) dengan field *Tanggal Tangkap*, *Lokasi Penangkapan*, *Judul Strategi*, serta editor teks kaya **Quill.js WYSIWYG**.
+  * Harmonisasi visual: eliminasi seluruh emoji sistem pada modal jurnal dan migrasi ke ikon vektor SVG inline murni, serta penyesuaian CSS tema gelap untuk toolbar dan container editor Quill.
+  * Menghubungkan jurnal taktis langsung dengan entri koleksi Pokémon trainer pada tombol aksi tabel DataTables serta integrasi kamus multi-bahasa (ID/EN).

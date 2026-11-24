@@ -14,7 +14,14 @@ class TrainerJournalController extends Controller
      */
     public function show($pokemonId)
     {
-        $userId = Auth::id() ?: 1;
+        $userId = Auth::id();
+
+        if (!$userId) {
+            return response()->json([
+                'success' => true,
+                'note'    => null,
+            ]);
+        }
 
         $note = TrainerNote::where('user_id', $userId)
             ->where('pokemon_id', $pokemonId)
@@ -27,7 +34,7 @@ class TrainerJournalController extends Controller
                 'content'         => $note->content,
                 'caught_date'     => $note->caught_date ? $note->caught_date->format('Y-m-d') : null,
                 'caught_location' => $note->caught_location,
-                'updated_at'      => $note->updated_at->diffForHumans(),
+                'updated_at'      => $note->updated_at ? $note->updated_at->diffForHumans() : null,
             ] : null,
         ]);
     }
