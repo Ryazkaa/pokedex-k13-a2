@@ -86,7 +86,7 @@
 * **Catatan Presenter:** Tekankan bahwa arsitektur backend memisahkan tanggung jawab secara tegas (*Separation of Concerns*). Tidak ada logika SQL mentah yang tercecer di View, dan seluruh proses manipulasi berkas berat (Excel/PDF) diisolasi di Controller masing-masing.
 
 #### Rekomendasi Visual / Screenshot:
-* Diagram blok arsitektur sistem (Client Layer Browser → Laravel 11 Backend & Services → MySQL 8.0 Database) seperti yang tertera pada dokumen arsitektur v1.5.2.
+* Diagram blok arsitektur sistem (Client Layer Browser → Laravel 11 Backend & Services → MySQL 8.0 Database) seperti yang tertera pada dokumen arsitektur v1.5.3.
 
 ---
 
@@ -247,7 +247,9 @@ Jelaskan kepada dosen bahwa proyek Pokédex Kelompok 13 dibangun dengan disiplin
 * **Subjudul:** Implementasi Silabus Praktikum P9 (Pengolahan Grafik) & Praktikum P12 (DataTables dan WYSIWYG)
 
 #### Konten Slide (Bullet Points):
-* **P9 (Pengolahan Grafik & Visualisasi Statistik):**
+* **P9 (Pengolahan Grafik, Distribusi Wilayah & Random Encounter Spotlight):**
+  - *Distribusi Wilayah I–IX (`v1.5.2`):* Grafik batang interaktif populasi Kanto s.d. Paldea yang dapat diklik untuk langsung menyaring tabel Pustaka Pokémon.
+  - *Random Encounter Spotlight (`v1.5.3`):* Kartu eksplorasi Pokémon acak di panel tengah Bento lengkap dengan tombol *Acak*, *Detail*, dan *+ Tangkap* pre-fill otomatis ke modal Koleksi.
   - *Progress Bar Dinamis:* Menampilkan rasio persentase tangkapan terhadap total 1.025 entitas Pokémon secara real-time.
   - *Funnel Kelengkapan Generasi:* Visual bar statistik koleksi per wilayah (Gen I Kanto hingga Gen IX Paldea).
   - *Visual Artwork & Sprites:* Rendering grafik visual resolusi tinggi dari GitHub raw data PokéAPI untuk setiap kartu koleksi.

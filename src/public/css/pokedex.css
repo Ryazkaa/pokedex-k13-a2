@@ -1703,6 +1703,145 @@ dialog.fact-modal[open] .fact-cascade {
 .rule--bad { --c: #ff4655; }
 
 /* Kolom 2: Control Panel Excel & Filter */
+.control-panel {
+    justify-content: space-between;
+}
+.control-bottom-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+}
+.encounter-roll-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 7px;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.32);
+    color: #38bdf8;
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+.encounter-roll-btn:hover {
+    background: rgba(56, 189, 248, 0.22);
+    border-color: rgba(56, 189, 248, 0.6);
+    color: #ffffff;
+}
+.encounter-roll-btn.is-rolling svg {
+    animation: encounterDiceSpin 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes encounterDiceSpin {
+    from { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(195deg) scale(1.15); }
+    to { transform: rotate(360deg) scale(1); }
+}
+.encounter-card {
+    display: grid;
+    grid-template-columns: 52px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    background: radial-gradient(circle at 12% 50%, rgba(255, 70, 85, 0.12), rgba(13, 22, 32, 0.96) 55%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.encounter-card.is-pop {
+    animation: encounterCardPop 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes encounterCardPop {
+    0% { opacity: 0.55; transform: scale(0.97); }
+    100% { opacity: 1; transform: scale(1); }
+}
+.encounter-card__sprite {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+.encounter-card__sprite img {
+    width: 46px;
+    height: 46px;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+.encounter-card__info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+.encounter-card__name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.encounter-card__meta {
+    font-size: 0.74rem;
+    color: #94a3b8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.encounter-card__actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+.encounter-act-btn {
+    padding: 7px 10px;
+    border-radius: 7px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.16s ease;
+    white-space: nowrap;
+}
+.encounter-act-btn--detail {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #e2e8f0;
+}
+.encounter-act-btn--detail:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+}
+.encounter-act-btn--catch {
+    background: rgba(255, 70, 85, 0.16);
+    border: 1px solid rgba(255, 70, 85, 0.42);
+    color: #ff6b78;
+}
+.encounter-act-btn--catch:hover {
+    background: var(--crimson, #ff4655);
+    border-color: var(--crimson, #ff4655);
+    color: #ffffff;
+}
+@media (max-width: 479px) {
+    .encounter-card {
+        grid-template-columns: 48px 1fr;
+    }
+    .encounter-card__actions {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    .encounter-act-btn {
+        text-align: center;
+    }
+}
+
 .bento__control.is-dragover .control-panel {
     border-color: var(--crimson);
     box-shadow: 0 0 0 3px rgb(255 70 85 / .22), var(--glow);

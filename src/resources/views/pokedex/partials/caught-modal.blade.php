@@ -203,8 +203,8 @@
 </div>
 
 <script>
-// Fungsi Global untuk Membuka Modal Tambah Koleksi (Autentikasi Checked)
-window.openAddCaughtModal = function() {
+// Fungsi Global untuk Membuka Modal Tambah Koleksi (Autentikasi Checked, dukung prefill dari Random Encounter)
+window.openAddCaughtModal = function(prefill = null) {
     @auth
         const modal = document.getElementById('addCaughtModal');
         if (modal) {
@@ -212,6 +212,43 @@ window.openAddCaughtModal = function() {
             const caughtInput = document.getElementById('apiDexCaughtAt');
             if (caughtInput && !caughtInput.value) {
                 caughtInput.value = new Date().toISOString().split('T')[0];
+            }
+            if (prefill && (prefill.num || prefill.name)) {
+                const idxEl = document.getElementById('apiDexIndex');
+                const nameEl = document.getElementById('apiDexName');
+                const t1El = document.getElementById('apiDexType1');
+                const t2El = document.getElementById('apiDexType2');
+                const genEl = document.getElementById('apiDexGen');
+                const spriteEl = document.getElementById('apiDexSprite');
+                const pImg = document.getElementById('apiDexPreviewImg');
+                const pIcon = document.getElementById('apiDexPlaceholderIcon');
+                const pTitle = document.getElementById('apiDexPreviewTitle');
+                const pSub = document.getElementById('apiDexPreviewSub');
+                const pBox = document.getElementById('apiDexPreviewBox');
+
+                if (idxEl && prefill.num) idxEl.value = prefill.num;
+                if (nameEl && prefill.name) nameEl.value = prefill.name;
+                const types = Array.isArray(prefill.types) ? prefill.types : [];
+                if (t1El && types[0]) t1El.value = types[0];
+                if (t2El) t2El.value = types[1] || '';
+                if (genEl && prefill.gen) genEl.value = prefill.gen;
+                if (spriteEl && prefill.sprite) spriteEl.value = prefill.sprite;
+
+                if (pImg && prefill.sprite) {
+                    pImg.src = prefill.sprite;
+                    pImg.style.display = 'block';
+                }
+                if (pIcon) pIcon.style.display = 'none';
+                if (pTitle) {
+                    pTitle.textContent = `${prefill.name || ''} (#${String(prefill.num || '').padStart(4, '0')})`;
+                }
+                if (pSub) {
+                    pSub.textContent = `${types.join(' / ')}${prefill.gen ? ' · ' + prefill.gen : ''}`;
+                }
+                if (pBox) {
+                    pBox.style.borderColor = '#ff4655';
+                    pBox.style.background = 'radial-gradient(circle at center, rgba(255, 70, 85, 0.18) 0%, rgba(15, 25, 35, 0.8) 100%)';
+                }
             }
         }
     @else

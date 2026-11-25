@@ -1023,6 +1023,73 @@
         document.getElementById('search')?.scrollIntoView({ behavior: 'smooth' });
     });
 
+    // Random Encounter Card (Kolom Tengah Bento)
+    const btnRollEncounter = document.getElementById('btnRollEncounter');
+    const encounterCard = document.getElementById('encounterCard');
+    const encounterSprite = document.getElementById('encounterSprite');
+    const encounterName = document.getElementById('encounterName');
+    const encounterMeta = document.getElementById('encounterMeta');
+    const encounterDetailBtn = document.getElementById('encounterDetailBtn');
+    const encounterCatchBtn = document.getElementById('encounterCatchBtn');
+
+    function rollRandomEncounter() {
+        const pool = Array.isArray(window.POKEDEX?.pokemons) ? window.POKEDEX.pokemons : [];
+        if (pool.length === 0) return;
+
+        const curNo = encounterDetailBtn?.dataset.openPokemon || '';
+        let pick = pool[Math.floor(Math.random() * pool.length)];
+        if (pool.length > 1 && pick.no === curNo) {
+            pick = pool[(pool.indexOf(pick) + 1) % pool.length];
+        }
+
+        if (encounterSprite) {
+            encounterSprite.src = pick.sprite || '';
+            encounterSprite.alt = pick.name || '';
+        }
+        if (encounterName) {
+            encounterName.textContent = `${pick.no} · ${pick.name}`;
+        }
+        const types = Array.isArray(pick.types) ? pick.types : [];
+        if (encounterMeta) {
+            encounterMeta.textContent = `${types.join(' / ')}${pick.gen ? ' · ' + pick.gen : ''}`;
+        }
+        if (encounterDetailBtn) {
+            encounterDetailBtn.dataset.openPokemon = pick.no;
+        }
+        if (encounterCatchBtn) {
+            encounterCatchBtn.dataset.num = String(pick.num || '');
+            encounterCatchBtn.dataset.name = String(pick.name || '');
+            encounterCatchBtn.dataset.types = types.join('|');
+            encounterCatchBtn.dataset.gen = String(pick.gen || '');
+            encounterCatchBtn.dataset.sprite = String(pick.sprite || '');
+        }
+
+        if (btnRollEncounter) {
+            btnRollEncounter.classList.remove('is-rolling');
+            void btnRollEncounter.offsetWidth;
+            btnRollEncounter.classList.add('is-rolling');
+        }
+        if (encounterCard) {
+            encounterCard.classList.remove('is-pop');
+            void encounterCard.offsetWidth;
+            encounterCard.classList.add('is-pop');
+        }
+    }
+
+    btnRollEncounter?.addEventListener('click', rollRandomEncounter);
+
+    encounterCatchBtn?.addEventListener('click', () => {
+        if (typeof window.openAddCaughtModal !== 'function') return;
+        const d = encounterCatchBtn.dataset;
+        window.openAddCaughtModal({
+            num: d.num || '',
+            name: d.name || '',
+            types: d.types ? d.types.split('|').filter(Boolean) : [],
+            gen: d.gen || '',
+            sprite: d.sprite || '',
+        });
+    });
+
     // Shortcut "/" untuk fokus ke kotak search
     document.addEventListener('keydown', (e) => {
         if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey) {
@@ -1538,6 +1605,10 @@
             pill_gen_filter: "Filter Generasi",
             opt_all_generations: "Semua Generasi (Pilih Gen 1 – 9)",
             pill_type_filter: "Filter Tipe",
+            pill_random_encounter: "Random Encounter",
+            btn_roll_encounter: "Acak",
+            btn_encounter_detail: "Detail",
+            btn_encounter_catch: "+ Tangkap",
             btn_reset_filter: "Reset filter ×",
             drop_hint_dev: "Tarik & lepas file .xlsx langsung ke panel ini untuk import cepat",
             drop_hint_guest: "Mode Read-Only · Fitur Import Spreadsheet khusus akun Developer",
@@ -1655,6 +1726,10 @@
             pill_gen_filter: "Generation Filter",
             opt_all_generations: "All Generations (Select Gen 1 – 9)",
             pill_type_filter: "Type Filter",
+            pill_random_encounter: "Random Encounter",
+            btn_roll_encounter: "Roll",
+            btn_encounter_detail: "Detail",
+            btn_encounter_catch: "+ Catch",
             btn_reset_filter: "Reset filter ×",
             drop_hint_dev: "Drag & drop .xlsx file directly into this panel for fast import",
             drop_hint_guest: "Read-Only Mode · Spreadsheet Import is restricted to Developer accounts",

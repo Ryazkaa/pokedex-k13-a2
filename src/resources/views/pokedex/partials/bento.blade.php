@@ -74,7 +74,10 @@
         </div>
     </div>
 
-    {{-- Kolom 2 (Tengah): Control Panel Excel & Filter --}}
+    {{-- Kolom 2 (Tengah): Filter Tipe -> Random Encounter -> Import Excel & Drop Zone --}}
+    @php
+        $encounterPokemon = $pokemons->isNotEmpty() ? $pokemons->random() : null;
+    @endphp
     <div class="bento__col bento__control" @if($isDev) id="dropZone" @endif>
         <div class="bento-head">
             <span class="bento-head__kicker" data-i18n="control_kicker">Kontrol Data &amp; Koleksi</span>
@@ -82,167 +85,7 @@
         </div>
 
         <div class="bento-panel control-panel">
-            <div class="excel-actions" style="grid-template-columns: 1fr; width: 100%;">
-                @if ($isDev)
-                    <form id="importForm" class="import-form" method="POST" action="{{ route('pokedex.import') }}" enctype="multipart/form-data" style="width: 100%;">
-                        @csrf
-                        <input type="file" id="importFile" name="file_excel" class="visually-hidden" tabindex="-1"
-                               accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" aria-label="Pilih file Excel">
-                        <button type="button" class="action-pill action-pill--wide import-trigger-btn" id="importTrigger" data-action="import"
-                                style="width: 100%; padding: 14px 18px; border-radius: 12px; display: flex; align-items: center; gap: 14px;">
-                            <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 24px; height: 24px; flex-shrink: 0;"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            <div class="import-trigger-body" style="flex: 1; text-align: left; min-width: 0;">
-                                <div class="import-trigger-head" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 3px;">
-                                    <strong style="font-size: 0.95rem; color: #FFFFFF; font-weight: 700;">Import Pokemon untuk Database</strong>
-                                    <span class="import-trigger-badge" style="background: rgba(225, 29, 72, 0.22); color: #F43F5E; border: 1px solid rgba(225, 29, 72, 0.45); font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap;">Fitur Developer</span>
-                                </div>
-                                <small style="color: #94A3B8; font-size: 0.78rem;">Khusus Developer · Perbarui atau tambahkan semua Pokémon terbaru ke Library (.xlsx)</small>
-                            </div>
-                        </button>
-
-                        {{-- Panel Konfirmasi Import (Hold to Import -> Checklist) --}}
-                        <div class="import-chip" id="importChip" hidden>
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z M14 3v5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-                            <span id="importName">file.xlsx</span>
-                            <button type="button" id="importCancel" aria-label="Batalkan file">
-                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
-                            </button>
-                        </div>
-                        <button type="button" class="action-pill action-pill--upload hold-btn" id="importSubmit" hidden>
-                            <svg class="hold-btn__perimeter" viewBox="0 0 400 56" preserveAspectRatio="none" aria-hidden="true">
-                                <rect x="2" y="2" width="396" height="52" rx="13" ry="13" pathLength="100"/>
-                            </svg>
-                            <span class="hold-btn__ring-wrap" aria-hidden="true">
-                                <svg class="hold-btn__ring" viewBox="0 0 36 36">
-                                    <circle class="hold-btn__track" cx="18" cy="18" r="15" pathLength="100"/>
-                                    <circle class="hold-btn__fill" cx="18" cy="18" r="15" pathLength="100"/>
-                                </svg>
-                                <svg class="hold-btn__icon hold-btn__icon--idle" viewBox="0 0 24 24"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 20h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                <svg class="hold-btn__icon hold-btn__icon--check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            </span>
-                            <span class="hold-btn__text" data-label>Hold to Import</span>
-                        </button>
-                    </form>
-                @else
-                    {{-- Tampilan Terkunci Khusus Developer untuk Pengguna Tamu / Trainer --}}
-                    <button type="button" class="action-pill action-pill--wide is-locked import-trigger-btn" onclick="openDevLockModal()"
-                            style="width: 100%; padding: 14px 18px; border-radius: 12px; display: flex; align-items: center; gap: 14px; background: rgba(15, 23, 42, 0.7); border: 1px dashed rgba(255, 70, 85, 0.4); cursor: pointer; transition: all .2s;"
-                            title="Terkunci: Khusus 4 Akun Developer Kelompok 13">
-                        <div style="width: 38px; height: 38px; border-radius: 8px; background: rgba(255, 70, 85, 0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255, 70, 85, 0.25);">
-                            <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 20px; height: 20px; color: #ff4655;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-                        </div>
-                        <div class="import-trigger-body" style="flex: 1; text-align: left; min-width: 0;">
-                            <div class="import-trigger-head" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 3px;">
-                                <strong style="font-size: 0.95rem; color: #E2E8F0; font-weight: 700;" data-i18n="control_import_btn">Import Pokemon untuk Database</strong>
-                                <span class="import-trigger-badge" style="background: rgba(255, 70, 85, 0.15); color: #F43F5E; border: 1px solid rgba(255, 70, 85, 0.35); font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;">
-                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                                    <span data-i18n="badge_locked_dev">Terkunci (Dev Only)</span>
-                                </span>
-                            </div>
-                            <small style="color: #94A3B8; font-size: 0.78rem;" data-i18n="control_import_sub_guest">Khusus 4 Akun Developer (Kelompok 13) · Klik untuk info &amp; login</small>
-                        </div>
-                    </button>
-
-                    {{-- Modal Popup Animasi di Tengah: Akses Terkunci --}}
-                    <div id="devLockModal" class="pkm-modal" role="dialog" aria-modal="true" aria-labelledby="devLockTitle" hidden>
-                        <div class="pkm-modal__backdrop" onclick="closeDevLockModal()"></div>
-                        <div class="pkm-modal__dialog" style="max-width: 440px; text-align: center; padding: 32px 26px; border: 1px solid rgba(255, 70, 85, 0.45); box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 70, 85, 0.25);">
-                            <button type="button" onclick="closeDevLockModal()" style="position: absolute; right: 14px; top: 14px; background: none; border: none; font-size: 1.6rem; color: #94A3B8; cursor: pointer; line-height: 1; transition: color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94A3B8'">&times;</button>
-                            
-                            {{-- Logo Lingkaran Beranimasi Merah Berdenyut dengan Simbol X --}}
-                            <div class="lock-icon-pulse" style="width: 76px; height: 76px; border-radius: 50%; background: rgba(255, 70, 85, 0.12); border: 2.5px solid #ff4655; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-                                <svg viewBox="0 0 24 24" style="width: 38px; height: 38px;" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10" stroke="#ff4655" stroke-width="2"/>
-                                    <line x1="15" y1="9" x2="9" y2="15" stroke="#ff4655" stroke-width="2.5"/>
-                                    <line x1="9" y1="9" x2="15" y2="15" stroke="#ff4655" stroke-width="2.5"/>
-                                </svg>
-                            </div>
-
-                            <h3 id="devLockTitle" style="font-size: 1.3rem; font-weight: 800; color: #FFFFFF; margin: 0 0 8px 0; letter-spacing: -0.01em;" data-i18n="dev_lock_title">
-                                Akses Fitur Terkunci
-                            </h3>
-                            <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 70, 85, 0.16); color: #F43F5E; border: 1px solid rgba(255, 70, 85, 0.35); font-size: 0.72rem; font-weight: 800; padding: 3px 12px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 18px;">
-                                <span data-i18n="dev_lock_badge">Khusus Developer Kelompok 13</span>
-                            </div>
-
-                            <p style="font-size: 0.88rem; color: #CBD5E1; line-height: 1.6; margin: 0 0 24px 0;" id="devLockDesc" data-auth="{{ Auth::check() ? '1' : '0' }}" data-name="{{ Auth::check() ? Auth::user()->name : '' }}">
-                                @if (!Auth::check())
-                                    Fitur <strong>Import Master Dataset (.xlsx)</strong> dilindungi dan hanya dapat diakses oleh <strong>4 Akun Developer</strong> (Yanuar, Arya, Madina, Iasha) untuk menjaga integritas database katalog 1.025 Pokémon.<br><br>
-                                    Silakan beralih ke akun Developer melalui menu di bawah:
-                                @else
-                                    Anda saat ini masuk sebagai <strong>{{ Auth::user()->name }}</strong> dengan status <strong>TRAINER</strong>.<br><br>
-                                    Pengguna umum berstatus Trainer hanya memiliki izin melihat katalog Pokémon (<em>Read-Only</em>). Otoritas import master data dibatasi khusus untuk 4 Developer Kelompok 13.
-                                @endif
-                            </p>
-
-                            <div style="display: flex; flex-direction: column; gap: 10px;">
-                                <button type="button" onclick="switchToDevFromLockModal()"
-                                        class="action-pill action-pill--primary"
-                                        style="width: 100%; justify-content: center; padding: 12px; font-weight: 700; font-size: 0.88rem; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px;">
-                                    <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                                    <span data-i18n="btn_open_dev_switch">Buka Switch Developer (K13)</span>
-                                </button>
-                                <button type="button" onclick="closeDevLockModal()"
-                                        class="action-pill action-pill--ghost"
-                                        style="width: 100%; justify-content: center; padding: 10px; font-weight: 600; font-size: 0.84rem; color: #94A3B8; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;"
-                                        data-i18n="btn_close">
-                                    Tutup
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <script>
-                        function openDevLockModal() {
-                            const modal = document.getElementById('devLockModal');
-                            if (modal) modal.hidden = false;
-                        }
-                        function closeDevLockModal() {
-                            const modal = document.getElementById('devLockModal');
-                            if (modal) modal.hidden = true;
-                        }
-                        function switchToDevFromLockModal() {
-                            closeDevLockModal();
-                            const authModal = document.getElementById('authModal');
-                            if (authModal) {
-                                authModal.hidden = false;
-                                document.querySelector('[data-tab="switchTab"]')?.click();
-                            }
-                        }
-                    </script>
-                @endif
-            </div>
-
-            {{-- Filter Generasi (Dropdown Generasi 1 - 9) --}}
-            <div class="control-group">
-                <div class="control-group__head">
-                    <p class="pill-label" data-i18n="pill_gen_filter">Filter Generasi</p>
-                    <button type="button" class="btn-reset-inline" id="resetGenPill" data-reset-gen hidden data-i18n="btn_reset_filter">
-                        Reset filter ×
-                    </button>
-                </div>
-                <div class="gen-dropdown-wrap">
-                    <label class="bento-select-wrap">
-                        <select id="bentoGenFilter" class="bento-select" aria-label="Pilih Generasi Pokémon">
-                            <option value="" data-i18n="opt_all_generations">Semua Generasi (Pilih Gen 1 – 9)</option>
-                            <option value="Generasi I (Kanto)">Gen 1 · Kanto (#0001 – #0151)</option>
-                            <option value="Generasi II (Johto)">Gen 2 · Johto (#0152 – #0251)</option>
-                            <option value="Generasi III (Hoenn)">Gen 3 · Hoenn (#0252 – #0386)</option>
-                            <option value="Generasi IV (Sinnoh)">Gen 4 · Sinnoh (#0387 – #0493)</option>
-                            <option value="Generasi V (Unova)">Gen 5 · Unova (#0494 – #0649)</option>
-                            <option value="Generasi VI (Kalos)">Gen 6 · Kalos (#0650 – #0721)</option>
-                            <option value="Generasi VII (Alola)">Gen 7 · Alola (#0722 – #0809)</option>
-                            <option value="Generasi VIII (Galar)">Gen 8 · Galar (#0810 – #0905)</option>
-                            <option value="Generasi IX (Paldea)">Gen 9 · Paldea (#0906 – #1025)</option>
-                        </select>
-                        <span class="bento-select__icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
-                        </span>
-                    </label>
-                </div>
-            </div>
-
-            {{-- Filter Tipe Elemen (18 tipe standar + 1 tipe khusus Stellar = 19 tipe + logo resmi) --}}
+            {{-- 1. Atas: Filter Tipe Elemen (18 tipe standar + 1 tipe khusus Stellar = 19 tipe) --}}
             <div class="control-group">
                 <div class="control-group__head">
                     <p class="pill-label" data-i18n="pill_type_filter">Filter Tipe</p>
@@ -264,15 +107,204 @@
                 </div>
             </div>
 
-            <p class="drop-hint">
-                @if ($isDev)
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 16a4 4 0 0 1-.8-7.9A5.5 5.5 0 0 1 17 7a4.5 4.5 0 0 1 .5 9H7z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
-                    <span data-i18n="drop_hint_dev">Tarik &amp; lepas file <strong>.xlsx</strong> langsung ke panel ini untuk import cepat</span>
-                @else
-                    <svg viewBox="0 0 24 24" aria-hidden="true" style="color: #ff4655; width: 16px; height: 16px; flex-shrink: 0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-                    <span style="color: #94A3B8;" data-i18n="drop_hint_guest">Mode Read-Only · Fitur Import Spreadsheet khusus akun Developer</span>
-                @endif
-            </p>
+            {{-- 2. Tengah: Random Encounter Spotlight (Acak Pokémon + Lihat Detail / Tangkap) --}}
+            <div class="control-group encounter-box">
+                <div class="control-group__head">
+                    <p class="pill-label" data-i18n="pill_random_encounter">Random Encounter</p>
+                    <button type="button" class="encounter-roll-btn" id="btnRollEncounter" title="Acak Pokémon lainnya">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="3" y="3" width="18" height="18" rx="4"/>
+                            <circle cx="8.5" cy="8.5" r="1" fill="currentColor"/>
+                            <circle cx="15.5" cy="8.5" r="1" fill="currentColor"/>
+                            <circle cx="12" cy="12" r="1" fill="currentColor"/>
+                            <circle cx="8.5" cy="15.5" r="1" fill="currentColor"/>
+                            <circle cx="15.5" cy="15.5" r="1" fill="currentColor"/>
+                        </svg>
+                        <span data-i18n="btn_roll_encounter">Acak</span>
+                    </button>
+                </div>
+                <div class="encounter-card" id="encounterCard">
+                    <div class="encounter-card__sprite">
+                        <img id="encounterSprite"
+                             src="{{ $encounterPokemon?->sprite_url ?? asset('images/pokeball.svg') }}"
+                             alt="{{ $encounterPokemon?->nama_pokemon ?? 'Pokéball' }}"
+                             width="48" height="48" loading="lazy">
+                    </div>
+                    <div class="encounter-card__info">
+                        <strong class="encounter-card__name" id="encounterName">
+                            {{ $encounterPokemon ? ($encounterPokemon->nomor_index . ' · ' . $encounterPokemon->nama_pokemon) : 'Pokémon Acak' }}
+                        </strong>
+                        <span class="encounter-card__meta" id="encounterMeta">
+                            {{ $encounterPokemon ? (implode(' / ', $encounterPokemon->type_list) . ' · ' . $encounterPokemon->generasi) : 'Klik Acak untuk mencari' }}
+                        </span>
+                    </div>
+                    <div class="encounter-card__actions">
+                        <button type="button"
+                                class="encounter-act-btn encounter-act-btn--detail"
+                                id="encounterDetailBtn"
+                                data-open-pokemon="{{ $encounterPokemon?->nomor_index ?? '' }}"
+                                data-i18n="btn_encounter_detail"
+                                title="Lihat detail Pokémon">
+                            Detail
+                        </button>
+                        <button type="button"
+                                class="encounter-act-btn encounter-act-btn--catch"
+                                id="encounterCatchBtn"
+                                data-num="{{ $encounterPokemon?->number ?? '' }}"
+                                data-name="{{ $encounterPokemon?->nama_pokemon ?? '' }}"
+                                data-types="{{ $encounterPokemon ? implode('|', $encounterPokemon->type_list) : '' }}"
+                                data-gen="{{ $encounterPokemon?->generasi ?? '' }}"
+                                data-sprite="{{ $encounterPokemon?->sprite_url ?? '' }}"
+                                data-i18n="btn_encounter_catch"
+                                title="Tambahkan ke koleksi Pokédex">
+                            + Tangkap
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {{-- 3. Bawah: Import Pokemon untuk Database + Teks Tarik & Lepas .xlsx --}}
+            <div class="control-bottom-stack">
+                <div class="excel-actions" style="grid-template-columns: 1fr; width: 100%;">
+                    @if ($isDev)
+                        <form id="importForm" class="import-form" method="POST" action="{{ route('pokedex.import') }}" enctype="multipart/form-data" style="width: 100%;">
+                            @csrf
+                            <input type="file" id="importFile" name="file_excel" class="visually-hidden" tabindex="-1"
+                                   accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" aria-label="Pilih file Excel">
+                            <button type="button" class="action-pill action-pill--wide import-trigger-btn" id="importTrigger" data-action="import"
+                                    style="width: 100%; padding: 14px 18px; border-radius: 12px; display: flex; align-items: center; gap: 14px;">
+                                <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 24px; height: 24px; flex-shrink: 0;"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                <div class="import-trigger-body" style="flex: 1; text-align: left; min-width: 0;">
+                                    <div class="import-trigger-head" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 3px;">
+                                        <strong style="font-size: 0.95rem; color: #FFFFFF; font-weight: 700;">Import Pokemon untuk Database</strong>
+                                        <span class="import-trigger-badge" style="background: rgba(225, 29, 72, 0.22); color: #F43F5E; border: 1px solid rgba(225, 29, 72, 0.45); font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap;">Fitur Developer</span>
+                                    </div>
+                                    <small style="color: #94A3B8; font-size: 0.78rem;">Khusus Developer · Perbarui atau tambahkan semua Pokémon terbaru ke Library (.xlsx)</small>
+                                </div>
+                            </button>
+
+                            {{-- Panel Konfirmasi Import (Hold to Import -> Checklist) --}}
+                            <div class="import-chip" id="importChip" hidden>
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z M14 3v5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                                <span id="importName">file.xlsx</span>
+                                <button type="button" id="importCancel" aria-label="Batalkan file">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+                                </button>
+                            </div>
+                            <button type="button" class="action-pill action-pill--upload hold-btn" id="importSubmit" hidden>
+                                <svg class="hold-btn__perimeter" viewBox="0 0 400 56" preserveAspectRatio="none" aria-hidden="true">
+                                    <rect x="2" y="2" width="396" height="52" rx="13" ry="13" pathLength="100"/>
+                                </svg>
+                                <span class="hold-btn__ring-wrap" aria-hidden="true">
+                                    <svg class="hold-btn__ring" viewBox="0 0 36 36">
+                                        <circle class="hold-btn__track" cx="18" cy="18" r="15" pathLength="100"/>
+                                        <circle class="hold-btn__fill" cx="18" cy="18" r="15" pathLength="100"/>
+                                    </svg>
+                                    <svg class="hold-btn__icon hold-btn__icon--idle" viewBox="0 0 24 24"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 20h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    <svg class="hold-btn__icon hold-btn__icon--check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </span>
+                                <span class="hold-btn__text" data-label>Hold to Import</span>
+                            </button>
+                        </form>
+                    @else
+                        {{-- Tampilan Terkunci Khusus Developer untuk Pengguna Tamu / Trainer --}}
+                        <button type="button" class="action-pill action-pill--wide is-locked import-trigger-btn" onclick="openDevLockModal()"
+                                style="width: 100%; padding: 14px 18px; border-radius: 12px; display: flex; align-items: center; gap: 14px; background: rgba(15, 23, 42, 0.7); border: 1px dashed rgba(255, 70, 85, 0.4); cursor: pointer; transition: all .2s;"
+                                title="Terkunci: Khusus 4 Akun Developer Kelompok 13">
+                            <div style="width: 38px; height: 38px; border-radius: 8px; background: rgba(255, 70, 85, 0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255, 70, 85, 0.25);">
+                                <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 20px; height: 20px; color: #ff4655;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                            </div>
+                            <div class="import-trigger-body" style="flex: 1; text-align: left; min-width: 0;">
+                                <div class="import-trigger-head" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 3px;">
+                                    <strong style="font-size: 0.95rem; color: #E2E8F0; font-weight: 700;" data-i18n="control_import_btn">Import Pokemon untuk Database</strong>
+                                    <span class="import-trigger-badge" style="background: rgba(255, 70, 85, 0.15); color: #F43F5E; border: 1px solid rgba(255, 70, 85, 0.35); font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;">
+                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                        <span data-i18n="badge_locked_dev">Terkunci (Dev Only)</span>
+                                    </span>
+                                </div>
+                                <small style="color: #94A3B8; font-size: 0.78rem;" data-i18n="control_import_sub_guest">Khusus 4 Akun Developer (Kelompok 13) · Klik untuk info &amp; login</small>
+                            </div>
+                        </button>
+
+                        {{-- Modal Popup Animasi di Tengah: Akses Terkunci --}}
+                        <div id="devLockModal" class="pkm-modal" role="dialog" aria-modal="true" aria-labelledby="devLockTitle" hidden>
+                            <div class="pkm-modal__backdrop" onclick="closeDevLockModal()"></div>
+                            <div class="pkm-modal__dialog" style="max-width: 440px; text-align: center; padding: 32px 26px; border: 1px solid rgba(255, 70, 85, 0.45); box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 70, 85, 0.25);">
+                                <button type="button" onclick="closeDevLockModal()" style="position: absolute; right: 14px; top: 14px; background: none; border: none; font-size: 1.6rem; color: #94A3B8; cursor: pointer; line-height: 1; transition: color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94A3B8'">&times;</button>
+                                
+                                <div class="lock-icon-pulse" style="width: 76px; height: 76px; border-radius: 50%; background: rgba(255, 70, 85, 0.12); border: 2.5px solid #ff4655; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                                    <svg viewBox="0 0 24 24" style="width: 38px; height: 38px;" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10" stroke="#ff4655" stroke-width="2"/>
+                                        <line x1="15" y1="9" x2="9" y2="15" stroke="#ff4655" stroke-width="2.5"/>
+                                        <line x1="9" y1="9" x2="15" y2="15" stroke="#ff4655" stroke-width="2.5"/>
+                                    </svg>
+                                </div>
+
+                                <h3 id="devLockTitle" style="font-size: 1.3rem; font-weight: 800; color: #FFFFFF; margin: 0 0 8px 0; letter-spacing: -0.01em;" data-i18n="dev_lock_title">
+                                    Akses Fitur Terkunci
+                                </h3>
+                                <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 70, 85, 0.16); color: #F43F5E; border: 1px solid rgba(255, 70, 85, 0.35); font-size: 0.72rem; font-weight: 800; padding: 3px 12px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 18px;">
+                                    <span data-i18n="dev_lock_badge">Khusus Developer Kelompok 13</span>
+                                </div>
+
+                                <p style="font-size: 0.88rem; color: #CBD5E1; line-height: 1.6; margin: 0 0 24px 0;" id="devLockDesc" data-auth="{{ Auth::check() ? '1' : '0' }}" data-name="{{ Auth::check() ? Auth::user()->name : '' }}">
+                                    @if (!Auth::check())
+                                        Fitur <strong>Import Master Dataset (.xlsx)</strong> dilindungi dan hanya dapat diakses oleh <strong>4 Akun Developer</strong> (Yanuar, Arya, Madina, Iasha) untuk menjaga integritas database katalog 1.025 Pokémon.<br><br>
+                                        Silakan beralih ke akun Developer melalui menu di bawah:
+                                    @else
+                                        Anda saat ini masuk sebagai <strong>{{ Auth::user()->name }}</strong> dengan status <strong>TRAINER</strong>.<br><br>
+                                        Pengguna umum berstatus Trainer hanya memiliki izin melihat katalog Pokémon (<em>Read-Only</em>). Otoritas import master data dibatasi khusus untuk 4 Developer Kelompok 13.
+                                    @endif
+                                </p>
+
+                                <div style="display: flex; flex-direction: column; gap: 10px;">
+                                    <button type="button" onclick="switchToDevFromLockModal()"
+                                            class="action-pill action-pill--primary"
+                                            style="width: 100%; justify-content: center; padding: 12px; font-weight: 700; font-size: 0.88rem; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px;">
+                                        <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                                        <span data-i18n="btn_open_dev_switch">Buka Switch Developer (K13)</span>
+                                    </button>
+                                    <button type="button" onclick="closeDevLockModal()"
+                                            class="action-pill action-pill--ghost"
+                                            style="width: 100%; justify-content: center; padding: 10px; font-weight: 600; font-size: 0.84rem; color: #94A3B8; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;"
+                                            data-i18n="btn_close">
+                                        Tutup
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            function openDevLockModal() {
+                                const modal = document.getElementById('devLockModal');
+                                if (modal) modal.hidden = false;
+                            }
+                            function closeDevLockModal() {
+                                const modal = document.getElementById('devLockModal');
+                                if (modal) modal.hidden = true;
+                            }
+                            function switchToDevFromLockModal() {
+                                closeDevLockModal();
+                                const authModal = document.getElementById('authModal');
+                                if (authModal) {
+                                    authModal.hidden = false;
+                                    document.querySelector('[data-tab="switchTab"]')?.click();
+                                }
+                            }
+                        </script>
+                    @endif
+                </div>
+
+                <p class="drop-hint">
+                    @if ($isDev)
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 16a4 4 0 0 1-.8-7.9A5.5 5.5 0 0 1 17 7a4.5 4.5 0 0 1 .5 9H7z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+                        <span data-i18n="drop_hint_dev">Tarik &amp; lepas file <strong>.xlsx</strong> langsung ke panel ini untuk import cepat</span>
+                    @else
+                        <svg viewBox="0 0 24 24" aria-hidden="true" style="color: #ff4655; width: 16px; height: 16px; flex-shrink: 0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                        <span style="color: #94A3B8;" data-i18n="drop_hint_guest">Mode Read-Only · Fitur Import Spreadsheet khusus akun Developer</span>
+                    @endif
+                </p>
+            </div>
         </div>
     </div>
 

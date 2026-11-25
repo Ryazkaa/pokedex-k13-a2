@@ -87,6 +87,10 @@ Proyek ini dikembangkan oleh **Kelompok 13 — Kelas Praktikum Pemrograman Web A
 * **Animasi Lembar Kertas → Burung Origami → Terbang ke Kanan Atas (`#paperBirdOverlay`):** Setelah *Hold to Confirm* selesai, lembar dokumen `.XLSX` (emerald) atau `.PDF` (crimson) tampil di tengah layar, melipat menjadi burung kertas origami bersayap mengepak (`birdWingFlap`), lalu terbang melesat menuju sudut kanan atas (arah ikon Unduhan Chrome) tepat saat berkas mulai diunduh (`prefers-reduced-motion` didukung).
 * **Bento Kolom Kiri `Distribusi Wilayah Generasi I – IX` (`bento.blade.php`):** Mengubah 2 kotak statis *Format & Aturan* menjadi **1 kotak panjang tunggal** berisi grafik batang interaktif untuk 9 region (**Kanto** hingga **Paldea**, `#0001–#1025`). Setiap baris region dapat diklik (`data-filter-gen`) untuk langsung menyaring tabel Pustaka Pokémon dan tersinkronisasi penuh dengan pengalih bahasa ID/EN.
 
+### 15. Reorganisasi Kolom Tengah Bento & Fitur Random Encounter Spotlight (v1.5.3 Milestone)
+* **Penataan Ulang Kolom Tengah Bento (`bento.blade.php`, `pokedex.css`):** Menghapus dropdown *Filter Generasi* (`#bentoGenFilter`) yang sudah tercakup di kolom kiri (*Distribusi Wilayah Generasi I–IX*), menaikkan panel **Filter Tipe** (19 chip elemen) ke posisi teratas, dan menempatkan kartu **Import Pokemon untuk Database** di posisi bawah tepat di atas teks petunjuk *Tarik & lepas file `.xlsx`*.
+* **Kartu `Random Encounter` Interaktif di Bagian Tengah (`#encounterCard`, `#btnRollEncounter`):** Menampilkan Pokémon acak lengkap dengan sprite, nomor indeks, tipe, generasi, tombol **Acak** (*Roll*), tombol **Detail** (`data-open-pokemon`) untuk langsung membuka Showcase Modal, serta tombol **+ Tangkap** (`openAddCaughtModal(prefill)`) yang otomatis mengisi form *Tambah Koleksi Pokédex* dengan Pokémon hasil acakan.
+
 ---
 
 ## 🛠️ Tumpukan Teknologi (Tech Stack)
@@ -125,6 +129,7 @@ Pertemuan 999/
 │   ├── pokedex-app(v1.5.0).zip     # Rilis Fitur PokéAPI by Name, Animated Autocomplete & Perbaikan Scroll Modal Tambah Koleksi (Arya & K13)
 │   ├── pokedex-app(v1.5.1).zip     # Rilis Bugfix Duplikat Tangkapan: Popup Peringatan Sudah Ditangkap & Info First Caught (Arya & K13)
 │   ├── pokedex-app(v1.5.2).zip     # Rilis Ekspor Data Terpadu (Hold + Animasi Burung Kertas) & Bento Distribusi Region I-IX (Arya & K13)
+│   ├── pokedex-app(v1.5.3).zip     # Rilis Reorganisasi Bento Tengah: Filter Tipe Atas, Random Encounter Tengah & Import Bawah (Arya & K13)
 │   └── README.md                   # Catatan rilis dan riwayat versi komprehensif
 ├── datasets/                       # Dataset acuan spreadsheet (.xlsx)
 ├── docs/                           # Dokumentasi & rancangan sistem
@@ -202,7 +207,7 @@ Pertemuan 999/
 | Anggota | Modul Utama | Status Integrasi | Luaran & Komponen yang Dihasilkan |
 |---|---|:---:|---|
 | **Yanuar Dwi Prasetya**<br>*(J0404251022)* | **Modul 1:** Autentikasi, Sesi, & Role Developer | ✅ **Terintegrasi (v1.1.0 / v1.1.1)** | Migrasi `users.role`, `EnsureDeveloper` Middleware, `AuthController`, modal login/switch account (`auth-modal.blade.php`), lencana status navbar `DEV`/`TRAINER`. |
-| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1 / v1.2.1–v1.2.4 / v1.3.1 / v1.4.0–v1.5.2)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Distribusi Region I–IX & Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching, identitas brand Pokéball resmi, bilingual (ID/EN), Cloud DevOps Railway, UI responsif mobile, autocomplete PokéAPI by Name, proteksi duplikat First Caught, serta Ekspor Data + animasi burung kertas. |
+| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1 / v1.2.1–v1.2.4 / v1.3.1 / v1.4.0–v1.5.3)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Distribusi Region I–IX, Random Encounter Spotlight, Card 3 Kelengkapan Library, Git branching, identitas brand Pokéball resmi, bilingual (ID/EN), Cloud DevOps Railway, UI responsif mobile, autocomplete PokéAPI by Name, proteksi duplikat First Caught, serta Ekspor Data + animasi burung kertas. |
 | **Madina Dwiyana Putri**<br>*(J0404251090)* | **Modul 3:** Pokédex Caught Tracker, DataTables, & Ekspor | ✅ **Terintegrasi (v1.2.0 / v1.2.1)** | Migrasi `trainer_catches`, model `TrainerCatch`, modal `+ Tambah Koleksi` dengan auto-fetch PokéAPI, integrasi DataTables, serta ekspor Excel & DomPDF A4. |
 | **Iasha Irdanti**<br>*(J0404251115)* | **Modul 4:** Field Notes & Jurnal Strategi Trainer | ✅ **Terintegrasi (v1.3.0)** | Migrasi `trainer_notes`, model `TrainerNote`, modal Jurnal Taktik dengan tanggal/lokasi tangkap, integrasi editor WYSIWYG Quill.js, sanitasi HTML. |
 
