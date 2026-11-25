@@ -918,6 +918,9 @@
         if (bentoGen && bentoGen.value !== gVal) {
             bentoGen.value = gVal;
         }
+        if (typeof renderTypeRadar === 'function') {
+            renderTypeRadar(tVal || activeRadarType);
+        }
     }
 
     let totalPagesCount = 1;
@@ -1015,80 +1018,110 @@
     typeFilter?.addEventListener('change', () => applyTable(true));
     genFilter?.addEventListener('change', () => applyTable(true));
 
-    const bentoGenFilter = document.getElementById('bentoGenFilter');
-    bentoGenFilter?.addEventListener('change', () => {
-        if (!genFilter) return;
-        genFilter.value = bentoGenFilter.value;
-        applyTable(true);
-        document.getElementById('search')?.scrollIntoView({ behavior: 'smooth' });
-    });
+    // Radar Efektivitas & Kelemahan Elemen (Kolom Tengah Bento)
+    const TYPE_MATCHUPS = {
+        Normal:   { strong: [], weak: ['Fighting'], resist: [], immune: ['Ghost'] },
+        Fire:     { strong: ['Grass', 'Ice', 'Bug', 'Steel'], weak: ['Water', 'Ground', 'Rock'], resist: ['Fire', 'Grass', 'Ice', 'Bug', 'Steel', 'Fairy'], immune: [] },
+        Water:    { strong: ['Fire', 'Ground', 'Rock'], weak: ['Electric', 'Grass'], resist: ['Fire', 'Water', 'Ice', 'Steel'], immune: [] },
+        Grass:    { strong: ['Water', 'Ground', 'Rock'], weak: ['Fire', 'Ice', 'Poison', 'Flying', 'Bug'], resist: ['Water', 'Electric', 'Grass', 'Ground'], immune: [] },
+        Electric: { strong: ['Water', 'Flying'], weak: ['Ground'], resist: ['Electric', 'Flying', 'Steel'], immune: [] },
+        Ice:      { strong: ['Grass', 'Ground', 'Flying', 'Dragon'], weak: ['Fire', 'Fighting', 'Rock', 'Steel'], resist: ['Ice'], immune: [] },
+        Fighting: { strong: ['Normal', 'Ice', 'Rock', 'Dark', 'Steel'], weak: ['Flying', 'Psychic', 'Fairy'], resist: ['Bug', 'Rock', 'Dark'], immune: [] },
+        Poison:   { strong: ['Grass', 'Fairy'], weak: ['Ground', 'Psychic'], resist: ['Grass', 'Fighting', 'Poison', 'Bug', 'Fairy'], immune: [] },
+        Ground:   { strong: ['Fire', 'Electric', 'Poison', 'Rock', 'Steel'], weak: ['Water', 'Grass', 'Ice'], resist: ['Poison', 'Rock'], immune: ['Electric'] },
+        Flying:   { strong: ['Grass', 'Fighting', 'Bug'], weak: ['Electric', 'Ice', 'Rock'], resist: ['Grass', 'Fighting', 'Bug'], immune: ['Ground'] },
+        Psychic:  { strong: ['Fighting', 'Poison'], weak: ['Bug', 'Ghost', 'Dark'], resist: ['Fighting', 'Psychic'], immune: [] },
+        Bug:      { strong: ['Grass', 'Psychic', 'Dark'], weak: ['Fire', 'Flying', 'Rock'], resist: ['Grass', 'Fighting', 'Ground'], immune: [] },
+        Rock:     { strong: ['Fire', 'Ice', 'Flying', 'Bug'], weak: ['Water', 'Grass', 'Fighting', 'Ground', 'Steel'], resist: ['Normal', 'Fire', 'Poison', 'Flying'], immune: [] },
+        Ghost:    { strong: ['Psychic', 'Ghost'], weak: ['Ghost', 'Dark'], resist: ['Poison', 'Bug'], immune: ['Normal', 'Fighting'] },
+        Dragon:   { strong: ['Dragon'], weak: ['Ice', 'Dragon', 'Fairy'], resist: ['Fire', 'Water', 'Grass', 'Electric'], immune: [] },
+        Dark:     { strong: ['Psychic', 'Ghost'], weak: ['Fighting', 'Bug', 'Fairy'], resist: ['Ghost', 'Dark'], immune: ['Psychic'] },
+        Steel:    { strong: ['Ice', 'Rock', 'Fairy'], weak: ['Fire', 'Fighting', 'Ground'], resist: ['Normal', 'Grass', 'Ice', 'Flying', 'Psychic', 'Bug', 'Rock', 'Dragon', 'Steel', 'Fairy'], immune: ['Poison'] },
+        Fairy:    { strong: ['Fighting', 'Dragon', 'Dark'], weak: ['Poison', 'Steel'], resist: ['Fighting', 'Bug', 'Dark'], immune: ['Dragon'] },
+        Stellar:  { strong: ['Tera (2×)'], weak: [], resist: [], immune: [] },
+    };
 
-    // Random Encounter Card (Kolom Tengah Bento)
-    const btnRollEncounter = document.getElementById('btnRollEncounter');
-    const encounterCard = document.getElementById('encounterCard');
-    const encounterSprite = document.getElementById('encounterSprite');
-    const encounterName = document.getElementById('encounterName');
-    const encounterMeta = document.getElementById('encounterMeta');
-    const encounterDetailBtn = document.getElementById('encounterDetailBtn');
-    const encounterCatchBtn = document.getElementById('encounterCatchBtn');
+    const typeMetaMap = window.POKEDEX?.types || {};
+    let activeRadarType = 'Fire';
+    const typeRadarCard = document.getElementById('typeRadarCard');
+    const typeRadarIcon = document.getElementById('typeRadarIcon');
+    const typeRadarName = document.getElementById('typeRadarName');
+    const typeRadarCount = document.getElementById('typeRadarCount');
+    const typeRadarStrong = document.getElementById('typeRadarStrong');
+    const typeRadarWeak = document.getElementById('typeRadarWeak');
+    const typeRadarResist = document.getElementById('typeRadarResist');
 
-    function rollRandomEncounter() {
-        const pool = Array.isArray(window.POKEDEX?.pokemons) ? window.POKEDEX.pokemons : [];
-        if (pool.length === 0) return;
+    function renderRadarPillList(container, list, immuneList = []) {
+        if (!container) return;
+        container.innerHTML = '';
+        const combined = list.map((name) => ({ name, immune: false }))
+            .concat(immuneList.map((name) => ({ name, immune: true })));
 
-        const curNo = encounterDetailBtn?.dataset.openPokemon || '';
-        let pick = pool[Math.floor(Math.random() * pool.length)];
-        if (pool.length > 1 && pick.no === curNo) {
-            pick = pool[(pool.indexOf(pick) + 1) % pool.length];
-        }
-
-        if (encounterSprite) {
-            encounterSprite.src = pick.sprite || '';
-            encounterSprite.alt = pick.name || '';
-        }
-        if (encounterName) {
-            encounterName.textContent = `${pick.no} · ${pick.name}`;
-        }
-        const types = Array.isArray(pick.types) ? pick.types : [];
-        if (encounterMeta) {
-            encounterMeta.textContent = `${types.join(' / ')}${pick.gen ? ' · ' + pick.gen : ''}`;
-        }
-        if (encounterDetailBtn) {
-            encounterDetailBtn.dataset.openPokemon = pick.no;
-        }
-        if (encounterCatchBtn) {
-            encounterCatchBtn.dataset.num = String(pick.num || '');
-            encounterCatchBtn.dataset.name = String(pick.name || '');
-            encounterCatchBtn.dataset.types = types.join('|');
-            encounterCatchBtn.dataset.gen = String(pick.gen || '');
-            encounterCatchBtn.dataset.sprite = String(pick.sprite || '');
+        if (combined.length === 0) {
+            const muted = document.createElement('span');
+            muted.className = 'type-radar-pill type-radar-pill--muted';
+            muted.textContent = 'Netral (1×)';
+            container.appendChild(muted);
+            return;
         }
 
-        if (btnRollEncounter) {
-            btnRollEncounter.classList.remove('is-rolling');
-            void btnRollEncounter.offsetWidth;
-            btnRollEncounter.classList.add('is-rolling');
-        }
-        if (encounterCard) {
-            encounterCard.classList.remove('is-pop');
-            void encounterCard.offsetWidth;
-            encounterCard.classList.add('is-pop');
-        }
+        combined.forEach(({ name, immune }) => {
+            const meta = typeMetaMap[name.toLowerCase()];
+            const isFilterable = Boolean(meta);
+            const pill = document.createElement(isFilterable ? 'button' : 'span');
+            if (isFilterable) pill.type = 'button';
+            pill.className = 'type-radar-pill' + (immune ? ' type-radar-pill--immune' : '');
+            if (meta?.color) pill.style.setProperty('--pc', meta.color);
+
+            if (meta?.icon) {
+                const img = document.createElement('img');
+                img.src = meta.icon;
+                img.alt = '';
+                img.width = 13;
+                img.height = 13;
+                pill.appendChild(img);
+            }
+            const txt = document.createElement('span');
+            txt.textContent = immune ? `${name} (0×)` : name;
+            pill.appendChild(txt);
+
+            if (isFilterable) {
+                pill.title = `Filter & cek Radar tipe ${name}`;
+                pill.addEventListener('click', () => {
+                    if (typeFilter) {
+                        typeFilter.value = meta.label;
+                        applyTable(true);
+                    } else {
+                        renderTypeRadar(meta.label);
+                    }
+                });
+            }
+            container.appendChild(pill);
+        });
     }
 
-    btnRollEncounter?.addEventListener('click', rollRandomEncounter);
+    function renderTypeRadar(typeLabel) {
+        const key = Object.keys(TYPE_MATCHUPS).find((k) => k.toLowerCase() === String(typeLabel || '').toLowerCase()) || 'Fire';
+        activeRadarType = key;
+        const rule = TYPE_MATCHUPS[key];
+        const meta = typeMetaMap[key.toLowerCase()] || {};
+        const pool = Array.isArray(window.POKEDEX?.pokemons) ? window.POKEDEX.pokemons : [];
+        const totalOfType = pool.filter((p) => Array.isArray(p.types) && p.types.some((t) => t.toLowerCase() === key.toLowerCase())).length;
 
-    encounterCatchBtn?.addEventListener('click', () => {
-        if (typeof window.openAddCaughtModal !== 'function') return;
-        const d = encounterCatchBtn.dataset;
-        window.openAddCaughtModal({
-            num: d.num || '',
-            name: d.name || '',
-            types: d.types ? d.types.split('|').filter(Boolean) : [],
-            gen: d.gen || '',
-            sprite: d.sprite || '',
-        });
-    });
+        if (typeRadarCard && meta.color) typeRadarCard.style.setProperty('--trc', meta.color);
+        if (typeRadarIcon && meta.icon) {
+            typeRadarIcon.src = meta.icon;
+            typeRadarIcon.alt = key;
+        }
+        if (typeRadarName) typeRadarName.textContent = key;
+        if (typeRadarCount) typeRadarCount.textContent = `${totalOfType} Pokémon`;
+
+        renderRadarPillList(typeRadarStrong, rule.strong);
+        renderRadarPillList(typeRadarWeak, rule.weak);
+        renderRadarPillList(typeRadarResist, rule.resist, rule.immune);
+    }
+
+    renderTypeRadar(typeFilter?.value || activeRadarType);
 
     // Shortcut "/" untuk fokus ke kotak search
     document.addEventListener('keydown', (e) => {
@@ -1605,10 +1638,11 @@
             pill_gen_filter: "Filter Generasi",
             opt_all_generations: "Semua Generasi (Pilih Gen 1 – 9)",
             pill_type_filter: "Filter Tipe",
-            pill_random_encounter: "Random Encounter",
-            btn_roll_encounter: "Acak",
-            btn_encounter_detail: "Detail",
-            btn_encounter_catch: "+ Tangkap",
+            pill_type_radar: "Radar Efektivitas Tipe",
+            radar_hint_badge: "Sinkron Filter Tipe",
+            radar_super_lbl: "2× Efektif Serang",
+            radar_weak_lbl: "2× Kelemahan",
+            radar_resist_lbl: "½× / 0× Resistensi",
             btn_reset_filter: "Reset filter ×",
             drop_hint_dev: "Tarik & lepas file .xlsx langsung ke panel ini untuk import cepat",
             drop_hint_guest: "Mode Read-Only · Fitur Import Spreadsheet khusus akun Developer",
@@ -1726,10 +1760,11 @@
             pill_gen_filter: "Generation Filter",
             opt_all_generations: "All Generations (Select Gen 1 – 9)",
             pill_type_filter: "Type Filter",
-            pill_random_encounter: "Random Encounter",
-            btn_roll_encounter: "Roll",
-            btn_encounter_detail: "Detail",
-            btn_encounter_catch: "+ Catch",
+            pill_type_radar: "Type Effectiveness Radar",
+            radar_hint_badge: "Synced w/ Type Filter",
+            radar_super_lbl: "2× Super Effective",
+            radar_weak_lbl: "2× Weak Against",
+            radar_resist_lbl: "½× / 0× Resistances",
             btn_reset_filter: "Reset filter ×",
             drop_hint_dev: "Drag & drop .xlsx file directly into this panel for fast import",
             drop_hint_guest: "Read-Only Mode · Spreadsheet Import is restricted to Developer accounts",

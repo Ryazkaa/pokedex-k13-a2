@@ -1,7 +1,7 @@
 # Dokumen Arsitektur Sistem: Pokédex Collection Tracker & Trainer Directory
 
-**Versi Dokumen:** 1.5.3 (Cloud Hosting Railway, Ekspor Data Burung Kertas, Bento Distribusi Wilayah & Random Encounter)
-**Status Rilis:** Rilis Produksi v1.5.3 (Live Cloud Hosting Railway, Paper Bird Export, Region Bento & Random Encounter)
+**Versi Dokumen:** 1.5.4 (Cloud Hosting Railway, Ekspor Data Burung Kertas, Bento Distribusi Wilayah & Radar Efektivitas Tipe)
+**Status Rilis:** Rilis Produksi v1.5.4 (Live Cloud Hosting Railway, Paper Bird Export, Region Bento & Type Effectiveness Radar)
 **Tanggal Rilis:** 25 November 2026
 **Live URL:** `https://pokedex-k13-a2-production.up.railway.app/pokedex`
 **Pengembang:** Kelompok 13 — Kelas Praktikum Pemrograman Web A / A2  
@@ -224,6 +224,6 @@ Untuk menjamin kenyamanan akses di perangkat seluler (*smartphone* `320px–480p
 * **Ekspor Data Terpadu, Hold-to-Confirm, Burung Kertas & Bento Distribusi Region (`v1.5.2`):**
   * Toolbar koleksi menyatukan tombol ekspor menjadi **Ekspor Data** (`#btnOpenCaughtExportModal`) yang membuka `#caughtExportModal` untuk memilih `.XLSX` atau `.PDF`, dikonfirmasi via **Hold to Confirm** (`window.pkmSetupHoldButton`), lalu memutar animasi dokumen terlipat menjadi burung kertas origami terbang menuju kanan atas (`#paperBirdOverlay`) sebelum mengunduh file.
   * Kolom kiri Bento Grid (`bento.blade.php`) diringkas menjadi 1 kartu panjang tunggal **Distribusi Wilayah Generasi I – IX** (`.region-panel`) berisi 9 grafik batang klik-able (`data-filter-gen`) untuk menyaring tabel Pustaka Pokémon secara instan.
-* **Reorganisasi Bento Kolom Tengah & Random Encounter Spotlight (`v1.5.3`):**
-  * Kolom tengah Bento Grid menaikkan **Filter Tipe** (19 elemen) ke posisi teratas, menggantikan dropdown generasi yang redundan dengan kartu interaktif **Random Encounter** (`#encounterCard`, tombol *Acak*, *Detail* Showcase, dan *+ Tangkap* prefill via `openAddCaughtModal(prefill)`), serta memindahkan kartu **Import Pokemon untuk Database** ke posisi paling bawah tepat di atas teks petunjuk drag-and-drop `.xlsx`.
+* **Reorganisasi Bento Kolom Tengah & Radar Efektivitas Tipe (`v1.5.3` – `v1.5.4`):**
+  * Kolom tengah Bento Grid menaikkan **Filter Tipe** (19 elemen) ke posisi teratas, meletakkan kartu **Import Pokemon untuk Database** di posisi paling bawah tepat di atas teks petunjuk drag-and-drop `.xlsx`, serta mengisi ruang tengah (`flex: 1`) dengan **Radar Efektivitas & Kelemahan Tipe** (`#typeRadarCard`, `TYPE_MATCHUPS`, `renderTypeRadar()`) yang menampilkan serangan **2×**, kelemahan **2×**, dan resistensi/kebal **½× / 0×** sinkron real-time dengan *Filter Tipe*.
 

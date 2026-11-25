@@ -74,9 +74,9 @@
         </div>
     </div>
 
-    {{-- Kolom 2 (Tengah): Filter Tipe -> Random Encounter -> Import Excel & Drop Zone --}}
+    {{-- Kolom 2 (Tengah): Filter Tipe -> Radar Kelemahan Elemen (Flex Fill) -> Import Excel & Drop Zone --}}
     @php
-        $encounterPokemon = $pokemons->isNotEmpty() ? $pokemons->random() : null;
+        $fireCount = $pokemons->filter(fn($p) => in_array('Fire', $p->type_list, true))->count();
     @endphp
     <div class="bento__col bento__control" @if($isDev) id="dropZone" @endif>
         <div class="bento-head">
@@ -107,58 +107,50 @@
                 </div>
             </div>
 
-            {{-- 2. Tengah: Random Encounter Spotlight (Acak Pokémon + Lihat Detail / Tangkap) --}}
-            <div class="control-group encounter-box">
+            {{-- 2. Tengah: Radar Efektivitas & Kelemahan Tipe (Mengisi penuh ruang tengah Bento) --}}
+            <div class="control-group type-radar-box">
                 <div class="control-group__head">
-                    <p class="pill-label" data-i18n="pill_random_encounter">Random Encounter</p>
-                    <button type="button" class="encounter-roll-btn" id="btnRollEncounter" title="Acak Pokémon lainnya">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <rect x="3" y="3" width="18" height="18" rx="4"/>
-                            <circle cx="8.5" cy="8.5" r="1" fill="currentColor"/>
-                            <circle cx="15.5" cy="8.5" r="1" fill="currentColor"/>
-                            <circle cx="12" cy="12" r="1" fill="currentColor"/>
-                            <circle cx="8.5" cy="15.5" r="1" fill="currentColor"/>
-                            <circle cx="15.5" cy="15.5" r="1" fill="currentColor"/>
-                        </svg>
-                        <span data-i18n="btn_roll_encounter">Acak</span>
-                    </button>
+                    <p class="pill-label" data-i18n="pill_type_radar">Radar Efektivitas Tipe</p>
+                    <span class="type-radar-hint" id="typeRadarActiveTag" data-i18n="radar_hint_badge">Sinkron Filter Tipe</span>
                 </div>
-                <div class="encounter-card" id="encounterCard">
-                    <div class="encounter-card__sprite">
-                        <img id="encounterSprite"
-                             src="{{ $encounterPokemon?->sprite_url ?? asset('images/pokeball.svg') }}"
-                             alt="{{ $encounterPokemon?->nama_pokemon ?? 'Pokéball' }}"
-                             width="48" height="48" loading="lazy">
+                <div class="type-radar-card" id="typeRadarCard" style="--trc: #EE8130;">
+                    <div class="type-radar-head">
+                        <div class="type-radar-type">
+                            <img id="typeRadarIcon" src="{{ asset('images/types/fire.svg') }}" alt="Fire" width="22" height="22">
+                            <strong id="typeRadarName">Fire</strong>
+                        </div>
+                        <span class="type-radar-count" id="typeRadarCount">{{ $fireCount }} Pokémon</span>
                     </div>
-                    <div class="encounter-card__info">
-                        <strong class="encounter-card__name" id="encounterName">
-                            {{ $encounterPokemon ? ($encounterPokemon->nomor_index . ' · ' . $encounterPokemon->nama_pokemon) : 'Pokémon Acak' }}
-                        </strong>
-                        <span class="encounter-card__meta" id="encounterMeta">
-                            {{ $encounterPokemon ? (implode(' / ', $encounterPokemon->type_list) . ' · ' . $encounterPokemon->generasi) : 'Klik Acak untuk mencari' }}
-                        </span>
-                    </div>
-                    <div class="encounter-card__actions">
-                        <button type="button"
-                                class="encounter-act-btn encounter-act-btn--detail"
-                                id="encounterDetailBtn"
-                                data-open-pokemon="{{ $encounterPokemon?->nomor_index ?? '' }}"
-                                data-i18n="btn_encounter_detail"
-                                title="Lihat detail Pokémon">
-                            Detail
-                        </button>
-                        <button type="button"
-                                class="encounter-act-btn encounter-act-btn--catch"
-                                id="encounterCatchBtn"
-                                data-num="{{ $encounterPokemon?->number ?? '' }}"
-                                data-name="{{ $encounterPokemon?->nama_pokemon ?? '' }}"
-                                data-types="{{ $encounterPokemon ? implode('|', $encounterPokemon->type_list) : '' }}"
-                                data-gen="{{ $encounterPokemon?->generasi ?? '' }}"
-                                data-sprite="{{ $encounterPokemon?->sprite_url ?? '' }}"
-                                data-i18n="btn_encounter_catch"
-                                title="Tambahkan ke koleksi Pokédex">
-                            + Tangkap
-                        </button>
+
+                    <div class="type-radar-rows">
+                        <div class="type-radar-row">
+                            <span class="type-radar-lbl type-radar-lbl--strong" data-i18n="radar_super_lbl">2× Efektif Serang</span>
+                            <div class="type-radar-pills" id="typeRadarStrong">
+                                <span class="type-radar-pill">Grass</span>
+                                <span class="type-radar-pill">Ice</span>
+                                <span class="type-radar-pill">Bug</span>
+                                <span class="type-radar-pill">Steel</span>
+                            </div>
+                        </div>
+                        <div class="type-radar-row">
+                            <span class="type-radar-lbl type-radar-lbl--weak" data-i18n="radar_weak_lbl">2× Kelemahan</span>
+                            <div class="type-radar-pills" id="typeRadarWeak">
+                                <span class="type-radar-pill">Water</span>
+                                <span class="type-radar-pill">Ground</span>
+                                <span class="type-radar-pill">Rock</span>
+                            </div>
+                        </div>
+                        <div class="type-radar-row">
+                            <span class="type-radar-lbl type-radar-lbl--resist" data-i18n="radar_resist_lbl">½× / 0× Resistensi</span>
+                            <div class="type-radar-pills" id="typeRadarResist">
+                                <span class="type-radar-pill">Fire</span>
+                                <span class="type-radar-pill">Grass</span>
+                                <span class="type-radar-pill">Ice</span>
+                                <span class="type-radar-pill">Bug</span>
+                                <span class="type-radar-pill">Steel</span>
+                                <span class="type-radar-pill">Fairy</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
