@@ -101,6 +101,7 @@ Pertemuan 999/
 │   ├── pokedex-app(v1.3.0).zip     # Rilis integrasi Modul 4: Jurnal Taktik & Quill.js WYSIWYG (Iasha Irdanti)
 │   ├── pokedex-app(v1.3.1).zip     # Rilis bugfix jurnal: Skema DB, SVG murni & popup feedback (Arya & K13)
 │   ├── pokedex-app(v1.4.0).zip     # Rilis Cloud Hosting Railway: HTTPS proxy, ext-gd/zip & config:cache sanitizer (Arya & K13)
+│   ├── pokedex-app(v1.4.1).zip     # Rilis UI Responsif Mobile/Tablet: Topbar, Hero Deck, Caught DataTables & Scrollable Modals (Arya & K13)
 │   └── README.md                   # Catatan rilis dan riwayat versi komprehensif
 ├── datasets/                       # Dataset acuan spreadsheet (.xlsx)
 ├── docs/                           # Dokumentasi & rancangan sistem
