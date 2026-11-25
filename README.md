@@ -93,7 +93,7 @@ Proyek ini dikembangkan oleh **Kelompok 13 — Kelas Praktikum Pemrograman Web A
 
 ### 16. Radar Efektivitas & Kelemahan Tipe Penuh-Ruang di Bento Tengah (v1.5.4 Milestone)
 * **Mengganti `Random Encounter` dengan `Radar Efektivitas Tipe` (`#typeRadarCard`, `.type-radar-box`):** Mengisi penuh sisa ruang vertikal di kolom tengah Bento (`flex: 1`) sehingga rata sejajar dengan kolom kiri (*Distribusi Wilayah*) dan kanan (*Progress Koleksi*) tanpa celah kosong.
-* **Sinkronisasi Real-Time dengan `Filter Tipe` (`TYPE_MATCHUPS`, `renderTypeRadar()` di `pokedex.js`):** Ketika pengguna memilih salah satu dari 19 elemen di *Filter Tipe* (atau mengklik lencana tipe di dalam Radar), panel langsung menampilkan jumlah populasi Pokémon bertipe tersebut beserta daftar **2× Efektif Serang**, **2× Kelemahan**, dan **½× / 0× Resistensi/Kebal** lengkap dengan ikon SVG tipe.
+* **Dropdown Pemilih 19 Elemen Independen (`#typeRadarPickerBtn`, `#typeRadarDropdown`, `TYPE_MATCHUPS`):** Berjalan independen tanpa mengganggu *Filter Tipe* tabel utama; pengguna cukup mengklik nama elemen di bagian atas kartu Radar untuk membuka dropdown grid berikon 19 tipe (atau mengklik lencana di dalam Radar) guna melihat jumlah populasi serta **2× Efektif Serang**, **2× Kelemahan**, dan **½× / 0× Resistensi/Kebal**.
 
 ---
 
@@ -134,7 +134,7 @@ Pertemuan 999/
 │   ├── pokedex-app(v1.5.1).zip     # Rilis Bugfix Duplikat Tangkapan: Popup Peringatan Sudah Ditangkap & Info First Caught (Arya & K13)
 │   ├── pokedex-app(v1.5.2).zip     # Rilis Ekspor Data Terpadu (Hold + Animasi Burung Kertas) & Bento Distribusi Region I-IX (Arya & K13)
 │   ├── pokedex-app(v1.5.3).zip     # Rilis Reorganisasi Bento Tengah: Filter Tipe Atas, Random Encounter Tengah & Import Bawah (Arya & K13)
-│   ├── pokedex-app(v1.5.4).zip     # Rilis Bento Tengah Penuh-Ruang: Radar Efektivitas & Kelemahan 19 Tipe Elemen Sinkron Filter (Arya & K13)
+│   ├── pokedex-app(v1.5.4).zip     # Rilis Bento Tengah Penuh-Ruang: Radar Efektivitas 19 Elemen Independen + Dropdown (Arya & K13)
 │   └── README.md                   # Catatan rilis dan riwayat versi komprehensif
 ├── datasets/                       # Dataset acuan spreadsheet (.xlsx)
 ├── docs/                           # Dokumentasi & rancangan sistem

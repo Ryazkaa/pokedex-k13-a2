@@ -918,9 +918,6 @@
         if (bentoGen && bentoGen.value !== gVal) {
             bentoGen.value = gVal;
         }
-        if (typeof renderTypeRadar === 'function') {
-            renderTypeRadar(tVal || activeRadarType);
-        }
     }
 
     let totalPagesCount = 1;
@@ -1044,12 +1041,21 @@
     const typeMetaMap = window.POKEDEX?.types || {};
     let activeRadarType = 'Fire';
     const typeRadarCard = document.getElementById('typeRadarCard');
+    const typeRadarPicker = document.getElementById('typeRadarPicker');
+    const typeRadarPickerBtn = document.getElementById('typeRadarPickerBtn');
+    const typeRadarDropdown = document.getElementById('typeRadarDropdown');
     const typeRadarIcon = document.getElementById('typeRadarIcon');
     const typeRadarName = document.getElementById('typeRadarName');
     const typeRadarCount = document.getElementById('typeRadarCount');
     const typeRadarStrong = document.getElementById('typeRadarStrong');
     const typeRadarWeak = document.getElementById('typeRadarWeak');
     const typeRadarResist = document.getElementById('typeRadarResist');
+
+    function setRadarDropdownOpen(open) {
+        if (!typeRadarDropdown || !typeRadarPickerBtn) return;
+        typeRadarDropdown.hidden = !open;
+        typeRadarPickerBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
 
     function renderRadarPillList(container, list, immuneList = []) {
         if (!container) return;
@@ -1067,9 +1073,9 @@
 
         combined.forEach(({ name, immune }) => {
             const meta = typeMetaMap[name.toLowerCase()];
-            const isFilterable = Boolean(meta);
-            const pill = document.createElement(isFilterable ? 'button' : 'span');
-            if (isFilterable) pill.type = 'button';
+            const isSelectable = Boolean(meta);
+            const pill = document.createElement(isSelectable ? 'button' : 'span');
+            if (isSelectable) pill.type = 'button';
             pill.className = 'type-radar-pill' + (immune ? ' type-radar-pill--immune' : '');
             if (meta?.color) pill.style.setProperty('--pc', meta.color);
 
@@ -1085,15 +1091,10 @@
             txt.textContent = immune ? `${name} (0×)` : name;
             pill.appendChild(txt);
 
-            if (isFilterable) {
-                pill.title = `Filter & cek Radar tipe ${name}`;
+            if (isSelectable) {
+                pill.title = `Lihat Radar elemen ${name}`;
                 pill.addEventListener('click', () => {
-                    if (typeFilter) {
-                        typeFilter.value = meta.label;
-                        applyTable(true);
-                    } else {
-                        renderTypeRadar(meta.label);
-                    }
+                    renderTypeRadar(meta.label);
                 });
             }
             container.appendChild(pill);
@@ -1116,12 +1117,47 @@
         if (typeRadarName) typeRadarName.textContent = key;
         if (typeRadarCount) typeRadarCount.textContent = `${totalOfType} Pokémon`;
 
+        if (typeRadarDropdown) {
+            typeRadarDropdown.querySelectorAll('.type-radar-opt').forEach((opt) => {
+                const active = String(opt.dataset.radarType || '').toLowerCase() === key.toLowerCase();
+                opt.classList.toggle('is-active', active);
+                opt.setAttribute('aria-selected', active ? 'true' : 'false');
+            });
+        }
+
         renderRadarPillList(typeRadarStrong, rule.strong);
         renderRadarPillList(typeRadarWeak, rule.weak);
         renderRadarPillList(typeRadarResist, rule.resist, rule.immune);
     }
 
-    renderTypeRadar(typeFilter?.value || activeRadarType);
+    typeRadarPickerBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const willOpen = Boolean(typeRadarDropdown?.hidden);
+        setRadarDropdownOpen(willOpen);
+    });
+
+    typeRadarDropdown?.addEventListener('click', (e) => {
+        const opt = e.target.closest('.type-radar-opt');
+        if (!opt) return;
+        renderTypeRadar(opt.dataset.radarType);
+        setRadarDropdownOpen(false);
+        typeRadarPickerBtn?.focus();
+    });
+
+    document.addEventListener('click', (e) => {
+        if (typeRadarPicker && !typeRadarPicker.contains(e.target)) {
+            setRadarDropdownOpen(false);
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && typeRadarDropdown && !typeRadarDropdown.hidden) {
+            setRadarDropdownOpen(false);
+            typeRadarPickerBtn?.focus();
+        }
+    });
+
+    renderTypeRadar(activeRadarType);
 
     // Shortcut "/" untuk fokus ke kotak search
     document.addEventListener('keydown', (e) => {
@@ -1639,7 +1675,7 @@
             opt_all_generations: "Semua Generasi (Pilih Gen 1 – 9)",
             pill_type_filter: "Filter Tipe",
             pill_type_radar: "Radar Efektivitas Tipe",
-            radar_hint_badge: "Sinkron Filter Tipe",
+            radar_hint_badge: "Pilih Elemen",
             radar_super_lbl: "2× Efektif Serang",
             radar_weak_lbl: "2× Kelemahan",
             radar_resist_lbl: "½× / 0× Resistensi",
@@ -1761,7 +1797,7 @@
             opt_all_generations: "All Generations (Select Gen 1 – 9)",
             pill_type_filter: "Type Filter",
             pill_type_radar: "Type Effectiveness Radar",
-            radar_hint_badge: "Synced w/ Type Filter",
+            radar_hint_badge: "Select Element",
             radar_super_lbl: "2× Super Effective",
             radar_weak_lbl: "2× Weak Against",
             radar_resist_lbl: "½× / 0× Resistances",

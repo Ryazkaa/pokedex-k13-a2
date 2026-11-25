@@ -107,17 +107,41 @@
                 </div>
             </div>
 
-            {{-- 2. Tengah: Radar Efektivitas & Kelemahan Tipe (Mengisi penuh ruang tengah Bento) --}}
+            {{-- 2. Tengah: Radar Efektivitas & Kelemahan Tipe (Independen + Dropdown Pilih 19 Elemen) --}}
             <div class="control-group type-radar-box">
                 <div class="control-group__head">
                     <p class="pill-label" data-i18n="pill_type_radar">Radar Efektivitas Tipe</p>
-                    <span class="type-radar-hint" id="typeRadarActiveTag" data-i18n="radar_hint_badge">Sinkron Filter Tipe</span>
+                    <span class="type-radar-hint" id="typeRadarActiveTag" data-i18n="radar_hint_badge">Pilih Elemen</span>
                 </div>
                 <div class="type-radar-card" id="typeRadarCard" style="--trc: #EE8130;">
                     <div class="type-radar-head">
-                        <div class="type-radar-type">
-                            <img id="typeRadarIcon" src="{{ asset('images/types/fire.svg') }}" alt="Fire" width="22" height="22">
-                            <strong id="typeRadarName">Fire</strong>
+                        <div class="type-radar-picker" id="typeRadarPicker">
+                            <button type="button"
+                                    class="type-radar-picker-btn"
+                                    id="typeRadarPickerBtn"
+                                    aria-haspopup="listbox"
+                                    aria-expanded="false"
+                                    aria-controls="typeRadarDropdown"
+                                    title="Pilih elemen Pokémon untuk melihat kelemahan & kekuatan">
+                                <img id="typeRadarIcon" src="{{ asset('images/types/fire.svg') }}" alt="Fire" width="22" height="22">
+                                <strong id="typeRadarName">Fire</strong>
+                                <svg class="type-radar-chevron" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="m6 9 6 6 6-6"/>
+                                </svg>
+                            </button>
+                            <div class="type-radar-dropdown" id="typeRadarDropdown" role="listbox" aria-label="Pilih Elemen Tipe Pokémon" hidden>
+                                @foreach ($typeMeta as $typeKey => $meta)
+                                    <button type="button"
+                                            class="type-radar-opt {{ strtolower($meta['label']) === 'fire' ? 'is-active' : '' }}"
+                                            role="option"
+                                            aria-selected="{{ strtolower($meta['label']) === 'fire' ? 'true' : 'false' }}"
+                                            data-radar-type="{{ $meta['label'] }}"
+                                            style="--oc: {{ $meta['color'] }}">
+                                        <img src="{{ asset($meta['icon']) }}" alt="" width="16" height="16" loading="lazy">
+                                        <span>{{ $meta['label'] }}</span>
+                                    </button>
+                                @endforeach
+                            </div>
                         </div>
                         <span class="type-radar-count" id="typeRadarCount">{{ $fireCount }} Pokémon</span>
                     </div>

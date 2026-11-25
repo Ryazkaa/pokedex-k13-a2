@@ -249,7 +249,7 @@ Jelaskan kepada dosen bahwa proyek Pokédex Kelompok 13 dibangun dengan disiplin
 #### Konten Slide (Bullet Points):
 * **P9 (Pengolahan Grafik, Distribusi Wilayah & Radar Efektivitas Tipe):**
   - *Distribusi Wilayah I–IX (`v1.5.2`):* Grafik batang interaktif populasi Kanto s.d. Paldea yang dapat diklik untuk langsung menyaring tabel Pustaka Pokémon.
-  - *Radar Efektivitas Tipe (`v1.5.4`):* Panel analisis matchup **2× Efektif Serang**, **2× Kelemahan**, dan **½× / 0× Resistensi** di tengah Bento yang tersinkronisasi real-time dengan pilihan *Filter Tipe*.
+  - *Radar Efektivitas Tipe (`v1.5.4`):* Panel analisis matchup **2× Efektif Serang**, **2× Kelemahan**, dan **½× / 0× Resistensi** di tengah Bento yang berdiri independen dengan dropdown pemilih 19 elemen berikon SVG.
   - *Progress Bar Dinamis:* Menampilkan rasio persentase tangkapan terhadap total 1.025 entitas Pokémon secara real-time.
   - *Funnel Kelengkapan Generasi:* Visual bar statistik koleksi per wilayah (Gen I Kanto hingga Gen IX Paldea).
   - *Visual Artwork & Sprites:* Rendering grafik visual resolusi tinggi dari GitHub raw data PokéAPI untuk setiap kartu koleksi.
