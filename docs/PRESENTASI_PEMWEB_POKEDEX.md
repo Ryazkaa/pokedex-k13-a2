@@ -86,7 +86,7 @@
 * **Catatan Presenter:** Tekankan bahwa arsitektur backend memisahkan tanggung jawab secara tegas (*Separation of Concerns*). Tidak ada logika SQL mentah yang tercecer di View, dan seluruh proses manipulasi berkas berat (Excel/PDF) diisolasi di Controller masing-masing.
 
 #### Rekomendasi Visual / Screenshot:
-* Diagram blok arsitektur sistem (Client Layer Browser → Laravel 11 Backend & Services → MySQL 8.0 Database) seperti yang tertera pada dokumen arsitektur v1.5.0.
+* Diagram blok arsitektur sistem (Client Layer Browser → Laravel 11 Backend & Services → MySQL 8.0 Database) seperti yang tertera pada dokumen arsitektur v1.5.1.
 
 ---
 
@@ -219,7 +219,7 @@ Jelaskan kepada dosen bahwa proyek Pokédex Kelompok 13 dibangun dengan disiplin
 
 #### Konten Slide (Bullet Points):
 * **P6 (Implementasi Penuh Siklus CRUD):**
-  - **Create:** Menambah Pokémon tangkapan baru via modal `caught-modal.blade.php` dan endpoint POST AJAX.
+  - **Create:** Menambah Pokémon tangkapan baru via modal `caught-modal.blade.php` dan endpoint POST AJAX (dilengkapi deteksi duplikat HTTP `409` pada `v1.5.1` yang memberi tahu trainer bahwa Pokémon sudah pernah ditangkap beserta tanggal **First Caught**-nya).
   - **Read:** Menampilkan daftar koleksi tangkapan personal pada tabel Caught Tracker secara terisolasi per `user_id`.
   - **Update:** Fitur edit tanggal tangkap cepat (`updateDate`) dengan pemilih kalender modal terintegrasi.
   - **Delete:** Penghapusan Pokémon tangkapan (`destroy`) dengan modal konfirmasi peringatan cyber merah demi keamanan data.

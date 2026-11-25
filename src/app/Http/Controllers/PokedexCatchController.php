@@ -56,22 +56,36 @@ class PokedexCatchController extends Controller
 
         $caughtDate = !empty($validated['caught_at']) ? \Carbon\Carbon::parse($validated['caught_at']) : now();
 
-        // Tambahkan ke koleksi trainer aktif
-        $catch = TrainerCatch::firstOrCreate(
-            [
-                'user_id'    => Auth::id(),
-                'pokemon_id' => $pokemon->id,
-            ],
-            [
-                'caught_at'   => $caughtDate,
-                'location'    => 'Wild Encounter',
-                'is_favorite' => false,
-            ]
-        );
+        // Cek apakah Pokémon sudah pernah ditangkap trainer ini sebelumnya
+        $existingCatch = TrainerCatch::where('user_id', Auth::id())
+            ->where('pokemon_id', $pokemon->id)
+            ->orderBy('id', 'asc')
+            ->first();
 
-        if (!$catch->wasRecentlyCreated && !empty($validated['caught_at'])) {
-            $catch->update(['caught_at' => $caughtDate]);
+        if ($existingCatch) {
+            $firstCaught = $existingCatch->caught_at ?? $existingCatch->created_at;
+            $firstCaughtFormatted = $firstCaught
+                ? $firstCaught->copy()->locale('id')->translatedFormat('d F Y')
+                : 'Tidak tercatat';
+
+            return response()->json([
+                'success'          => false,
+                'already_caught'   => true,
+                'first_caught_at'  => $firstCaughtFormatted,
+                'first_caught_raw' => $firstCaught?->format('Y-m-d'),
+                'message'          => "{$pokemon->nama_pokemon} ({$pokemon->nomor_index}) sudah pernah Anda tangkap sebelumnya! First Caught: {$firstCaughtFormatted}.",
+                'pokemon'          => $pokemon,
+            ], 409);
         }
+
+        // Tambahkan ke koleksi trainer aktif
+        TrainerCatch::create([
+            'user_id'     => Auth::id(),
+            'pokemon_id'  => $pokemon->id,
+            'caught_at'   => $caughtDate,
+            'location'    => 'Wild Encounter',
+            'is_favorite' => false,
+        ]);
 
         return response()->json([
             'success' => true,

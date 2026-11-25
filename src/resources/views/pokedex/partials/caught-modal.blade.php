@@ -245,18 +245,32 @@ window.showCaughtFeedback = function(isSuccess, title, message, reloadOnClose = 
 
     if (!modal) return;
 
-    if (isSuccess) {
+    const variant = isSuccess === 'warning' ? 'warning' : (isSuccess ? 'success' : 'error');
+
+    if (variant === 'success') {
         icon.style.background = 'rgba(16, 185, 129, 0.15)';
         icon.style.border = '2px solid #10b981';
         icon.innerHTML = '<svg viewBox="0 0 24 24" style="width: 32px; height: 32px; color: #10b981;" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
         titleEl.style.color = '#10b981';
         okBtn.style.background = '#10b981';
+        okBtn.style.color = '#ffffff';
+        okBtn.textContent = 'OK, Lanjutkan';
+    } else if (variant === 'warning') {
+        icon.style.background = 'rgba(245, 158, 11, 0.15)';
+        icon.style.border = '2px solid #f59e0b';
+        icon.innerHTML = '<svg viewBox="0 0 24 24" style="width: 32px; height: 32px; color: #f59e0b;" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+        titleEl.style.color = '#f59e0b';
+        okBtn.style.background = '#f59e0b';
+        okBtn.style.color = '#0f172a';
+        okBtn.textContent = 'OK, Mengerti';
     } else {
         icon.style.background = 'rgba(239, 68, 68, 0.15)';
         icon.style.border = '2px solid #ef4444';
         icon.innerHTML = '<svg viewBox="0 0 24 24" style="width: 32px; height: 32px; color: #ef4444;" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>';
         titleEl.style.color = '#ef4444';
         okBtn.style.background = '#ef4444';
+        okBtn.style.color = '#ffffff';
+        okBtn.textContent = 'OK, Lanjutkan';
     }
 
     titleEl.textContent = title;
@@ -699,7 +713,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 const json = await res.json();
-                if (json.success) {
+                if (json.already_caught) {
+                    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+                    const pName = esc(json.pokemon?.nama_pokemon || formData.get('nama_pokemon') || 'Pokémon');
+                    const pIndex = esc(json.pokemon?.nomor_index || '');
+                    const firstDate = esc(json.first_caught_at || 'Tidak tercatat');
+                    const msg = `Anda sudah pernah menangkap <strong>${pName}${pIndex ? ' (' + pIndex + ')' : ''}</strong> sebelumnya dan sudah ada di koleksi Pokédex Anda.<br><span style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:7px 12px;border-radius:8px;background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.35);color:#fbbf24;font-size:0.84rem;"><strong>First Caught:</strong> ${firstDate}</span>`;
+                    window.showCaughtFeedback('warning', 'Sudah Pernah Ditangkap!', msg, false);
+                } else if (json.success) {
                     document.getElementById('addCaughtModal').hidden = true;
                     window.showCaughtFeedback(true, 'Koleksi Tersimpan!', json.message, true);
                 } else {

@@ -1,7 +1,7 @@
 # Dokumen Arsitektur Sistem: Pokédex Collection Tracker & Trainer Directory
 
-**Versi Dokumen:** 1.5.0 (Cloud Hosting Railway, UI Responsif Multi-Perangkat & PokéAPI Name Autocomplete)
-**Status Rilis:** Rilis Produksi v1.5.0 (Live Cloud Hosting Railway, Full Responsive Mobile & Smart PokéAPI Combobox)
+**Versi Dokumen:** 1.5.1 (Cloud Hosting Railway, PokéAPI Name Autocomplete & Proteksi Duplikat First Caught)
+**Status Rilis:** Rilis Produksi v1.5.1 (Live Cloud Hosting Railway, Smart PokéAPI Combobox & Duplicate Catch Guard)
 **Tanggal Rilis:** 25 November 2026
 **Live URL:** `https://pokedex-k13-a2-production.up.railway.app/pokedex`
 **Pengembang:** Kelompok 13 — Kelas Praktikum Pemrograman Web A / A2  
@@ -220,4 +220,5 @@ Untuk menjamin kenyamanan akses di perangkat seluler (*smartphone* `320px–480p
 * **Animated Name Autocomplete Combobox (`#apiDexName`, `#apiDexNameList`):** Menggunakan pola aksesibel WAI-ARIA `role="combobox"` (`aria-autocomplete="list"`, `aria-expanded`, `aria-activedescendant`, `role="listbox"`) dengan animasi muncul halus (`@keyframes caughtSuggestIn`, menghormati `prefers-reduced-motion`). Saran difilter berdasarkan awalan nama (*prefix*) lalu kecocokan (*substring*) dan diurutkan menaik (*ascending*) menurut nomor index (`#0025 Pikachu` di atas `#0731 Pikipek`), dilengkapi sinkronisasi fallback katalog `https://pokeapi.co/api/v2/pokemon?limit=1025`.
 * **Dual-Mode PokéAPI Lookup (Index & Name):** Tombol `#btnFetchPokeApi` ditempatkan di bawah input *Nama Pokémon* dan secara otomatis mengambil data via nomor indeks maupun slug nama (`normalizePokeApiSlug`) dari `https://pokeapi.co/api/v2/pokemon/{identifier}` untuk mengisi nomor index (`#apiDexIndex`), nama, tipe, generasi, sprite, serta hologram preview.
 * **Modal Scroll & Button Alignment Fix:** Menghapus inline `overflow: hidden` pada `.pkm-modal__dialog` (`caught-modal.blade.php`, `journal-modal.blade.php`, `caught-table.blade.php`) dan menetapkan `.pkm-modal__actions .action-pill { width: auto; }` di `pokedex.css` agar seluruh modal dapat digulir vertikal penuh di zoom 100% dan layar ponsel.
+* **Proteksi Duplikat Tangkapan & Info First Caught (`v1.5.1`):** `PokedexCatchController::store()` mengecek `TrainerCatch` yang sudah ada untuk `(user_id, pokemon_id)` sebelum menyimpan agar tanggal tangkapan awal tidak tertimpa, mengembalikan HTTP `409` (`already_caught: true`, `first_caught_at`), dan menampilkannya lewat varian peringatan amber `#f59e0b` pada `#caughtFeedbackModal` (`Sudah Pernah Ditangkap!`).
 

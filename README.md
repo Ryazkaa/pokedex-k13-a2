@@ -78,6 +78,10 @@ Proyek ini dikembangkan oleh **Kelompok 13 — Kelas Praktikum Pemrograman Web A
 * **Ambil Data PokéAPI via Nomor Index atau Nama (`#btnFetchPokeApi`):** Memindahkan tombol **⚡ Ambil PokéAPI** ke bawah kolom *Nama Pokémon* dan mendukung pengambilan data `https://pokeapi.co/api/v2/pokemon/{identifier}` berdasarkan **Nomor Index** maupun **Nama Pokémon** lengkap (mengisi otomatis kolom nomor index, nama, tipe 1/2, generasi, sprite URL, dan preview hologram).
 * **Perbaikan Bug Scroll & Tata Letak Tombol Modal (`caught-modal.blade.php`, `journal-modal.blade.php`, `caught-table.blade.php`, `pokedex.css`):** Menghapus deklarasi inline `overflow: hidden` yang sebelumnya menghalangi scroll vertikal pada `.pkm-modal__dialog` di zoom 100% maupun layar kecil, serta memperbaiki `.pkm-modal__actions .action-pill` (`width: auto`) agar tombol `Batal` dan `Simpan Koleksi` sejajar rapi tanpa terpotong di bawah layar.
 
+### 13. Proteksi Duplikat Tangkapan & Info First Caught (v1.5.1 Milestone)
+* **Validasi Duplikat Koleksi (`PokedexCatchController::store()`):** Mencegah penimpaan data atau popup sukses palsu ketika trainer mencoba menambah Pokémon yang sudah ada dalam `trainer_catches`, dan mengembalikan respons terstruktur HTTP `409` (`already_caught: true`, `first_caught_at`) dengan tanggal tangkap pertamanya (`caught_at ?? created_at`).
+* **Popup Peringatan Amber `Sudah Pernah Ditangkap!` (`caught-modal.blade.php`):** Menambahkan varian `'warning'` (`#f59e0b`) pada `window.showCaughtFeedback()` yang memberi tahu trainer bahwa Pokémon tersebut sudah ada di Pokédex beserta lencana tanggal **First Caught**-nya tanpa menimpa catatan tanggal asli.
+
 ---
 
 ## 🛠️ Tumpukan Teknologi (Tech Stack)
@@ -114,6 +118,7 @@ Pertemuan 999/
 │   ├── pokedex-app(v1.4.1).zip     # Rilis UI Responsif Mobile/Tablet: Topbar, Hero Deck, Caught DataTables & Scrollable Modals (Arya & K13)
 │   ├── pokedex-app(v1.4.2).zip     # Rilis Penyempurnaan Responsif Lanjutan: Eyebrow Hero, Grid 3-Kol Filter Tipe, Auth Tabs 1-Baris (Arya & K13)
 │   ├── pokedex-app(v1.5.0).zip     # Rilis Fitur PokéAPI by Name, Animated Autocomplete & Perbaikan Scroll Modal Tambah Koleksi (Arya & K13)
+│   ├── pokedex-app(v1.5.1).zip     # Rilis Bugfix Duplikat Tangkapan: Popup Peringatan Sudah Ditangkap & Info First Caught (Arya & K13)
 │   └── README.md                   # Catatan rilis dan riwayat versi komprehensif
 ├── datasets/                       # Dataset acuan spreadsheet (.xlsx)
 ├── docs/                           # Dokumentasi & rancangan sistem
@@ -191,7 +196,7 @@ Pertemuan 999/
 | Anggota | Modul Utama | Status Integrasi | Luaran & Komponen yang Dihasilkan |
 |---|---|:---:|---|
 | **Yanuar Dwi Prasetya**<br>*(J0404251022)* | **Modul 1:** Autentikasi, Sesi, & Role Developer | ✅ **Terintegrasi (v1.1.0 / v1.1.1)** | Migrasi `users.role`, `EnsureDeveloper` Middleware, `AuthController`, modal login/switch account (`auth-modal.blade.php`), lencana status navbar `DEV`/`TRAINER`. |
-| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1 / v1.2.1–v1.2.4 / v1.3.1 / v1.4.0–v1.5.0)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Card 2 Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching, identitas brand Pokéball resmi, sistem bilingual (ID/EN), Cloud DevOps Railway, UI responsif mobile, serta autocomplete PokéAPI by Name & scroll fix modal. |
+| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1 / v1.2.1–v1.2.4 / v1.3.1 / v1.4.0–v1.5.1)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Card 2 Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching, identitas brand Pokéball resmi, sistem bilingual (ID/EN), Cloud DevOps Railway, UI responsif mobile, autocomplete PokéAPI by Name, scroll fix modal, & proteksi duplikat First Caught. |
 | **Madina Dwiyana Putri**<br>*(J0404251090)* | **Modul 3:** Pokédex Caught Tracker, DataTables, & Ekspor | ✅ **Terintegrasi (v1.2.0 / v1.2.1)** | Migrasi `trainer_catches`, model `TrainerCatch`, modal `+ Tambah Koleksi` dengan auto-fetch PokéAPI, integrasi DataTables, serta ekspor Excel & DomPDF A4. |
 | **Iasha Irdanti**<br>*(J0404251115)* | **Modul 4:** Field Notes & Jurnal Strategi Trainer | ✅ **Terintegrasi (v1.3.0)** | Migrasi `trainer_notes`, model `TrainerNote`, modal Jurnal Taktik dengan tanggal/lokasi tangkap, integrasi editor WYSIWYG Quill.js, sanitasi HTML. |
 
