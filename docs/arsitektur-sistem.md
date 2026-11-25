@@ -1,7 +1,7 @@
 # Dokumen Arsitektur Sistem: Pokédex Collection Tracker & Trainer Directory
 
-**Versi Dokumen:** 1.5.1 (Cloud Hosting Railway, PokéAPI Name Autocomplete & Proteksi Duplikat First Caught)
-**Status Rilis:** Rilis Produksi v1.5.1 (Live Cloud Hosting Railway, Smart PokéAPI Combobox & Duplicate Catch Guard)
+**Versi Dokumen:** 1.5.2 (Cloud Hosting Railway, PokéAPI Autocomplete, Ekspor Data Burung Kertas & Bento Distribusi Wilayah)
+**Status Rilis:** Rilis Produksi v1.5.2 (Live Cloud Hosting Railway, Smart PokéAPI Combobox, Hold-to-Export Paper Bird & Region Bento)
 **Tanggal Rilis:** 25 November 2026
 **Live URL:** `https://pokedex-k13-a2-production.up.railway.app/pokedex`
 **Pengembang:** Kelompok 13 — Kelas Praktikum Pemrograman Web A / A2  
@@ -221,4 +221,7 @@ Untuk menjamin kenyamanan akses di perangkat seluler (*smartphone* `320px–480p
 * **Dual-Mode PokéAPI Lookup (Index & Name):** Tombol `#btnFetchPokeApi` ditempatkan di bawah input *Nama Pokémon* dan secara otomatis mengambil data via nomor indeks maupun slug nama (`normalizePokeApiSlug`) dari `https://pokeapi.co/api/v2/pokemon/{identifier}` untuk mengisi nomor index (`#apiDexIndex`), nama, tipe, generasi, sprite, serta hologram preview.
 * **Modal Scroll & Button Alignment Fix:** Menghapus inline `overflow: hidden` pada `.pkm-modal__dialog` (`caught-modal.blade.php`, `journal-modal.blade.php`, `caught-table.blade.php`) dan menetapkan `.pkm-modal__actions .action-pill { width: auto; }` di `pokedex.css` agar seluruh modal dapat digulir vertikal penuh di zoom 100% dan layar ponsel.
 * **Proteksi Duplikat Tangkapan & Info First Caught (`v1.5.1`):** `PokedexCatchController::store()` mengecek `TrainerCatch` yang sudah ada untuk `(user_id, pokemon_id)` sebelum menyimpan agar tanggal tangkapan awal tidak tertimpa, mengembalikan HTTP `409` (`already_caught: true`, `first_caught_at`), dan menampilkannya lewat varian peringatan amber `#f59e0b` pada `#caughtFeedbackModal` (`Sudah Pernah Ditangkap!`).
+* **Ekspor Data Terpadu, Hold-to-Confirm, Burung Kertas & Bento Distribusi Region (`v1.5.2`):**
+  * Toolbar koleksi menyatukan tombol ekspor menjadi **Ekspor Data** (`#btnOpenCaughtExportModal`) yang membuka `#caughtExportModal` untuk memilih `.XLSX` atau `.PDF`, dikonfirmasi via **Hold to Confirm** (`window.pkmSetupHoldButton`), lalu memutar animasi dokumen terlipat menjadi burung kertas origami terbang menuju kanan atas (`#paperBirdOverlay`) sebelum mengunduh file.
+  * Kolom kiri Bento Grid (`bento.blade.php`) diringkas menjadi 1 kartu panjang tunggal **Distribusi Wilayah Generasi I – IX** (`.region-panel`) berisi 9 grafik batang klik-able (`data-filter-gen`) untuk menyaring tabel Pustaka Pokémon secara instan.
 

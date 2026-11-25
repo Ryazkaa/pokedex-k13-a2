@@ -86,7 +86,7 @@
 * **Catatan Presenter:** Tekankan bahwa arsitektur backend memisahkan tanggung jawab secara tegas (*Separation of Concerns*). Tidak ada logika SQL mentah yang tercecer di View, dan seluruh proses manipulasi berkas berat (Excel/PDF) diisolasi di Controller masing-masing.
 
 #### Rekomendasi Visual / Screenshot:
-* Diagram blok arsitektur sistem (Client Layer Browser → Laravel 11 Backend & Services → MySQL 8.0 Database) seperti yang tertera pada dokumen arsitektur v1.5.1.
+* Diagram blok arsitektur sistem (Client Layer Browser → Laravel 11 Backend & Services → MySQL 8.0 Database) seperti yang tertera pada dokumen arsitektur v1.5.2.
 
 ---
 
@@ -288,7 +288,7 @@ Jelaskan kepada dosen bahwa proyek Pokédex Kelompok 13 dibangun dengan disiplin
   - *Ringkasan Statistik:* Menampilkan total Pokémon yang berhasil dikoleksi oleh trainer tersebut.
   - *Tabel Rekapitulasi Data:* Memuat Nomor Indeks (#), Nama Pokémon, Tipe Elemen Primer/Sekunder, Lokasi Penangkapan, dan Tanggal Tangkap.
   - *Kolom Pengesahan:* Ruang tanda tangan digital resmi trainer di bagian kaki dokumen sebagai bukti kepemilikan koleksi yang sah.
-* **Pemicu Unduh 1-Klik:** Tombol '📄 Unduh Laporan PDF' disematkan langsung di atas tabel koleksi trainer (`GET /pokedex/export-pdf`).
+* **Pemicu Terpadu `Ekspor Data` + Hold-to-Confirm (`v1.5.2`):** Tombol tunggal **Ekspor Data** di atas tabel koleksi membuka modal pilihan format `.XLSX` vs `.PDF` dengan tombol *Hold to Confirm* serta animasi burung kertas origami yang terbang menuju sudut unduhan peramban sebelum mengunduh berkas (`GET /pokedex/export-pdf` / `GET /pokedex/export-excel`).
 
 #### Kaitan Pertemuan Pemweb & Detail Teknis:
 * **Kaitan Silabus Resmi:** `[Praktikum P10 : Pengolahan File PDF]`

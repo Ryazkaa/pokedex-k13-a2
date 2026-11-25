@@ -27,16 +27,16 @@
                     <span style="font-size: 1.1rem; line-height: 1;">+</span> <span data-i18n="btn_add_collection">Tambah Koleksi</span>
                 </button>
             @endauth
-            <a href="{{ route('pokedex.exportExcel') }}" class="btn btn--subtle"
-               style="background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 10px 16px; border-radius: 8px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px;">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                <span data-i18n="btn_export_excel">Ekspor Excel</span>
-            </a>
-            <a href="{{ route('pokedex.exportPdf') }}" class="btn btn--subtle"
-               style="background: rgba(239, 68, 68, 0.15); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.3); padding: 10px 16px; border-radius: 8px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px;">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M10 12h2a2 2 0 0 1 0 4h-2v-4z"/></svg>
-                <span data-i18n="btn_export_pdf">Unduh Laporan PDF</span>
-            </a>
+            <button type="button" id="btnOpenCaughtExportModal" class="btn btn--subtle"
+                    onclick="openCaughtExportModal()"
+                    style="background: rgba(56, 189, 248, 0.14); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.38); padding: 10px 18px; border-radius: 8px; font-weight: 700; display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span data-i18n="btn_export_data">Ekspor Data</span>
+            </button>
         </div>
     </div>
 
@@ -210,6 +210,119 @@
     </div>
 </div>
 
+{{-- MODAL 3: EKSPOR DATA KOLEKSI (PILIH FORMAT .XLSX / .PDF + HOLD TO CONFIRM) --}}
+<div id="caughtExportModal" class="pkm-modal" role="dialog" aria-modal="true" aria-labelledby="caughtExportTitle" hidden>
+    <div class="pkm-modal__backdrop" onclick="closeCaughtExportModal()"></div>
+    <div class="pkm-modal__dialog" style="max-width: 490px; background: #0f1923; color: #f1f5f9; border-radius: 14px; border: 1px solid rgba(56, 189, 248, 0.35); box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(56, 189, 248, 0.16); animation: pkmModalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);">
+        <div class="pkm-modal__header" style="padding: 16px 22px; background: rgba(255, 255, 255, 0.02); border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 11px;">
+                <div style="width: 34px; height: 34px; border-radius: 9px; background: rgba(56, 189, 248, 0.14); border: 1px solid rgba(56, 189, 248, 0.32); display: flex; align-items: center; justify-content: center; color: #38BDF8;">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 id="caughtExportTitle" class="pkm-modal__title" style="margin: 0; font-size: 1.05rem; font-weight: 700; color: #ffffff;">Ekspor Data Koleksi</h3>
+                    <span style="font-size: 0.75rem; color: #94a3b8;">Pilih format berkas lalu tahan tombol untuk mengunduh</span>
+                </div>
+            </div>
+            <button type="button" class="pkm-modal__close" onclick="closeCaughtExportModal()" aria-label="Tutup modal ekspor" style="background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer; line-height: 1;">&times;</button>
+        </div>
+
+        <div style="padding: 20px 22px;">
+            <div class="export-format-grid" role="radiogroup" aria-label="Pilih Format Ekspor">
+                <button type="button" class="export-format-card is-selected" data-format="xlsx" role="radio" aria-checked="true" onclick="selectCaughtExportFormat('xlsx')">
+                    <div class="export-format-card__top">
+                        <span class="export-format-card__badge export-format-card__badge--xlsx">.XLSX</span>
+                        <span class="export-format-card__check" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        </span>
+                    </div>
+                    <p class="export-format-card__title">Excel Spreadsheet</p>
+                    <p class="export-format-card__desc">Tabel data koleksi terstruktur siap olah (PhpSpreadsheet).</p>
+                </button>
+
+                <button type="button" class="export-format-card" data-format="pdf" role="radio" aria-checked="false" onclick="selectCaughtExportFormat('pdf')">
+                    <div class="export-format-card__top">
+                        <span class="export-format-card__badge export-format-card__badge--pdf">.PDF</span>
+                        <span class="export-format-card__check" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        </span>
+                    </div>
+                    <p class="export-format-card__title">Laporan Resmi PDF</p>
+                    <p class="export-format-card__desc">Dokumen portofolio A4 siap cetak berlogo Pokédex (DomPDF).</p>
+                </button>
+            </div>
+
+            <button type="button" class="action-pill hold-btn caught-export-hold" id="caughtExportHoldBtn">
+                <svg class="hold-btn__perimeter" viewBox="0 0 400 56" preserveAspectRatio="none" aria-hidden="true">
+                    <rect x="2" y="2" width="396" height="52" rx="13" ry="13" pathLength="100"/>
+                </svg>
+                <span class="hold-btn__ring-wrap" aria-hidden="true">
+                    <svg class="hold-btn__ring" viewBox="0 0 36 36">
+                        <circle class="hold-btn__track" cx="18" cy="18" r="15" pathLength="100"/>
+                        <circle class="hold-btn__fill" cx="18" cy="18" r="15" pathLength="100"/>
+                    </svg>
+                    <svg class="hold-btn__icon hold-btn__icon--idle" viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="hold-btn__icon hold-btn__icon--check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <span class="hold-btn__text" data-label id="caughtExportHoldLabel">Tahan untuk Ekspor Excel (.xlsx)</span>
+            </button>
+
+            <div style="display: flex; justify-content: flex-end; margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.08);">
+                <button type="button" onclick="closeCaughtExportModal()"
+                        style="padding: 8px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #94a3b8; font-weight: 600; cursor: pointer;">
+                    Batal
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- OVERLAY ANIMASI: Kertas File -> Burung Kertas Origami -> Terbang ke Kanan Atas (Chrome Downloads) --}}
+<div id="paperBirdOverlay" class="bird-overlay" data-format="xlsx" aria-hidden="true" hidden>
+    <div class="bird-top-beacon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/>
+        </svg>
+    </div>
+    <div class="bird-stage">
+        <div class="bird-morph-box">
+            {{-- Fase 1: Lembaran Dokumen Sesuai Format (.XLSX / .PDF) --}}
+            <div class="bird-doc" aria-hidden="true">
+                <div class="bird-doc__badge" id="paperBirdDocBadge">.XLSX</div>
+                <div class="bird-doc__lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <span class="bird-doc__foot" id="paperBirdDocFoot">Koleksi Data</span>
+            </div>
+
+            {{-- Fase 2 & 3: Burung Kertas Origami Terbang ke Kanan Atas --}}
+            <div class="bird-origami-wrap" aria-hidden="true">
+                <svg class="bird-origami-svg" viewBox="0 0 120 100">
+                    <polygon points="56,54 22,20 74,40" fill="#cbd5e1" stroke="#64748b" stroke-width="1.2" stroke-linejoin="round"/>
+                    <polygon points="44,58 10,68 34,48" fill="#e2e8f0" stroke="#64748b" stroke-width="1.2" stroke-linejoin="round"/>
+                    <polygon points="34,48 82,42 64,74 44,58" fill="#ffffff" stroke="#64748b" stroke-width="1.3" stroke-linejoin="round"/>
+                    <polygon points="74,40 94,28 112,30 88,46 68,54" fill="#f8fafc" stroke="#64748b" stroke-width="1.3" stroke-linejoin="round"/>
+                    <polygon points="94,28 112,30 98,35" class="bird-accent-fill"/>
+                    <g class="bird-wing-top">
+                        <polygon points="44,54 32,8 82,42" fill="#ffffff" stroke="#64748b" stroke-width="1.4" stroke-linejoin="round"/>
+                        <polygon points="42,46 35,18 68,38" class="bird-accent-fill" opacity="0.9"/>
+                        <polygon points="50,48 44,32 76,42" class="bird-accent-dark" opacity="0.28"/>
+                        <text id="paperBirdWingText" x="45" y="39" font-family="monospace" font-size="8.5" font-weight="900" fill="#ffffff" transform="rotate(-12 45 39)">XLSX</text>
+                    </g>
+                </svg>
+            </div>
+        </div>
+        <p class="bird-caption" id="paperBirdCaption">Melipat berkas .XLSX menjadi burung kertas &amp; menerbangkan ke Unduhan ↗</p>
+    </div>
+</div>
+
 @push('head')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
 @endpush
@@ -373,5 +486,133 @@ window.executeDeleteCaught = async function() {
         btn.innerHTML = origText;
     }
 };
+
+// Logic Modal Ekspor Data (Pilih Format .XLSX / .PDF + Hold to Confirm + Paper Bird Flight)
+(function initCaughtExportModule() {
+    const exportUrls = {
+        xlsx: @json(route('pokedex.exportExcel')),
+        pdf: @json(route('pokedex.exportPdf')),
+    };
+    let selectedExportFormat = 'xlsx';
+    let exportHoldCtrl = null;
+
+    function getHoldEls() {
+        return {
+            modal: document.getElementById('caughtExportModal'),
+            holdBtn: document.getElementById('caughtExportHoldBtn'),
+            holdLabel: document.getElementById('caughtExportHoldLabel'),
+            overlay: document.getElementById('paperBirdOverlay'),
+            docBadge: document.getElementById('paperBirdDocBadge'),
+            docFoot: document.getElementById('paperBirdDocFoot'),
+            wingText: document.getElementById('paperBirdWingText'),
+            caption: document.getElementById('paperBirdCaption'),
+        };
+    }
+
+    function updateExportHoldUi(fmt) {
+        selectedExportFormat = fmt === 'pdf' ? 'pdf' : 'xlsx';
+        const { holdBtn, holdLabel } = getHoldEls();
+        document.querySelectorAll('.export-format-card').forEach((card) => {
+            const active = card.dataset.format === selectedExportFormat;
+            card.classList.toggle('is-selected', active);
+            card.setAttribute('aria-checked', active ? 'true' : 'false');
+        });
+        if (holdBtn) {
+            holdBtn.classList.toggle('is-pdf', selectedExportFormat === 'pdf');
+        }
+        if (holdLabel) {
+            holdLabel.textContent = selectedExportFormat === 'pdf'
+                ? 'Tahan untuk Ekspor PDF (.pdf)'
+                : 'Tahan untuk Ekspor Excel (.xlsx)';
+        }
+    }
+
+    function playPaperBirdExport(fmt) {
+        const targetUrl = exportUrls[fmt] || exportUrls.xlsx;
+        const badgeLabel = fmt === 'pdf' ? 'PDF' : 'XLSX';
+        const { overlay, docBadge, docFoot, wingText, caption } = getHoldEls();
+
+        if (!overlay) {
+            window.location.href = targetUrl;
+            return;
+        }
+
+        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        overlay.setAttribute('data-format', fmt);
+        if (docBadge) docBadge.textContent = '.' + badgeLabel;
+        if (docFoot) docFoot.textContent = fmt === 'pdf' ? 'Laporan A4' : 'Koleksi Data';
+        if (wingText) wingText.textContent = badgeLabel;
+        if (caption) {
+            caption.textContent = `Melipat berkas .${badgeLabel} menjadi burung kertas & menerbangkan ke Unduhan ↗`;
+        }
+
+        overlay.hidden = false;
+        overlay.setAttribute('aria-hidden', 'false');
+        overlay.classList.remove('is-playing');
+        void overlay.offsetWidth;
+        overlay.classList.add('is-playing');
+
+        const downloadDelay = prefersReduced ? 150 : 1480;
+        const cleanupDelay = prefersReduced ? 700 : 2350;
+
+        window.setTimeout(() => {
+            window.location.href = targetUrl;
+        }, downloadDelay);
+
+        window.setTimeout(() => {
+            overlay.classList.remove('is-playing');
+            overlay.hidden = true;
+            overlay.setAttribute('aria-hidden', 'true');
+            exportHoldCtrl?.reset();
+        }, cleanupDelay);
+    }
+
+    function ensureExportHoldBound() {
+        const { holdBtn, holdLabel } = getHoldEls();
+        if (!exportHoldCtrl && holdBtn && typeof window.pkmSetupHoldButton === 'function') {
+            exportHoldCtrl = window.pkmSetupHoldButton(holdBtn, {
+                holdMs: 900,
+                onConfirm: () => {
+                    if (holdLabel) {
+                        holdLabel.textContent = selectedExportFormat === 'pdf'
+                            ? 'Menyiapkan Laporan .PDF…'
+                            : 'Menyiapkan Berkas .XLSX…';
+                    }
+                    window.setTimeout(() => {
+                        window.closeCaughtExportModal(false);
+                        playPaperBirdExport(selectedExportFormat);
+                    }, 260);
+                },
+            });
+        }
+    }
+
+    window.selectCaughtExportFormat = function(fmt) {
+        exportHoldCtrl?.reset();
+        updateExportHoldUi(fmt);
+    };
+
+    window.openCaughtExportModal = function() {
+        const { modal } = getHoldEls();
+        if (!modal) return;
+        ensureExportHoldBound();
+        exportHoldCtrl?.reset();
+        updateExportHoldUi(selectedExportFormat);
+        modal.hidden = false;
+    };
+
+    window.closeCaughtExportModal = function(resetHold = true) {
+        const { modal } = getHoldEls();
+        if (modal) modal.hidden = true;
+        if (resetHold) exportHoldCtrl?.reset();
+    };
+
+    document.addEventListener('keydown', function(e) {
+        const { modal } = getHoldEls();
+        if (e.key === 'Escape' && modal && !modal.hidden) {
+            window.closeCaughtExportModal();
+        }
+    });
+})();
 </script>
 @endpush

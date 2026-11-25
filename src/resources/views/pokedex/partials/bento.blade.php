@@ -13,68 +13,64 @@
 @endphp
 
 <section id="explore" class="bento section" aria-label="Explore">
-    {{-- Kolom 1 (Kiri): Panduan Format & Validasi Excel --}}
+    {{-- Kolom 1 (Kiri): Distribusi Region & Generasi I–IX (1 Kotak Panjang Interaktif) --}}
+    @php
+        $regionStats = [
+            ['roman' => 'I',    'name' => 'Kanto',  'gen' => 'Generasi I (Kanto)',    'range' => '#0001–#0151', 'color' => '#ff4655'],
+            ['roman' => 'II',   'name' => 'Johto',  'gen' => 'Generasi II (Johto)',   'range' => '#0152–#0251', 'color' => '#f59e0b'],
+            ['roman' => 'III',  'name' => 'Hoenn',  'gen' => 'Generasi III (Hoenn)',  'range' => '#0252–#0386', 'color' => '#10b981'],
+            ['roman' => 'IV',   'name' => 'Sinnoh', 'gen' => 'Generasi IV (Sinnoh)',  'range' => '#0387–#0493', 'color' => '#38bdf8'],
+            ['roman' => 'V',    'name' => 'Unova',  'gen' => 'Generasi V (Unova)',   'range' => '#0494–#0649', 'color' => '#818cf8'],
+            ['roman' => 'VI',   'name' => 'Kalos',  'gen' => 'Generasi VI (Kalos)',   'range' => '#0650–#0721', 'color' => '#f472b6'],
+            ['roman' => 'VII',  'name' => 'Alola',  'gen' => 'Generasi VII (Alola)',  'range' => '#0722–#0809', 'color' => '#fb923c'],
+            ['roman' => 'VIII', 'name' => 'Galar',  'gen' => 'Generasi VIII (Galar)', 'range' => '#0810–#0905', 'color' => '#2dd4bf'],
+            ['roman' => 'IX',   'name' => 'Paldea', 'gen' => 'Generasi IX (Paldea)','range' => '#0906–#1025', 'color' => '#a78bfa'],
+        ];
+        $maxRegionPop = 156;
+    @endphp
     <div class="bento__col bento__artworks">
         <div class="bento-head">
-            <span class="bento-head__kicker" data-i18n="guide_kicker">Panduan PhpSpreadsheet</span>
-            <h2 class="section-title"><a href="#search"><span data-i18n="guide_title">Format &amp; Aturan</span> <span aria-hidden="true">›</span></a></h2>
+            <span class="bento-head__kicker" data-i18n="guide_kicker">Distribusi Wilayah</span>
+            <h2 class="section-title"><a href="#search"><span data-i18n="guide_title">Generasi I – IX</span> <span aria-hidden="true">›</span></a></h2>
         </div>
 
-        <div class="bento-panel guide-panel">
-            <article class="guide-block">
-                <header class="guide-block__head">
-                    <h3 class="guide-card__title" data-i18n="guide_struct_title">Struktur Excel</h3>
-                    <span class="guide-card__badge" data-i18n="guide_struct_badge">4 Kolom Wajib</span>
-                </header>
-                <div class="guide-cols">
-                    <div class="guide-col-item">
-                        <code data-i18n="guide_col_idx">nomor_index</code>
-                        <span>#0006</span>
-                    </div>
-                    <div class="guide-col-item">
-                        <code data-i18n="guide_col_name">nama_pokemon</code>
-                        <span>Charizard</span>
-                    </div>
-                    <div class="guide-col-item">
-                        <code data-i18n="guide_col_type">tipe</code>
-                        <span>Fire / Flying</span>
-                    </div>
-                    <div class="guide-col-item">
-                        <code data-i18n="guide_col_gen">generasi</code>
-                        <span data-i18n="guide_col_gen_val">Generasi I (Kanto)</span>
-                    </div>
+        <div class="bento-panel region-panel">
+            <div class="region-panel__head">
+                <div>
+                    <h3 class="guide-card__title" data-i18n="region_panel_sub">Populasi Regional</h3>
+                    <span class="region-panel__sub">{{ number_format($total) }} Pokémon Terdata</span>
                 </div>
-            </article>
+                <span class="guide-card__badge" data-i18n="region_panel_badge">9 Region · Filter</span>
+            </div>
 
-            <article class="guide-block">
-                <header class="guide-block__head">
-                    <h3 class="guide-card__title" data-i18n="guide_val_title">Validasi Import</h3>
-                    <span class="guide-card__badge" data-i18n="guide_val_badge">3 Status Cek</span>
-                </header>
-                <ul class="guide-card__rules">
-                    <li class="rule--ok">
-                        <span class="rule__dot" aria-hidden="true"></span>
-                        <div>
-                            <strong data-i18n="rule_success_title">Berhasil</strong>
-                            <span data-i18n="rule_success_desc">4 kolom sesuai &amp; nomor index baru</span>
+            <div class="region-bars" role="group" aria-label="Filter Pustaka berdasarkan Region Generasi I–IX">
+                @foreach ($regionStats as $reg)
+                    @php
+                        $regCount = $pokemons->where('gen_roman', $reg['roman'])->count();
+                        $barPct = $regCount > 0 ? min(100, max(6, (int) round(($regCount / $maxRegionPop) * 100))) : 0;
+                    @endphp
+                    <button type="button"
+                            class="region-row"
+                            data-filter-gen="{{ $reg['gen'] }}"
+                            aria-pressed="false"
+                            style="--rc: {{ $reg['color'] }};"
+                            title="Saring {{ $reg['gen'] }} ({{ $regCount }} Pokémon)">
+                        <div class="region-row__top">
+                            <span class="region-row__gen">Gen {{ $reg['roman'] }}</span>
+                            <strong class="region-row__name">{{ $reg['name'] }}</strong>
+                            <span class="region-row__range">{{ $reg['range'] }}</span>
+                            <span class="region-row__count">{{ $regCount }}</span>
                         </div>
-                    </li>
-                    <li class="rule--dup">
-                        <span class="rule__dot" aria-hidden="true"></span>
-                        <div>
-                            <strong data-i18n="rule_dup_title">Ditolak (Duplikat)</strong>
-                            <span data-i18n="rule_dup_desc">Nomor index sudah ada di database</span>
+                        <div class="region-row__track" aria-hidden="true">
+                            <span class="region-row__fill" style="width: {{ $barPct }}%;"></span>
                         </div>
-                    </li>
-                    <li class="rule--bad">
-                        <span class="rule__dot" aria-hidden="true"></span>
-                        <div>
-                            <strong data-i18n="rule_invalid_title">Tidak Valid</strong>
-                            <span data-i18n="rule_invalid_desc">Ada kolom kosong atau data tidak cocok</span>
-                        </div>
-                    </li>
-                </ul>
-            </article>
+                    </button>
+                @endforeach
+            </div>
+
+            <p class="region-panel__hint" data-i18n="region_panel_hint">
+                Klik wilayah mana saja untuk langsung menyaring tabel Pustaka Pokémon.
+            </p>
         </div>
     </div>
 

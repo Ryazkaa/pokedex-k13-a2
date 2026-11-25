@@ -1475,7 +1475,121 @@ dialog.fact-modal[open] .fact-cascade {
     box-shadow: 0 18px 40px rgb(4 9 14 / .5);
 }
 
-/* Kolom 1: Panduan Struktur & Validasi Excel */
+/* Kolom 1: Distribusi Region Generasi I–IX (1 Kotak Panjang Klik-able) */
+.region-panel {
+    justify-content: space-between;
+    gap: 12px;
+}
+.region-panel__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(236 232 225 / .08);
+}
+.region-panel__sub {
+    display: block;
+    font-size: .74rem;
+    color: var(--ash);
+    margin-top: 2px;
+}
+.region-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    flex: 1;
+    justify-content: space-between;
+}
+.region-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 8px 10px;
+    border-radius: 9px;
+    background: #0d1620;
+    border: 1px solid rgb(236 232 225 / .08);
+    color: var(--bone);
+    text-align: left;
+    cursor: pointer;
+    transition: transform .15s ease, border-color .18s ease, background-color .18s ease, box-shadow .18s ease;
+}
+.region-row:hover {
+    transform: translateX(2px);
+    background: #142231;
+    border-color: color-mix(in srgb, var(--rc, var(--crimson)) 55%, transparent);
+}
+.region-row[aria-pressed="true"] {
+    background: color-mix(in srgb, var(--rc, var(--crimson)) 14%, #101b27);
+    border-color: var(--rc, var(--crimson));
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--rc, var(--crimson)) 22%, transparent);
+}
+.region-row__top {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+}
+.region-row__gen {
+    font-family: var(--font-mono);
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+    color: var(--rc, var(--crimson));
+    background: color-mix(in srgb, var(--rc, var(--crimson)) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--rc, var(--crimson)) 35%, transparent);
+    padding: 2px 6px;
+    border-radius: 5px;
+    flex-shrink: 0;
+}
+.region-row__name {
+    font-size: .84rem;
+    font-weight: 700;
+    color: #ffffff;
+    white-space: nowrap;
+}
+.region-row__range {
+    font-family: var(--font-mono);
+    font-size: .68rem;
+    color: #7c8da1;
+    margin-left: auto;
+    white-space: nowrap;
+}
+.region-row__count {
+    font-family: var(--font-mono);
+    font-size: .76rem;
+    font-weight: 800;
+    color: #f1f5f9;
+    min-width: 28px;
+    text-align: right;
+    flex-shrink: 0;
+}
+.region-row__track {
+    width: 100%;
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+}
+.region-row__fill {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--rc, var(--crimson)), color-mix(in srgb, var(--rc, var(--crimson)) 72%, #ffffff));
+    box-shadow: 0 0 8px color-mix(in srgb, var(--rc, var(--crimson)) 45%, transparent);
+    transition: width .35s cubic-bezier(.16, 1, .3, 1);
+}
+.region-panel__hint {
+    margin: 2px 0 0;
+    padding-top: 8px;
+    border-top: 1px solid rgb(236 232 225 / .07);
+    font-size: .74rem;
+    color: var(--ash);
+    line-height: 1.4;
+}
+
+/* Kolom 1 (Legacy fallback if referenced) */
 .guide-panel {
     justify-content: space-between;
 }
@@ -2658,14 +2772,13 @@ h1, h2, h3 { text-wrap: balance; }
     .info-card__head-row { flex-wrap: wrap; }
     .info-card__jump-badge { white-space: nowrap; }
 
-    /* Caught Toolbar 1 + 2 Grid Simetris */
+    /* Caught Toolbar 2-Tombol Simetris (+ Tambah Koleksi & Ekspor Data) */
     .caught-toolbar {
         display: grid !important;
         grid-template-columns: 1fr 1fr;
         gap: 8px !important;
         width: 100%;
     }
-    .caught-toolbar > :first-child { grid-column: 1 / -1; }
     .caught-toolbar > .btn {
         width: 100%;
         justify-content: center;
@@ -3187,4 +3300,362 @@ h1, h2, h3 { text-wrap: balance; }
     .journal-modal-actions > div { justify-content: flex-end; }
     .pkm-modal__actions > button { flex: 1 1 auto; justify-content: center; }
     .switch-dev-item { flex-wrap: wrap; gap: 6px 8px; font-size: .82rem; }
+    .export-format-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ---------- Caught Export Modal & Hold-to-Confirm + Paper Bird Flight Animation ---------- */
+.export-format-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+.export-format-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 15px 14px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    color: #e2e8f0;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.18s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.export-format-card:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.055);
+}
+.export-format-card__top {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+.export-format-card__badge {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 7px;
+}
+.export-format-card__badge--xlsx {
+    background: rgba(16, 185, 129, 0.16);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.35);
+}
+.export-format-card__badge--pdf {
+    background: rgba(255, 70, 85, 0.16);
+    color: #fb7185;
+    border: 1px solid rgba(255, 70, 85, 0.38);
+}
+.export-format-card__check {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.22);
+    display: grid;
+    place-items: center;
+    opacity: 0.55;
+    transition: all 0.2s ease;
+}
+.export-format-card__title {
+    font-size: 0.96rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+}
+.export-format-card__desc {
+    font-size: 0.76rem;
+    color: #94a3b8;
+    line-height: 1.42;
+    margin: 0;
+}
+.export-format-card[data-format="xlsx"].is-selected {
+    background: rgba(16, 185, 129, 0.11);
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.16), 0 12px 26px rgba(16, 185, 129, 0.18);
+}
+.export-format-card[data-format="xlsx"].is-selected .export-format-card__check {
+    background: #10b981;
+    border-color: #10b981;
+    color: #06281e;
+    opacity: 1;
+}
+.export-format-card[data-format="pdf"].is-selected {
+    background: rgba(255, 70, 85, 0.12);
+    border-color: #ff4655;
+    box-shadow: 0 0 0 3px rgba(255, 70, 85, 0.18), 0 12px 26px rgba(255, 70, 85, 0.18);
+}
+.export-format-card[data-format="pdf"].is-selected .export-format-card__check {
+    background: #ff4655;
+    border-color: #ff4655;
+    color: #ffffff;
+    opacity: 1;
+}
+
+.caught-export-hold {
+    width: 100%;
+    justify-content: center;
+    border-radius: 12px;
+    background:
+        linear-gradient(90deg, rgba(16, 185, 129, 0.24) calc(var(--hold-pct) * 1%), transparent 0),
+        #162230;
+    border: 1.5px solid rgba(16, 185, 129, 0.45);
+    color: #f8fafc;
+}
+.caught-export-hold .hold-btn__track {
+    fill: rgba(255, 255, 255, 0.06);
+    stroke: rgba(255, 255, 255, 0.2);
+}
+.caught-export-hold .hold-btn__fill,
+.caught-export-hold .hold-btn__perimeter rect {
+    stroke: #10b981;
+}
+.caught-export-hold .hold-btn__icon {
+    color: #34d399;
+}
+.caught-export-hold.is-pdf {
+    background:
+        linear-gradient(90deg, rgba(255, 70, 85, 0.24) calc(var(--hold-pct) * 1%), transparent 0),
+        #1e1722;
+    border-color: rgba(255, 70, 85, 0.48);
+}
+.caught-export-hold.is-pdf .hold-btn__fill,
+.caught-export-hold.is-pdf .hold-btn__perimeter rect {
+    stroke: #ff4655;
+}
+.caught-export-hold.is-pdf .hold-btn__icon {
+    color: #fb7185;
+}
+.caught-export-hold.is-holding {
+    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.22), 0 12px 28px rgba(0, 0, 0, 0.45);
+}
+
+/* Paper -> Origami Paper Bird -> Fly to Top-Right Chrome Download Icon */
+.bird-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10050;
+    display: grid;
+    place-items: center;
+    background: rgba(8, 14, 22, 0.84);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: auto;
+}
+.bird-overlay[hidden] {
+    display: none !important;
+}
+.bird-overlay.is-playing {
+    opacity: 1;
+}
+.bird-top-beacon {
+    position: fixed;
+    top: 14px;
+    right: 22px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px solid rgba(56, 189, 248, 0.65);
+    background: rgba(56, 189, 248, 0.14);
+    display: grid;
+    place-items: center;
+    color: #38bdf8;
+    opacity: 0;
+    transform: scale(0.7);
+    pointer-events: none;
+}
+.bird-overlay[data-format="xlsx"] .bird-top-beacon {
+    border-color: rgba(16, 185, 129, 0.75);
+    background: rgba(16, 185, 129, 0.16);
+    color: #34d399;
+}
+.bird-overlay[data-format="pdf"] .bird-top-beacon {
+    border-color: rgba(255, 70, 85, 0.75);
+    background: rgba(255, 70, 85, 0.16);
+    color: #fb7185;
+}
+.bird-stage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    perspective: 900px;
+}
+.bird-morph-box {
+    position: relative;
+    width: 170px;
+    height: 150px;
+    display: grid;
+    place-items: center;
+}
+.bird-doc {
+    position: absolute;
+    width: 118px;
+    height: 144px;
+    padding: 14px 12px;
+    border-radius: 11px;
+    background: #ffffff;
+    border: 2.5px solid #10b981;
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.55);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    opacity: 0;
+    transform: translateY(20px) scale(0.86);
+}
+.bird-overlay[data-format="pdf"] .bird-doc {
+    border-color: #ff4655;
+}
+.bird-doc__badge {
+    width: 100%;
+    text-align: center;
+    padding: 6px 8px;
+    border-radius: 7px;
+    font-family: var(--font-mono, monospace);
+    font-weight: 800;
+    font-size: 0.92rem;
+    letter-spacing: 0.08em;
+    color: #ffffff;
+    background: linear-gradient(135deg, #16a34a, #059669);
+    box-shadow: 0 5px 12px rgba(16, 185, 129, 0.35);
+}
+.bird-overlay[data-format="pdf"] .bird-doc__badge {
+    background: linear-gradient(135deg, #ff4655, #dc2626);
+    box-shadow: 0 5px 12px rgba(255, 70, 85, 0.35);
+}
+.bird-doc__lines {
+    width: 100%;
+    display: grid;
+    gap: 6px;
+}
+.bird-doc__lines span {
+    display: block;
+    height: 6px;
+    border-radius: 4px;
+    background: #e2e8f0;
+}
+.bird-doc__lines span:nth-child(1) { width: 90%; background: #bbf7d0; }
+.bird-doc__lines span:nth-child(2) { width: 100%; }
+.bird-doc__lines span:nth-child(3) { width: 76%; }
+.bird-doc__lines span:nth-child(4) { width: 84%; }
+.bird-overlay[data-format="pdf"] .bird-doc__lines span:nth-child(1) { background: #fecdd3; }
+.bird-doc__foot {
+    margin-top: auto;
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: 0.02em;
+}
+
+.bird-origami-wrap {
+    position: absolute;
+    width: 146px;
+    height: 122px;
+    display: grid;
+    place-items: center;
+    opacity: 0;
+    transform: scale(0.45) rotate(8deg);
+    filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.55));
+}
+.bird-origami-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+.bird-wing-top {
+    transform-origin: 58px 54px;
+}
+.bird-accent-fill {
+    fill: #10b981;
+}
+.bird-accent-dark {
+    fill: #047857;
+}
+.bird-overlay[data-format="pdf"] .bird-accent-fill {
+    fill: #ff4655;
+}
+.bird-overlay[data-format="pdf"] .bird-accent-dark {
+    fill: #be123c;
+}
+.bird-caption {
+    font-size: 0.94rem;
+    font-weight: 700;
+    color: #f8fafc;
+    text-align: center;
+    padding: 0 18px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Sequence: Sheet In & Fold (0->0.85s) -> Origami Bloom & Flap (0.72->1.32s) -> Fly Top-Right (1.30->2.25s) */
+.bird-overlay.is-playing .bird-doc {
+    animation: birdDocFoldSequence 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.bird-overlay.is-playing .bird-origami-wrap {
+    animation:
+        birdOrigamiAppear 0.48s cubic-bezier(0.2, 1.3, 0.35, 1) 0.68s forwards,
+        birdFlyTopRight 0.96s cubic-bezier(0.42, 0, 0.58, 1) 1.28s forwards;
+}
+.bird-overlay.is-playing .bird-wing-top {
+    animation: birdWingFlap 0.3s ease-in-out 0.72s 5 alternate;
+}
+.bird-overlay.is-playing .bird-top-beacon {
+    animation: birdBeaconPulse 0.9s ease-out 1.45s forwards;
+}
+
+@keyframes birdDocFoldSequence {
+    0% { opacity: 0; transform: translateY(20px) scale(0.84) rotate(0deg); }
+    28% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+    62% { opacity: 1; transform: translateY(0) scale(0.95) rotate(-6deg); }
+    100% { opacity: 0; transform: scale(0.32, 0.65) rotateX(62deg) rotateZ(18deg); }
+}
+@keyframes birdOrigamiAppear {
+    0% { opacity: 0; transform: scale(0.4) rotate(12deg); }
+    70% { opacity: 1; transform: scale(1.08) rotate(-6deg); }
+    100% { opacity: 1; transform: scale(1) rotate(-4deg); }
+}
+@keyframes birdWingFlap {
+    0% { transform: rotateX(0deg) rotateZ(0deg); }
+    100% { transform: rotateX(48deg) rotateZ(-8deg) translateY(3px); }
+}
+@keyframes birdFlyTopRight {
+    0% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1) rotate(-4deg);
+    }
+    25% {
+        opacity: 1;
+        transform: translate3d(70px, -45px, 0) scale(0.92) rotate(-14deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translate3d(calc(50vw - 44px), calc(-50vh + 26px), 0) scale(0.22) rotate(-22deg);
+    }
+}
+@keyframes birdBeaconPulse {
+    0% { opacity: 0; transform: scale(0.65); }
+    45% { opacity: 1; transform: scale(1.15); }
+    100% { opacity: 0; transform: scale(1.55); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .bird-overlay.is-playing .bird-doc,
+    .bird-overlay.is-playing .bird-origami-wrap,
+    .bird-overlay.is-playing .bird-wing-top,
+    .bird-overlay.is-playing .bird-top-beacon {
+        animation: none !important;
+    }
+    .bird-overlay.is-playing .bird-origami-wrap {
+        opacity: 1;
+        transform: scale(1);
+    }
 }

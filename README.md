@@ -82,6 +82,11 @@ Proyek ini dikembangkan oleh **Kelompok 13 — Kelas Praktikum Pemrograman Web A
 * **Validasi Duplikat Koleksi (`PokedexCatchController::store()`):** Mencegah penimpaan data atau popup sukses palsu ketika trainer mencoba menambah Pokémon yang sudah ada dalam `trainer_catches`, dan mengembalikan respons terstruktur HTTP `409` (`already_caught: true`, `first_caught_at`) dengan tanggal tangkap pertamanya (`caught_at ?? created_at`).
 * **Popup Peringatan Amber `Sudah Pernah Ditangkap!` (`caught-modal.blade.php`):** Menambahkan varian `'warning'` (`#f59e0b`) pada `window.showCaughtFeedback()` yang memberi tahu trainer bahwa Pokémon tersebut sudah ada di Pokédex beserta lencana tanggal **First Caught**-nya tanpa menimpa catatan tanggal asli.
 
+### 14. Penyatuan Ekspor Data (Hold-to-Confirm + Burung Kertas Origami) & Distribusi Region Bento (v1.5.2 Milestone)
+* **Tombol Terpadu `Ekspor Data` & Modal Pilihan Format (`#caughtExportModal`):** Menyatukan tombol `Ekspor Excel` dan `Unduh Laporan PDF` pada toolbar koleksi menjadi satu tombol **Ekspor Data** (`btn_export_data`), dengan modal pemilihan kartu format **Excel (`.xlsx`)** maupun **Laporan Resmi PDF (`.pdf`)** beserta tombol **Hold to Confirm** (`window.pkmSetupHoldButton`).
+* **Animasi Lembar Kertas → Burung Origami → Terbang ke Kanan Atas (`#paperBirdOverlay`):** Setelah *Hold to Confirm* selesai, lembar dokumen `.XLSX` (emerald) atau `.PDF` (crimson) tampil di tengah layar, melipat menjadi burung kertas origami bersayap mengepak (`birdWingFlap`), lalu terbang melesat menuju sudut kanan atas (arah ikon Unduhan Chrome) tepat saat berkas mulai diunduh (`prefers-reduced-motion` didukung).
+* **Bento Kolom Kiri `Distribusi Wilayah Generasi I – IX` (`bento.blade.php`):** Mengubah 2 kotak statis *Format & Aturan* menjadi **1 kotak panjang tunggal** berisi grafik batang interaktif untuk 9 region (**Kanto** hingga **Paldea**, `#0001–#1025`). Setiap baris region dapat diklik (`data-filter-gen`) untuk langsung menyaring tabel Pustaka Pokémon dan tersinkronisasi penuh dengan pengalih bahasa ID/EN.
+
 ---
 
 ## 🛠️ Tumpukan Teknologi (Tech Stack)
@@ -119,6 +124,7 @@ Pertemuan 999/
 │   ├── pokedex-app(v1.4.2).zip     # Rilis Penyempurnaan Responsif Lanjutan: Eyebrow Hero, Grid 3-Kol Filter Tipe, Auth Tabs 1-Baris (Arya & K13)
 │   ├── pokedex-app(v1.5.0).zip     # Rilis Fitur PokéAPI by Name, Animated Autocomplete & Perbaikan Scroll Modal Tambah Koleksi (Arya & K13)
 │   ├── pokedex-app(v1.5.1).zip     # Rilis Bugfix Duplikat Tangkapan: Popup Peringatan Sudah Ditangkap & Info First Caught (Arya & K13)
+│   ├── pokedex-app(v1.5.2).zip     # Rilis Ekspor Data Terpadu (Hold + Animasi Burung Kertas) & Bento Distribusi Region I-IX (Arya & K13)
 │   └── README.md                   # Catatan rilis dan riwayat versi komprehensif
 ├── datasets/                       # Dataset acuan spreadsheet (.xlsx)
 ├── docs/                           # Dokumentasi & rancangan sistem
@@ -196,7 +202,7 @@ Pertemuan 999/
 | Anggota | Modul Utama | Status Integrasi | Luaran & Komponen yang Dihasilkan |
 |---|---|:---:|---|
 | **Yanuar Dwi Prasetya**<br>*(J0404251022)* | **Modul 1:** Autentikasi, Sesi, & Role Developer | ✅ **Terintegrasi (v1.1.0 / v1.1.1)** | Migrasi `users.role`, `EnsureDeveloper` Middleware, `AuthController`, modal login/switch account (`auth-modal.blade.php`), lencana status navbar `DEV`/`TRAINER`. |
-| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1 / v1.2.1–v1.2.4 / v1.3.1 / v1.4.0–v1.5.1)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Card 2 Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching, identitas brand Pokéball resmi, sistem bilingual (ID/EN), Cloud DevOps Railway, UI responsif mobile, autocomplete PokéAPI by Name, scroll fix modal, & proteksi duplikat First Caught. |
+| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1 / v1.2.1–v1.2.4 / v1.3.1 / v1.4.0–v1.5.2)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Distribusi Region I–IX & Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching, identitas brand Pokéball resmi, bilingual (ID/EN), Cloud DevOps Railway, UI responsif mobile, autocomplete PokéAPI by Name, proteksi duplikat First Caught, serta Ekspor Data + animasi burung kertas. |
 | **Madina Dwiyana Putri**<br>*(J0404251090)* | **Modul 3:** Pokédex Caught Tracker, DataTables, & Ekspor | ✅ **Terintegrasi (v1.2.0 / v1.2.1)** | Migrasi `trainer_catches`, model `TrainerCatch`, modal `+ Tambah Koleksi` dengan auto-fetch PokéAPI, integrasi DataTables, serta ekspor Excel & DomPDF A4. |
 | **Iasha Irdanti**<br>*(J0404251115)* | **Modul 4:** Field Notes & Jurnal Strategi Trainer | ✅ **Terintegrasi (v1.3.0)** | Migrasi `trainer_notes`, model `TrainerNote`, modal Jurnal Taktik dengan tanggal/lokasi tangkap, integrasi editor WYSIWYG Quill.js, sanitasi HTML. |
 

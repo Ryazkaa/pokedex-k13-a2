@@ -674,6 +674,7 @@
 
         return { reset };
     }
+    window.pkmSetupHoldButton = setupHoldButton;
 
     const importHoldCtrl = setupHoldButton(importSubmit, {
         holdMs: 950,
@@ -1511,8 +1512,11 @@
             id_group_val: "Kelompok 13",
             id_class_lbl: "Kelas Praktikum",
             id_class_val: "Kelas A / A2",
-            guide_kicker: "Panduan PhpSpreadsheet",
-            guide_title: "Format & Aturan",
+            guide_kicker: "Distribusi Wilayah",
+            guide_title: "Generasi I – IX",
+            region_panel_sub: "Populasi Regional",
+            region_panel_badge: "9 Region · Filter",
+            region_panel_hint: "Klik wilayah mana saja untuk langsung menyaring tabel Pustaka Pokémon.",
             guide_struct_title: "Struktur Excel",
             guide_struct_badge: "4 Kolom Wajib",
             guide_val_title: "Validasi Import",
@@ -1554,6 +1558,7 @@
             caught_title: "Koleksi Tangkapan Trainer",
             caught_subtitle: "Daftar Pokémon yang berhasil Anda tangkap di lapangan, lengkap dengan lokasi dan catatan strategi.",
             btn_add_collection: "Tambah Koleksi",
+            btn_export_data: "Ekspor Data",
             btn_export_excel: "Ekspor Excel",
             btn_export_pdf: "Unduh Laporan PDF",
             search_placeholder: "Cari nama atau nomor index…",
@@ -1624,8 +1629,11 @@
             id_group_val: "Group 13",
             id_class_lbl: "Practicum Class",
             id_class_val: "Class A / A2",
-            guide_kicker: "PhpSpreadsheet Guide",
-            guide_title: "Format & Rules",
+            guide_kicker: "Region Distribution",
+            guide_title: "Generations I – IX",
+            region_panel_sub: "Regional Population",
+            region_panel_badge: "9 Regions · Filter",
+            region_panel_hint: "Click any region above to instantly filter the Pokémon Library table.",
             guide_struct_title: "Excel Structure",
             guide_struct_badge: "4 Required Columns",
             guide_val_title: "Import Validation",
@@ -1667,6 +1675,7 @@
             caught_title: "Trainer Catch Collection",
             caught_subtitle: "List of Pokémon you caught in the wild, complete with capture date, location, and tactics.",
             btn_add_collection: "Add Collection",
+            btn_export_data: "Export Data",
             btn_export_excel: "Export Excel",
             btn_export_pdf: "Download PDF Report",
             search_placeholder: "Search name or index number…",
