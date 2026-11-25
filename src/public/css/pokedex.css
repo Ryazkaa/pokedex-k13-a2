@@ -1014,9 +1014,13 @@ dialog::backdrop {
     transition: opacity .25s ease;
 }
 .hero__slide[data-depth="0"] .hero__text,
-.hero__slide[data-depth="0"] .hero__art {
-    opacity: 1;
-    transition: opacity .35s ease .08s;
+.hero__slide[data-depth="0"] .hero__art,
+.hero__slide.is-sliding-out .hero__text,
+.hero__slide.is-sliding-out .hero__art,
+.hero__slide.is-sliding-out-right .hero__text,
+.hero__slide.is-sliding-out-right .hero__art {
+    opacity: 1 !important;
+    transition: opacity .28s ease;
 }
 
 /* Animasi saat kartu teratas bergeser keluar (Top card slides away) */
@@ -2356,13 +2360,13 @@ h1, h2, h3 { text-wrap: balance; }
         position: absolute;
         inset: 0;
         height: 100%;
-        overflow: hidden;
+        overflow: visible;
     }
     .hero__card-bg {
         background:
             linear-gradient(90deg, rgb(236 232 225 / .03) 1px, transparent 1px) 0 0 / 48px 48px,
             linear-gradient(0deg, rgb(236 232 225 / .03) 1px, transparent 1px) 0 0 / 48px 48px,
-            linear-gradient(155deg, #ff4655 0%, #d92b3a 31%, #0f1923 31.3%, #131f2c 100%);
+            linear-gradient(155deg, #ff4655 0%, #d92b3a 23%, #0f1923 23.3%, #131f2c 100%);
     }
     .hero__card-bg::before {
         width: 220px; height: 220px;
@@ -2688,7 +2692,7 @@ h1, h2, h3 { text-wrap: balance; }
     .shell { width: calc(100% - 24px); }
     .brand-logo__text { font-size: clamp(0.98rem, 3.8vw, 1.25rem); }
     .topbar-auth-name { display: none !important; }
-    .hero { margin-top: 62px; }
+    .hero { margin-top: 68px; }
     .hero__art { width: min(176px, 52%); margin-top: -54px; }
     .hero__text { padding: 4px 16px 72px; }
     .hero__controls { left: 16px; bottom: 14px; }
