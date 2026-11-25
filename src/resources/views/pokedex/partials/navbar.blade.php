@@ -20,7 +20,7 @@
 
         <div class="topbar__right">
             {{-- Tombol Switch Bahasa ID / EN --}}
-            <button type="button" class="pill pill--dark" id="langToggleBtn" title="Ganti Bahasa (Indonesia / English)" style="cursor: pointer; padding: 0.5rem 0.85rem; font-weight: 700; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px;">
+            <button type="button" class="pill pill--dark topbar-lang-btn" id="langToggleBtn" title="Ganti Bahasa (Indonesia / English)" style="cursor: pointer; padding: 0.5rem 0.85rem; font-weight: 700; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px;">
                 <span id="langFlagContainer" style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 12px; border-radius: 2px; overflow: hidden; line-height: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.25);">
                     <svg viewBox="0 0 24 16" width="18" height="12" aria-hidden="true"><rect width="24" height="8" fill="#E70011"/><rect y="8" width="24" height="8" fill="#FFFFFF"/></svg>
                 </span>
@@ -28,23 +28,23 @@
             </button>
             {{-- Status Akun Trainer / Quick Switch (Modul 1: Yanuar Dwi Prasetya) --}}
             @if (Auth::check())
-                <div class="pill pill--dark" style="display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; flex-shrink: 0; padding: 0.5rem 0.9rem;">
+                <div class="pill pill--dark topbar-auth-pill" style="display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; flex-shrink: 0; padding: 0.5rem 0.9rem;">
                     @if (method_exists(Auth::user(), 'isDeveloper') && Auth::user()->isDeveloper())
-                        <span class="badge" style="background: var(--crimson, #ff4655); color: #fff; font-size: 0.65rem; font-weight: 800; padding: 2px 6px; border-radius: 4px; letter-spacing: 0.5px; flex-shrink: 0;">DEV</span>
+                        <span class="badge topbar-auth-badge" style="background: var(--crimson, #ff4655); color: #fff; font-size: 0.65rem; font-weight: 800; padding: 2px 6px; border-radius: 4px; letter-spacing: 0.5px; flex-shrink: 0;">DEV</span>
                     @else
-                        <span class="badge" style="background: #10b981; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 2px 6px; border-radius: 4px; letter-spacing: 0.5px; flex-shrink: 0;">TRAINER</span>
+                        <span class="badge topbar-auth-badge" style="background: #10b981; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 2px 6px; border-radius: 4px; letter-spacing: 0.5px; flex-shrink: 0;">TRAINER</span>
                     @endif
-                    <span style="font-size: 0.82rem; font-weight: 600; color: #fff; white-space: nowrap; display: inline-block; max-width: 160px; overflow: hidden; text-overflow: ellipsis; vertical-align: middle;" title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</span>
-                    <button type="button" onclick="document.getElementById('authModal') ? document.getElementById('authModal').hidden = false : null" style="background: none; border: none; color: #94a3b8; cursor: pointer; padding: 0 4px; font-size: 0.85rem; line-height: 1; flex-shrink: 0; display: inline-flex; align-items: center;" title="Ganti / Kelola Akun">
+                    <span class="topbar-auth-name" style="font-size: 0.82rem; font-weight: 600; color: #fff; white-space: nowrap; display: inline-block; max-width: 160px; overflow: hidden; text-overflow: ellipsis; vertical-align: middle;" title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</span>
+                    <button type="button" class="topbar-auth-switch" onclick="document.getElementById('authModal') ? document.getElementById('authModal').hidden = false : null" style="background: none; border: none; color: #94a3b8; cursor: pointer; padding: 0 4px; font-size: 0.85rem; line-height: 1; flex-shrink: 0; display: inline-flex; align-items: center;" title="Ganti / Kelola Akun" aria-label="Ganti atau kelola akun">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg>
                     </button>
                     <form action="{{ route('logout') }}" method="POST" style="display: inline; margin: 0; flex-shrink: 0;">
                         @csrf
-                        <button type="submit" style="background: none; border: none; color: #ff4655; cursor: pointer; font-size: 0.75rem; font-weight: 600; padding: 0 4px; line-height: 1;" title="Keluar">Logout</button>
+                        <button type="submit" class="topbar-auth-logout" style="background: none; border: none; color: #ff4655; cursor: pointer; font-size: 0.75rem; font-weight: 600; padding: 0 4px; line-height: 1;" title="Keluar">Logout</button>
                     </form>
                 </div>
             @else
-                <button type="button" class="pill pill--dark" onclick="document.getElementById('authModal') ? document.getElementById('authModal').hidden = false : null" style="cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px;">
+                <button type="button" class="pill pill--dark topbar-login-btn" onclick="document.getElementById('authModal') ? document.getElementById('authModal').hidden = false : null" style="cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px;">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
                     <span data-i18n="btn_login">Masuk</span>
                 </button>
@@ -72,9 +72,9 @@
                 </div>
             </details>
 
-            <button type="button" class="pill pill--dark" id="menuBtn" aria-controls="drawer" aria-expanded="false">
+            <button type="button" class="pill pill--dark topbar-menu-btn" id="menuBtn" aria-controls="drawer" aria-expanded="false" aria-label="Menu">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-                <span>Menu</span>
+                <span class="topbar-menu-label">Menu</span>
             </button>
         </div>
     </div>

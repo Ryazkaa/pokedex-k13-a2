@@ -26,7 +26,7 @@
                 <label class="field-label" for="apiDexIndex" style="display: block; font-size: 0.78rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">
                     Nomor Index Pokémon (Manual atau Otomatis PokéAPI)
                 </label>
-                <div style="display: flex; gap: 8px;">
+                <div class="caught-api-row" style="display: flex; gap: 8px;">
                     <input type="number" id="apiDexIndex" name="nomor_index" placeholder="Contoh: 25 atau 150" required min="1" max="1025"
                            class="text-input" style="flex: 1; padding: 10px 14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 8px; color: #ffffff; font-size: 0.95rem; font-family: monospace; font-weight: 700; outline: none;">
                     <button type="button" id="btnFetchPokeApi"
@@ -45,7 +45,7 @@
             </div>
 
             {{-- Field 3: Tipe 1 & Tipe 2 --}}
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+            <div class="caught-type-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
                 <div class="form-group" style="margin-bottom: 0;">
                     <label class="field-label" for="apiDexType1" style="display: block; font-size: 0.78rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Tipe 1 (Utama)</label>
                     <select id="apiDexType1" name="tipe_1" required
@@ -123,7 +123,7 @@
             </div>
 
             {{-- Action Buttons --}}
-            <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 16px;">
+            <div class="pkm-modal__actions" style="display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 16px;">
                 <button type="button" data-close-caught-modal
                         style="padding: 10px 18px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; font-weight: 600; color: #94a3b8; cursor: pointer; transition: all .15s;"
                         onmouseover="this.style.color='#fff'; this.style.borderColor='rgba(255,255,255,0.2)';"

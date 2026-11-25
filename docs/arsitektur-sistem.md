@@ -1,8 +1,9 @@
 # Dokumen Arsitektur Sistem: Pokédex Collection Tracker & Trainer Directory
 
-**Versi Dokumen:** 1.3.1 (Bugfix Skema Basis Data Jurnal, Eliminasi Emoji ke SVG Murni & Centered Modal Feedback)
-**Status Rilis:** Rilis Produksi v1.3.1 (Selesai & Stabil - 100% Terintegrasi)
-**Tanggal Rilis:** 24 November 2026
+**Versi Dokumen:** 1.4.1 (Cloud Hosting Railway & Optimasi UI Responsif Mobile/Tablet)
+**Status Rilis:** Rilis Produksi v1.4.1 (Live Cloud Hosting Railway & Full Responsive Layout)
+**Tanggal Rilis:** 25 November 2026
+**Live URL:** `https://pokedex-k13-a2-production.up.railway.app/pokedex`
 **Pengembang:** Kelompok 13 — Kelas Praktikum Pemrograman Web A / A2  
 * Arya Andra Diazka (J0404251155) — *Lead Architect & DevOps*
 * Yanuar Dwi Prasetya (J0404251022) — *Security & Authentication Engineer*
@@ -180,4 +181,34 @@ Sistem membedakan dua tingkatan hak akses:
     * Harmonisasi visual total: eliminasi seluruh emoji bawaan sistem menjadi ikon vektor SVG inline murni, serta penyesuaian CSS tema gelap Crimson Cyber Glassmorphism.
     * Pembuatan modal popup feedback di tengah layar (`#journalFeedbackModal`) menggantikan browser alert untuk notifikasi simpan berhasil maupun peringatan belum login.
     * Menghubungkan jurnal taktis langsung dengan entri koleksi Pokémon trainer pada tombol aksi tabel DataTables serta integrasi kamus multi-bahasa (ID/EN).
+
+---
+
+## 6. Arsitektur Cloud Deployment (Railway Production v1.4.0)
+
+* **Platform & Runtime:** Railway Cloud dengan kontainer Railpack (PHP 8.2+ & Node.js) serta layanan basis data **MySQL 8.0** cloud persisten.
+* **Ekstensi PHP Wajib:** `ext-gd` dan `ext-zip` dideklarasikan di `composer.json` dan `composer.lock` untuk menunjang `PhpSpreadsheet` & `Barryvdh DomPDF`.
+* **Terminasi SSL & Reverse Proxy:**
+  * `bootstrap/app.php` mengonfigurasi `$middleware->trustProxies(at: '*')`.
+  * `app/Providers/AppServiceProvider.php` memaksa skema `URL::forceScheme('https')` pada environment `production`.
+  * `layouts/app.blade.php` menggunakan `secure_asset()` dan CSP `upgrade-insecure-requests`.
+* **Stabilitas Build `config:cache`:** `config/app.php` dilengkapi sanitasi `app.url` untuk mencegah galat `Invalid URI` saat inisialisasi konfigurasi produksi di CLI.
+
+---
+
+## 7. Arsitektur UI Responsif Multi-Perangkat (v1.4.1)
+
+Untuk menjamin kenyamanan akses di perangkat seluler (*smartphone* `320px–480px`), tablet (`768px–1199px`), maupun desktop, stylesheet `public/css/pokedex.css` dan komponen Blade menerapkan strategi responsif tanpa mengubah logika bisnis aplikasi:
+
+1. **Adaptasi Topbar & Navigasi Mobile (`<= 767px`, `<= 439px`):**
+   * Merampingkan jarak dan ukuran `.brand-logo`, tombol bahasa `.topbar-lang-btn`, serta pil akun `.topbar-auth-pill` (`.topbar-auth-name` ter-elipsis rapi).
+   * Pada lebar `< 440px`, tombol menu (`#menuBtn`) beralih ke mode ikon hamburger kompak (`38px`) dengan `aria-label="Menu"` sehingga tidak terpotong di sisi kanan layar.
+2. **Hero Stack Slides Adaptif (`<= 899px`, `<= 479px`):**
+   * Menghilangkan kunci tinggi statis `364px` menjadi `height: auto` dengan padding bawah `72px` agar tombol kontrol `< >` tidak menimpa paragraf deskripsi dan kartu tidak meluber menabrak seksi Bento Grid.
+   * Menjaga slide bertumpuk non-aktif (`:not([data-depth="0"])`) tetap terkunci tingginya (`height: 100%; overflow: hidden;`).
+3. **Pemisahan Kartu Tabel Master Library vs Caught Tracker (`<= 767px`):**
+   * Tabel pustaka master menggunakan selektor khusus `.dex-table--master` untuk tata letak kartu 5-kolom.
+   * Tabel koleksi trainer (`#caughtDataTable` / `.caught-table`) menggunakan grid kartu 7-kolom tersendiri (*Sprite, Name, Index, Type, Gen, Date, Actions*) lengkap dengan penataan ulang kontrol DataTables (`.dataTables_length`, `.dataTables_filter`, `.dataTables_paginate`) agar tersusun vertikal rapi tanpa tumpang tindih.
+4. **Scrollable Dialogs & Modals (`100dvh`):**
+   * `dialog.showcase`, `dialog.fact-modal`, dan seluruh `.pkm-modal__dialog` dikonfigurasi dengan batas tinggi `calc(100dvh - 24px)` dan `overflow-y: auto` (`overscroll-behavior: contain`) agar seluruh form (Tambah Koleksi, Jurnal WYSIWYG, Autentikasi) dapat digulir mulus pada layar ponsel pendek.
 

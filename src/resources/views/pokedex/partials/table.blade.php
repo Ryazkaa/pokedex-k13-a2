@@ -43,7 +43,7 @@
     </div>
 
     <div class="table-wrap glass">
-        <table class="dex-table">
+        <table class="dex-table dex-table--master">
             <thead>
                 <tr>
                     <th scope="col" aria-sort="ascending"><button type="button" data-sort="num"><span data-i18n="th_no_index">Nomor Index</span> <span class="sort-ind" aria-hidden="true"></span></button></th>

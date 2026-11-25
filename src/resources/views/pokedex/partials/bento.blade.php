@@ -92,13 +92,13 @@
                         @csrf
                         <input type="file" id="importFile" name="file_excel" class="visually-hidden" tabindex="-1"
                                accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" aria-label="Pilih file Excel">
-                        <button type="button" class="action-pill action-pill--wide" id="importTrigger" data-action="import"
+                        <button type="button" class="action-pill action-pill--wide import-trigger-btn" id="importTrigger" data-action="import"
                                 style="width: 100%; padding: 14px 18px; border-radius: 12px; display: flex; align-items: center; gap: 14px;">
                             <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 24px; height: 24px; flex-shrink: 0;"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            <div style="flex: 1; text-align: left;">
-                                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 3px;">
+                            <div class="import-trigger-body" style="flex: 1; text-align: left; min-width: 0;">
+                                <div class="import-trigger-head" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 3px;">
                                     <strong style="font-size: 0.95rem; color: #FFFFFF; font-weight: 700;">Import Pokemon untuk Database</strong>
-                                    <span style="background: rgba(225, 29, 72, 0.22); color: #F43F5E; border: 1px solid rgba(225, 29, 72, 0.45); font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase;">Fitur Developer</span>
+                                    <span class="import-trigger-badge" style="background: rgba(225, 29, 72, 0.22); color: #F43F5E; border: 1px solid rgba(225, 29, 72, 0.45); font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap;">Fitur Developer</span>
                                 </div>
                                 <small style="color: #94A3B8; font-size: 0.78rem;">Khusus Developer · Perbarui atau tambahkan semua Pokémon terbaru ke Library (.xlsx)</small>
                             </div>
@@ -129,16 +129,16 @@
                     </form>
                 @else
                     {{-- Tampilan Terkunci Khusus Developer untuk Pengguna Tamu / Trainer --}}
-                    <button type="button" class="action-pill action-pill--wide is-locked" onclick="openDevLockModal()"
+                    <button type="button" class="action-pill action-pill--wide is-locked import-trigger-btn" onclick="openDevLockModal()"
                             style="width: 100%; padding: 14px 18px; border-radius: 12px; display: flex; align-items: center; gap: 14px; background: rgba(15, 23, 42, 0.7); border: 1px dashed rgba(255, 70, 85, 0.4); cursor: pointer; transition: all .2s;"
                             title="Terkunci: Khusus 4 Akun Developer Kelompok 13">
                         <div style="width: 38px; height: 38px; border-radius: 8px; background: rgba(255, 70, 85, 0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255, 70, 85, 0.25);">
                             <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 20px; height: 20px; color: #ff4655;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
                         </div>
-                        <div style="flex: 1; text-align: left;">
-                            <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 3px;">
+                        <div class="import-trigger-body" style="flex: 1; text-align: left; min-width: 0;">
+                            <div class="import-trigger-head" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 3px;">
                                 <strong style="font-size: 0.95rem; color: #E2E8F0; font-weight: 700;" data-i18n="control_import_btn">Import Pokemon untuk Database</strong>
-                                <span style="background: rgba(255, 70, 85, 0.15); color: #F43F5E; border: 1px solid rgba(255, 70, 85, 0.35); font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 4px;">
+                                <span class="import-trigger-badge" style="background: rgba(255, 70, 85, 0.15); color: #F43F5E; border: 1px solid rgba(255, 70, 85, 0.35); font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;">
                                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                                     <span data-i18n="badge_locked_dev">Terkunci (Dev Only)</span>
                                 </span>

@@ -14,7 +14,7 @@
         </div>
 
         {{-- Toolbar Tombol Aksi --}}
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <div class="caught-toolbar" style="display: flex; gap: 10px; flex-wrap: wrap;">
             @auth
                 <button type="button" class="btn btn--primary" onclick="openAddCaughtModal()"
                         style="background: var(--crimson, #ff4655); border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 14px rgba(255, 70, 85, 0.35); cursor: pointer; color: #fff;">
@@ -41,8 +41,8 @@
     </div>
 
     {{-- Container DataTables --}}
-    <div class="table-wrap" style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px;">
-        <table id="caughtDataTable" class="dex-table" style="width: 100%; border-collapse: collapse;">
+    <div class="table-wrap caught-table-wrap" style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px;">
+        <table id="caughtDataTable" class="dex-table caught-table" style="width: 100%; border-collapse: collapse;">
             <thead>
                 <tr style="border-bottom: 2px solid rgba(255,255,255,0.1); text-align: left; color: #94A3B8; font-size: 0.85rem;">
                     <th style="padding: 12px;" data-i18n="th_no_index">NO INDEX</th>
@@ -155,7 +155,7 @@
                 <small style="display: block; margin-top: 6px; font-size: 0.74rem; color: #94a3b8;" data-i18n="format_dmy_hint">Format: Tanggal - Bulan - Tahun (DD/MM/YYYY)</small>
             </div>
 
-            <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 16px;">
+            <div class="pkm-modal__actions" style="display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 16px;">
                 <button type="button" onclick="closeEditCaughtDateModal()"
                         style="padding: 9px 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; font-weight: 600; color: #94a3b8; cursor: pointer;">
                     Batal
@@ -197,7 +197,7 @@
             Pokémon ini akan dihapus dari buku koleksi tangkapan Anda. Data master di Library utama tetap aman dan tidak akan terhapus.
         </p>
 
-        <div style="display: flex; gap: 10px;">
+        <div class="pkm-modal__actions" style="display: flex; gap: 10px; flex-wrap: wrap;">
             <button type="button" onclick="closeDeleteCaughtModal()"
                     style="flex: 1; padding: 10px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; font-weight: 600; color: #94A3B8; cursor: pointer;">
                 Batal

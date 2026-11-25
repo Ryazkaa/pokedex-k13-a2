@@ -55,6 +55,19 @@ Proyek ini dikembangkan oleh **Kelompok 13 — Kelas Praktikum Pemrograman Web A
 * **Modal Popup Notifikasi Feedback:** Mengganti alert bawaan browser dengan modal popup beranimasi di tengah layar (`#journalFeedbackModal`) untuk konfirmasi simpan, hapus, maupun proteksi autentikasi.
 * **Integrasi Penuh 4 Modul Tim (100% Selesai):** Seluruh modul anggota Kelompok 13 (Modul 1: Yanuar, Modul 2: Arya, Modul 3: Madina, Modul 4: Iasha) kini telah terintegrasi penuh ke dalam basis kode utama.
 
+### 9. Cloud Hosting & Production Deployment di Railway (v1.4.0 Milestone)
+* **Live Production Cloud Hosting:** Aplikasi Pokédex K13 resmi mengudara secara publik di **Railway Cloud Platform** (`https://pokedex-k13-a2-production.up.railway.app/pokedex`) terhubung ke database **MySQL 8.0** cloud bervolume persisten.
+* **Deklarasi Ekstensi PHP Produksi:** Menambahkan ekstensi `ext-gd` dan `ext-zip` di `composer.json` & `composer.lock` untuk memastikan pustaka `PhpSpreadsheet` dan `DomPDF` berjalan stabil di kontainer cloud Railpack.
+* **SSL Reverse Proxy & Pencegahan Mixed Content:** Mengaktifkan `trustProxies(at: '*')` di `bootstrap/app.php`, `URL::forceScheme('https')` di `AppServiceProvider.php`, `secure_asset()` di Blade, dan meta tag CSP `upgrade-insecure-requests`.
+* **Sanitasi `app.url` & Header Aman saat Build:** Mencegah galat `Invalid URI` saat eksekusi `php artisan config:cache` pada pipeline deployment Railway melalui normalisasi URL di `config/app.php`.
+
+### 10. Optimasi Tampilan Responsif Mobile & Tablet (v1.4.1 Milestone)
+* **Topbar Mobile Tanpa Terpotong:** Penyesuaian layout `.topbar__inner`, ukuran ikon brand, pil bahasa (`ID`/`EN`), serta status akun terautentikasi (`.topbar-auth-pill`) agar seluruh tombol kontrol dan tombol menu hamburger tetap muat sempurna hingga lebar layar ponsel sempit (`320px–439px`).
+* **Perbaikan Stack Slides Hero Banner (`<= 899px`):** Mengubah tinggi tetap kartu hero menjadi adaptif (`height: auto`), menyelaraskan ukuran artwork di atas konten, memberi ruang bawah khusus (`padding-bottom: 72px`) untuk tombol navigasi `< >`, serta mencegah teks atau tag menumpuk ke seksi Bento di bawahnya.
+* **Bento Grid & Kartu Statistik Mobile:** Penataan ulang tombol `Import Pokemon untuk Database` (`.import-trigger-head` bertumpuk rapi dengan lencana `TERKUNCI (DEV ONLY)`), penyesuaian ukuran ikon kartu info (`46px`), dan toolbar filter pencarian Master Library yang adaptif.
+* **Kartu Responsif 7-Kolom DataTables Caught Tracker:** Memisahkan transformasi kartu mobile antara tabel Master Library (`.dex-table--master`) dan tabel Koleksi Tangkapan (`.caught-table` / `#caughtDataTable`) serta menata kontrol DataTables (`length`, `filter`, `paginate`) secara bertumpuk penuh agar tidak tumpang tindih di layar kecil.
+* **Scrollable Modals (`100dvh`) untuk Semua Perangkat:** Memastikan `dialog.showcase`, `dialog.fact-modal`, dan seluruh `.pkm-modal__dialog` (`Auth`, `Tambah Koleksi`, `Jurnal Taktis WYSIWYG`, `Edit Tanggal`) mendukung scroll vertikal sentuh yang mulus tanpa memotong tombol aksi di layar HP pendek.
+
 ---
 
 ## 🛠️ Tumpukan Teknologi (Tech Stack)
@@ -87,6 +100,7 @@ Pertemuan 999/
 │   ├── pokedex-app(v1.2.4).zip     # Rilis pure SVG icons, vector flags, lang modal & shimmer (Arya & K13)
 │   ├── pokedex-app(v1.3.0).zip     # Rilis integrasi Modul 4: Jurnal Taktik & Quill.js WYSIWYG (Iasha Irdanti)
 │   ├── pokedex-app(v1.3.1).zip     # Rilis bugfix jurnal: Skema DB, SVG murni & popup feedback (Arya & K13)
+│   ├── pokedex-app(v1.4.0).zip     # Rilis Cloud Hosting Railway: HTTPS proxy, ext-gd/zip & config:cache sanitizer (Arya & K13)
 │   └── README.md                   # Catatan rilis dan riwayat versi komprehensif
 ├── datasets/                       # Dataset acuan spreadsheet (.xlsx)
 ├── docs/                           # Dokumentasi & rancangan sistem
@@ -164,7 +178,7 @@ Pertemuan 999/
 | Anggota | Modul Utama | Status Integrasi | Luaran & Komponen yang Dihasilkan |
 |---|---|:---:|---|
 | **Yanuar Dwi Prasetya**<br>*(J0404251022)* | **Modul 1:** Autentikasi, Sesi, & Role Developer | ✅ **Terintegrasi (v1.1.0 / v1.1.1)** | Migrasi `users.role`, `EnsureDeveloper` Middleware, `AuthController`, modal login/switch account (`auth-modal.blade.php`), lencana status navbar `DEV`/`TRAINER`. |
-| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1 / v1.2.1 / v1.2.2 / v1.2.3 / v1.2.4 / v1.3.1)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Card 2 Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching, identitas brand Pokéball resmi, sistem bilingual (ID/EN) menyeluruh, dan CI/CD. |
+| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1 / v1.2.1–v1.2.4 / v1.3.1 / v1.4.0 / v1.4.1)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Card 2 Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching, identitas brand Pokéball resmi, sistem bilingual (ID/EN) menyeluruh, Cloud DevOps Railway, dan optimasi UI responsif mobile. |
 | **Madina Dwiyana Putri**<br>*(J0404251090)* | **Modul 3:** Pokédex Caught Tracker, DataTables, & Ekspor | ✅ **Terintegrasi (v1.2.0 / v1.2.1)** | Migrasi `trainer_catches`, model `TrainerCatch`, modal `+ Tambah Koleksi` dengan auto-fetch PokéAPI, integrasi DataTables, serta ekspor Excel & DomPDF A4. |
 | **Iasha Irdanti**<br>*(J0404251115)* | **Modul 4:** Field Notes & Jurnal Strategi Trainer | ✅ **Terintegrasi (v1.3.0)** | Migrasi `trainer_notes`, model `TrainerNote`, modal Jurnal Taktik dengan tanggal/lokasi tangkap, integrasi editor WYSIWYG Quill.js, sanitasi HTML. |
 
