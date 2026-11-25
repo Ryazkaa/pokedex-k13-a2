@@ -86,7 +86,7 @@
 * **Catatan Presenter:** Tekankan bahwa arsitektur backend memisahkan tanggung jawab secara tegas (*Separation of Concerns*). Tidak ada logika SQL mentah yang tercecer di View, dan seluruh proses manipulasi berkas berat (Excel/PDF) diisolasi di Controller masing-masing.
 
 #### Rekomendasi Visual / Screenshot:
-* Diagram blok arsitektur sistem (Client Layer Browser → Laravel 11 Backend & Services → MySQL 8.0 Database) seperti yang tertera pada dokumen arsitektur v1.4.1.
+* Diagram blok arsitektur sistem (Client Layer Browser → Laravel 11 Backend & Services → MySQL 8.0 Database) seperti yang tertera pada dokumen arsitektur v1.4.2.
 
 ---
 

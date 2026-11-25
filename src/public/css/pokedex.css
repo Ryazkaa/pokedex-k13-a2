@@ -1044,8 +1044,9 @@ dialog::backdrop {
 }
 .hero__eyebrow {
     display: inline-flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
+    gap: 4px 8px;
     font-family: var(--font-mono);
     font-size: .76rem; font-weight: 800;
     letter-spacing: .14em; text-transform: uppercase;
@@ -2344,7 +2345,7 @@ h1, h2, h3 { text-wrap: balance; }
 }
 
 @media (max-width: 899px) {
-    .hero { margin-top: 74px; padding-bottom: 44px; }
+    .hero { margin-top: 68px; padding-bottom: 52px; }
     .hero__slide {
         grid-template-columns: 1fr;
         height: auto;
@@ -2352,8 +2353,16 @@ h1, h2, h3 { text-wrap: balance; }
         align-content: start;
     }
     .hero__slide:not([data-depth="0"]) {
+        position: absolute;
+        inset: 0;
         height: 100%;
         overflow: hidden;
+    }
+    .hero__card-bg {
+        background:
+            linear-gradient(90deg, rgb(236 232 225 / .03) 1px, transparent 1px) 0 0 / 48px 48px,
+            linear-gradient(0deg, rgb(236 232 225 / .03) 1px, transparent 1px) 0 0 / 48px 48px,
+            linear-gradient(155deg, #ff4655 0%, #d92b3a 31%, #0f1923 31.3%, #131f2c 100%);
     }
     .hero__card-bg::before {
         width: 220px; height: 220px;
@@ -2368,7 +2377,7 @@ h1, h2, h3 { text-wrap: balance; }
         margin-top: -68px;
         margin-bottom: 4px;
     }
-    .hero__text { padding: 4px 20px 72px; }
+    .hero__text { padding: 6px 20px 76px; }
     .hero__title--fact {
         min-height: 0;
         max-width: none;
@@ -2429,6 +2438,8 @@ h1, h2, h3 { text-wrap: balance; }
 
     /* Search & Filter Toolbar */
     .pokedex { margin-top: 38px; }
+    .pokedex__head { align-items: flex-start; gap: 6px; }
+    .guide-card__badge { white-space: nowrap; flex-shrink: 0; }
     .toolbar { gap: 10px; }
     .search-field { flex: 1 1 100%; height: 44px; }
     .search-field kbd { display: none; }
@@ -2585,23 +2596,26 @@ h1, h2, h3 { text-wrap: balance; }
     .showcase__line { width: 36px; margin-bottom: 0; }
     .showcase__no { font-size: 1.65rem; }
     .showcase__stage {
-        height: auto;
-        min-height: 185px;
-        max-height: 220px;
+        height: 190px;
+        min-height: 170px;
+        max-height: 200px;
+        margin: 2px 0;
         overflow: hidden;
     }
     .showcase__stage::before {
-        width: 170px;
-        border-width: 14px;
+        width: 156px;
+        border-width: 12px;
         box-shadow: inset 0 0 0 10px #f5f2ec;
     }
     .showcase__watermark { font-size: clamp(4.5rem, 22vw, 7rem); }
-    .showcase__stage img { width: min(195px, 58%); max-height: 195px; }
+    .showcase__stage img { width: min(172px, 54%); max-height: 172px; }
+    .showcase__info { min-width: 0; }
     .showcase__name {
         font-size: clamp(1.5rem, 6vw, 2rem);
         white-space: normal;
         overflow: visible;
     }
+    .gallery__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
     .showcase__lore {
         height: auto; min-height: 0; max-height: none;
         overflow: visible;
@@ -2616,6 +2630,10 @@ h1, h2, h3 { text-wrap: balance; }
         flex-direction: column;
         text-align: center;
     }
+}
+
+@media (max-width: 600px) {
+    .select-field { flex: 1 1 100%; }
 }
 
 @media (max-width: 540px) {
@@ -2636,6 +2654,27 @@ h1, h2, h3 { text-wrap: balance; }
     .info-card__head-row { flex-wrap: wrap; }
     .info-card__jump-badge { white-space: nowrap; }
 
+    /* Caught Toolbar 1 + 2 Grid Simetris */
+    .caught-toolbar {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px !important;
+        width: 100%;
+    }
+    .caught-toolbar > :first-child { grid-column: 1 / -1; }
+    .caught-toolbar > .btn {
+        width: 100%;
+        justify-content: center;
+        min-height: 42px;
+        font-size: .82rem;
+        padding: 9px 12px !important;
+    }
+
+    /* Master Table Pager */
+    .pager { gap: 5px; }
+    .pager button { min-width: 36px; height: 38px; padding: 0 8px; font-size: .82rem; }
+    .pager__input { width: 48px; height: 38px; }
+
     /* Fun Fact Modal Mobile */
     .fact-modal__banner { padding: 16px 16px 14px; min-height: 112px; }
     .fact-modal__banner-meta { max-width: 58%; }
@@ -2647,19 +2686,43 @@ h1, h2, h3 { text-wrap: balance; }
 
 @media (max-width: 479px) {
     .shell { width: calc(100% - 24px); }
-    .hero { margin-top: 64px; }
+    .brand-logo__text { font-size: clamp(0.98rem, 3.8vw, 1.25rem); }
+    .topbar-auth-name { display: none !important; }
+    .hero { margin-top: 62px; }
     .hero__art { width: min(176px, 52%); margin-top: -54px; }
-    .hero__text { padding: 4px 16px 68px; }
+    .hero__text { padding: 4px 16px 72px; }
     .hero__controls { left: 16px; bottom: 14px; }
     .hero__deck-btn { width: 36px; height: 36px; }
-    .select-field { flex: 1 1 100%; }
+
+    /* 19 Filter Tipe Tersusun Rapi 3 Kolom */
+    .filter-pills {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+    }
+    .filter-pills .chip--type {
+        width: 100%;
+        min-width: 0;
+        justify-content: flex-start;
+        padding: .35rem .5rem;
+        font-size: .74rem;
+    }
+    .filter-pills .chip--type span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
 
 @media (max-width: 439px) {
-    .topbar-auth-name { max-width: 54px !important; }
     .topbar-menu-label { display: none; }
     .topbar-menu-btn { padding: 0 !important; width: 38px; justify-content: center; }
     .caught-type-grid { grid-template-columns: 1fr !important; }
+}
+
+@media (max-width: 359px) {
+    .filter-pills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .caught-toolbar { grid-template-columns: 1fr; }
 }
 
 /* ---------- 13. Reduced motion ---------- */
@@ -2928,12 +2991,13 @@ h1, h2, h3 { text-wrap: balance; }
 @media (max-width: 540px) {
     .pkm-modal { padding: 10px; }
     .pkm-modal__header { padding: 14px 16px !important; }
+    .pkm-modal__title { font-size: 1.02rem !important; }
     .pkm-modal__body,
     #formAddCaught,
     #formJournal,
     #formEditCaughtDate { padding: 16px !important; }
-    .auth-tabs { padding: 10px 14px 0; gap: 4px; overflow-x: auto; }
-    .auth-tab { padding: 8px 10px; font-size: .82rem; white-space: nowrap; }
+    .auth-tabs { display: flex; flex-wrap: nowrap; padding: 10px 10px 0; gap: 2px; overflow-x: auto; }
+    .auth-tab { flex: 1 1 auto; justify-content: center; padding: 8px 6px; font-size: .78rem; white-space: nowrap; }
     .caught-api-row { flex-wrap: wrap; }
     .caught-api-row #btnFetchPokeApi { width: 100%; justify-content: center; }
     .journal-meta-grid { grid-template-columns: 1fr !important; gap: 12px !important; }

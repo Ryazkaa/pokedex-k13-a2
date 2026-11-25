@@ -68,6 +68,11 @@ Proyek ini dikembangkan oleh **Kelompok 13 — Kelas Praktikum Pemrograman Web A
 * **Kartu Responsif 7-Kolom DataTables Caught Tracker:** Memisahkan transformasi kartu mobile antara tabel Master Library (`.dex-table--master`) dan tabel Koleksi Tangkapan (`.caught-table` / `#caughtDataTable`) serta menata kontrol DataTables (`length`, `filter`, `paginate`) secara bertumpuk penuh agar tidak tumpang tindih di layar kecil.
 * **Scrollable Modals (`100dvh`) untuk Semua Perangkat:** Memastikan `dialog.showcase`, `dialog.fact-modal`, dan seluruh `.pkm-modal__dialog` (`Auth`, `Tambah Koleksi`, `Jurnal Taktis WYSIWYG`, `Edit Tanggal`) mendukung scroll vertikal sentuh yang mulus tanpa memotong tombol aksi di layar HP pendek.
 
+### 11. Penyempurnaan Responsif Mobile Lanjutan (v1.4.2 Milestone)
+* **Eyebrow & Gradien Hero Kontras Tinggi:** Menambahkan `flex-wrap: wrap` pada `.hero__eyebrow` (`FUN FACT · TOPIK`), mengisolasi slide non-aktif via `position: absolute; inset: 0;`, serta mengarahkan gradien crimson ke sisi atas di belakang artwork sehingga teks deskripsi berada di atas latar gelap obsidian.
+* **Topbar & Filter Mobile Sempit (`<= 479px` & `<= 359px`):** Menyembunyikan `.topbar-auth-name` saat login di layar sempit `< 480px` agar status badge, switch, logout, bahasa, dan tombol hamburger tidak meluber; menyusun 19 tombol `Filter Tipe` dalam grid seragam 3 kolom (2 kolom di `< 360px`); serta merapikan `.caught-toolbar` dalam grid simetris 1 + 2.
+* **Modal Autentikasi & Showcase Ultra-Rapi:** Menata `.auth-tabs` (`Login | Daftar | Switch Dev (K13)`) tetap muat 1 baris penuh tanpa terlipat di `<= 540px`, memperluas dropdown `.select-field` menjadi `100%` sejak `<= 600px`, serta mengkompaksi `.showcase__stage` dan grid sprite 2 kolom di layar ponsel.
+
 ---
 
 ## 🛠️ Tumpukan Teknologi (Tech Stack)
@@ -102,6 +107,7 @@ Pertemuan 999/
 │   ├── pokedex-app(v1.3.1).zip     # Rilis bugfix jurnal: Skema DB, SVG murni & popup feedback (Arya & K13)
 │   ├── pokedex-app(v1.4.0).zip     # Rilis Cloud Hosting Railway: HTTPS proxy, ext-gd/zip & config:cache sanitizer (Arya & K13)
 │   ├── pokedex-app(v1.4.1).zip     # Rilis UI Responsif Mobile/Tablet: Topbar, Hero Deck, Caught DataTables & Scrollable Modals (Arya & K13)
+│   ├── pokedex-app(v1.4.2).zip     # Rilis Penyempurnaan Responsif Lanjutan: Eyebrow Hero, Grid 3-Kol Filter Tipe, Auth Tabs 1-Baris (Arya & K13)
 │   └── README.md                   # Catatan rilis dan riwayat versi komprehensif
 ├── datasets/                       # Dataset acuan spreadsheet (.xlsx)
 ├── docs/                           # Dokumentasi & rancangan sistem
@@ -179,7 +185,7 @@ Pertemuan 999/
 | Anggota | Modul Utama | Status Integrasi | Luaran & Komponen yang Dihasilkan |
 |---|---|:---:|---|
 | **Yanuar Dwi Prasetya**<br>*(J0404251022)* | **Modul 1:** Autentikasi, Sesi, & Role Developer | ✅ **Terintegrasi (v1.1.0 / v1.1.1)** | Migrasi `users.role`, `EnsureDeveloper` Middleware, `AuthController`, modal login/switch account (`auth-modal.blade.php`), lencana status navbar `DEV`/`TRAINER`. |
-| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1 / v1.2.1–v1.2.4 / v1.3.1 / v1.4.0 / v1.4.1)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Card 2 Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching, identitas brand Pokéball resmi, sistem bilingual (ID/EN) menyeluruh, Cloud DevOps Railway, dan optimasi UI responsif mobile. |
+| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1 / v1.2.1–v1.2.4 / v1.3.1 / v1.4.0–v1.4.2)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Card 2 Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching, identitas brand Pokéball resmi, sistem bilingual (ID/EN) menyeluruh, Cloud DevOps Railway, dan optimasi UI responsif mobile. |
 | **Madina Dwiyana Putri**<br>*(J0404251090)* | **Modul 3:** Pokédex Caught Tracker, DataTables, & Ekspor | ✅ **Terintegrasi (v1.2.0 / v1.2.1)** | Migrasi `trainer_catches`, model `TrainerCatch`, modal `+ Tambah Koleksi` dengan auto-fetch PokéAPI, integrasi DataTables, serta ekspor Excel & DomPDF A4. |
 | **Iasha Irdanti**<br>*(J0404251115)* | **Modul 4:** Field Notes & Jurnal Strategi Trainer | ✅ **Terintegrasi (v1.3.0)** | Migrasi `trainer_notes`, model `TrainerNote`, modal Jurnal Taktik dengan tanggal/lokasi tangkap, integrasi editor WYSIWYG Quill.js, sanitasi HTML. |
 

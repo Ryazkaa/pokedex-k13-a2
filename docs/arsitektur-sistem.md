@@ -1,7 +1,7 @@
 # Dokumen Arsitektur Sistem: Pokédex Collection Tracker & Trainer Directory
 
-**Versi Dokumen:** 1.4.1 (Cloud Hosting Railway & Optimasi UI Responsif Mobile/Tablet)
-**Status Rilis:** Rilis Produksi v1.4.1 (Live Cloud Hosting Railway & Full Responsive Layout)
+**Versi Dokumen:** 1.4.2 (Cloud Hosting Railway & Penyempurnaan UI Responsif Mobile/Tablet)
+**Status Rilis:** Rilis Produksi v1.4.2 (Live Cloud Hosting Railway & Full Responsive Mobile Polishing)
 **Tanggal Rilis:** 25 November 2026
 **Live URL:** `https://pokedex-k13-a2-production.up.railway.app/pokedex`
 **Pengembang:** Kelompok 13 — Kelas Praktikum Pemrograman Web A / A2  
@@ -196,19 +196,20 @@ Sistem membedakan dua tingkatan hak akses:
 
 ---
 
-## 7. Arsitektur UI Responsif Multi-Perangkat (v1.4.1)
+## 7. Arsitektur UI Responsif Multi-Perangkat (v1.4.1 & v1.4.2)
 
 Untuk menjamin kenyamanan akses di perangkat seluler (*smartphone* `320px–480px`), tablet (`768px–1199px`), maupun desktop, stylesheet `public/css/pokedex.css` dan komponen Blade menerapkan strategi responsif tanpa mengubah logika bisnis aplikasi:
 
-1. **Adaptasi Topbar & Navigasi Mobile (`<= 767px`, `<= 439px`):**
-   * Merampingkan jarak dan ukuran `.brand-logo`, tombol bahasa `.topbar-lang-btn`, serta pil akun `.topbar-auth-pill` (`.topbar-auth-name` ter-elipsis rapi).
+1. **Adaptasi Topbar & Navigasi Mobile (`<= 767px`, `<= 479px`, `<= 439px`):**
+   * Merampingkan jarak dan ukuran `.brand-logo`, tombol bahasa `.topbar-lang-btn`, serta pil akun `.topbar-auth-pill` (`.topbar-auth-name` disembunyikan di `< 480px` sambil mempertahankan badge role, tombol switch, dan logout; detail nama/email lengkap tersedia di Menu Drawer).
    * Pada lebar `< 440px`, tombol menu (`#menuBtn`) beralih ke mode ikon hamburger kompak (`38px`) dengan `aria-label="Menu"` sehingga tidak terpotong di sisi kanan layar.
-2. **Hero Stack Slides Adaptif (`<= 899px`, `<= 479px`):**
-   * Menghilangkan kunci tinggi statis `364px` menjadi `height: auto` dengan padding bawah `72px` agar tombol kontrol `< >` tidak menimpa paragraf deskripsi dan kartu tidak meluber menabrak seksi Bento Grid.
-   * Menjaga slide bertumpuk non-aktif (`:not([data-depth="0"])`) tetap terkunci tingginya (`height: 100%; overflow: hidden;`).
-3. **Pemisahan Kartu Tabel Master Library vs Caught Tracker (`<= 767px`):**
-   * Tabel pustaka master menggunakan selektor khusus `.dex-table--master` untuk tata letak kartu 5-kolom.
+2. **Hero Stack Slides Adaptif & Kontras Tinggi (`<= 899px`, `<= 479px`):**
+   * Menghilangkan kunci tinggi statis `364px` menjadi `height: auto` dengan padding bawah `72px–76px` agar tombol kontrol `< >` tidak menimpa paragraf deskripsi dan kartu tidak meluber menabrak seksi Bento Grid.
+   * Menetapkan `flex-wrap: wrap` pada `.hero__eyebrow`, mengisolasi slide bertumpuk non-aktif (`position: absolute; inset: 0; height: 100%;`), dan mengarahkan gradien diagonal crimson ke bagian atas belakang artwork agar seluruh teks hero tetap kontras di atas dasar gelap.
+3. **Bento Filter Grid, Caught Toolbar & Pemisahan Kartu Tabel (`<= 767px`, `<= 600px`, `<= 479px`):**
+   * Menata 19 tombol `.filter-pills` menjadi grid seragam 3 kolom pada `<= 479px` (2 kolom pada `< 360px`) serta menyusun `.caught-toolbar` dalam grid simetris 1+2 (`<= 540px`).
+   * Tabel pustaka master menggunakan selektor khusus `.dex-table--master` untuk tata letak kartu 5-kolom, sementara `.select-field` diperluas `100%` sejak `<= 600px`.
    * Tabel koleksi trainer (`#caughtDataTable` / `.caught-table`) menggunakan grid kartu 7-kolom tersendiri (*Sprite, Name, Index, Type, Gen, Date, Actions*) lengkap dengan penataan ulang kontrol DataTables (`.dataTables_length`, `.dataTables_filter`, `.dataTables_paginate`) agar tersusun vertikal rapi tanpa tumpang tindih.
-4. **Scrollable Dialogs & Modals (`100dvh`):**
-   * `dialog.showcase`, `dialog.fact-modal`, dan seluruh `.pkm-modal__dialog` dikonfigurasi dengan batas tinggi `calc(100dvh - 24px)` dan `overflow-y: auto` (`overscroll-behavior: contain`) agar seluruh form (Tambah Koleksi, Jurnal WYSIWYG, Autentikasi) dapat digulir mulus pada layar ponsel pendek.
+4. **Scrollable Dialogs & Modals (`100dvh`) serta Auth Tabs 1-Baris:**
+   * `dialog.showcase` (dengan `.showcase__stage` terkompaksi `height: 190px` & `.gallery__grid` 2 kolom), `dialog.fact-modal`, dan seluruh `.pkm-modal__dialog` dikonfigurasi dengan batas tinggi `calc(100dvh - 24px)` dan `overflow-y: auto` (`overscroll-behavior: contain`), sedangkan `.auth-tabs` tetap muat 1 baris penuh di `<= 540px`.
 
