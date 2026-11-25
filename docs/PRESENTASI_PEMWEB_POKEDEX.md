@@ -86,7 +86,7 @@
 * **Catatan Presenter:** Tekankan bahwa arsitektur backend memisahkan tanggung jawab secara tegas (*Separation of Concerns*). Tidak ada logika SQL mentah yang tercecer di View, dan seluruh proses manipulasi berkas berat (Excel/PDF) diisolasi di Controller masing-masing.
 
 #### Rekomendasi Visual / Screenshot:
-* Diagram blok arsitektur sistem (Client Layer Browser → Laravel 11 Backend & Services → MySQL 8.0 Database) seperti yang tertera pada dokumen arsitektur v1.4.2.
+* Diagram blok arsitektur sistem (Client Layer Browser → Laravel 11 Backend & Services → MySQL 8.0 Database) seperti yang tertera pada dokumen arsitektur v1.5.0.
 
 ---
 
@@ -224,9 +224,9 @@ Jelaskan kepada dosen bahwa proyek Pokédex Kelompok 13 dibangun dengan disiplin
   - **Update:** Fitur edit tanggal tangkap cepat (`updateDate`) dengan pemilih kalender modal terintegrasi.
   - **Delete:** Penghapusan Pokémon tangkapan (`destroy`) dengan modal konfirmasi peringatan cyber merah demi keamanan data.
 * **P7 (Konsumsi REST API Eksternal - PokéAPI v2):**
-  - **Tombol Cerdas '⚡ Ambil PokéAPI':** Cukup masukkan ID Pokémon (misal: 25 untuk Pikachu), sistem secara asinkronus mengeksekusi JavaScript `fetch()` ke endpoint publik:  
-    `https://pokeapi.co/api/v2/pokemon/{id}`
-  - **Auto-Fill Otomatis:** Data JSON yang diterima langsung di-parse untuk mengisi otomatis nama Pokémon, tipe primer, tipe sekunder, nomor generasi, serta URL sprite resmi resolusi tinggi.
+  - **Tombol Cerdas '⚡ Ambil PokéAPI' (Index & Nama) + Animated Autocomplete (`v1.5.0`):** Cukup ketik nomor ID (misal `25`) atau sebagian nama Pokémon (misal `pik` akan memunculkan dropdown rekomendasi beranimasi `#0025 Pikachu` di atas `#0731 Pikipek` terurut berdasarkan index), lalu pilih saran atau klik **⚡ Ambil PokéAPI** di bawah kolom nama untuk mengeksekusi `fetch()` asinkronus ke endpoint publik:  
+    `https://pokeapi.co/api/v2/pokemon/{id_or_name}`
+  - **Auto-Fill Otomatis:** Data JSON yang diterima langsung di-parse untuk mengisi otomatis nomor index, nama Pokémon, tipe primer, tipe sekunder, nomor generasi, serta URL sprite resmi resolusi tinggi.
   - Mengurangi beban ketik pengguna dan menjamin akurasi data koleksi tangkapan 100% valid.
 
 #### Kaitan Pertemuan Pemweb & Detail Teknis:

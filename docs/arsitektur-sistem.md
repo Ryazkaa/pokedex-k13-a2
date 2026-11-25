@@ -1,7 +1,7 @@
 # Dokumen Arsitektur Sistem: Pokédex Collection Tracker & Trainer Directory
 
-**Versi Dokumen:** 1.4.2 (Cloud Hosting Railway & Penyempurnaan UI Responsif Mobile/Tablet)
-**Status Rilis:** Rilis Produksi v1.4.2 (Live Cloud Hosting Railway & Full Responsive Mobile Polishing)
+**Versi Dokumen:** 1.5.0 (Cloud Hosting Railway, UI Responsif Multi-Perangkat & PokéAPI Name Autocomplete)
+**Status Rilis:** Rilis Produksi v1.5.0 (Live Cloud Hosting Railway, Full Responsive Mobile & Smart PokéAPI Combobox)
 **Tanggal Rilis:** 25 November 2026
 **Live URL:** `https://pokedex-k13-a2-production.up.railway.app/pokedex`
 **Pengembang:** Kelompok 13 — Kelas Praktikum Pemrograman Web A / A2  
@@ -212,4 +212,12 @@ Untuk menjamin kenyamanan akses di perangkat seluler (*smartphone* `320px–480p
    * Tabel koleksi trainer (`#caughtDataTable` / `.caught-table`) menggunakan grid kartu 7-kolom tersendiri (*Sprite, Name, Index, Type, Gen, Date, Actions*) lengkap dengan penataan ulang kontrol DataTables (`.dataTables_length`, `.dataTables_filter`, `.dataTables_paginate`) agar tersusun vertikal rapi tanpa tumpang tindih.
 4. **Scrollable Dialogs & Modals (`100dvh`) serta Auth Tabs 1-Baris:**
    * `dialog.showcase` (dengan `.showcase__stage` terkompaksi `height: 190px` & `.gallery__grid` 2 kolom), `dialog.fact-modal`, dan seluruh `.pkm-modal__dialog` dikonfigurasi dengan batas tinggi `calc(100dvh - 24px)` dan `overflow-y: auto` (`overscroll-behavior: contain`), sedangkan `.auth-tabs` tetap muat 1 baris penuh di `<= 540px`.
+
+---
+
+## 8. Pencarian PokéAPI via Nama, Animated Autocomplete & Modal Scroll Safeguard (v1.5.0)
+
+* **Animated Name Autocomplete Combobox (`#apiDexName`, `#apiDexNameList`):** Menggunakan pola aksesibel WAI-ARIA `role="combobox"` (`aria-autocomplete="list"`, `aria-expanded`, `aria-activedescendant`, `role="listbox"`) dengan animasi muncul halus (`@keyframes caughtSuggestIn`, menghormati `prefers-reduced-motion`). Saran difilter berdasarkan awalan nama (*prefix*) lalu kecocokan (*substring*) dan diurutkan menaik (*ascending*) menurut nomor index (`#0025 Pikachu` di atas `#0731 Pikipek`), dilengkapi sinkronisasi fallback katalog `https://pokeapi.co/api/v2/pokemon?limit=1025`.
+* **Dual-Mode PokéAPI Lookup (Index & Name):** Tombol `#btnFetchPokeApi` ditempatkan di bawah input *Nama Pokémon* dan secara otomatis mengambil data via nomor indeks maupun slug nama (`normalizePokeApiSlug`) dari `https://pokeapi.co/api/v2/pokemon/{identifier}` untuk mengisi nomor index (`#apiDexIndex`), nama, tipe, generasi, sprite, serta hologram preview.
+* **Modal Scroll & Button Alignment Fix:** Menghapus inline `overflow: hidden` pada `.pkm-modal__dialog` (`caught-modal.blade.php`, `journal-modal.blade.php`, `caught-table.blade.php`) dan menetapkan `.pkm-modal__actions .action-pill { width: auto; }` di `pokedex.css` agar seluruh modal dapat digulir vertikal penuh di zoom 100% dan layar ponsel.
 

@@ -121,7 +121,7 @@
 {{-- MODAL 1: EDIT TANGGAL PENANGKAPAN POKÉMON --}}
 <div id="editCaughtDateModal" class="pkm-modal" role="dialog" aria-modal="true" aria-labelledby="editCaughtDateTitle" hidden>
     <div class="pkm-modal__backdrop" onclick="closeEditCaughtDateModal()"></div>
-    <div class="pkm-modal__dialog" style="max-width: 440px; background: #0f1923; color: #f1f5f9; border-radius: 14px; overflow: hidden; border: 1px solid rgba(245, 158, 11, 0.4); box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(245, 158, 11, 0.2); animation: pkmModalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
+    <div class="pkm-modal__dialog" style="max-width: 440px; background: #0f1923; color: #f1f5f9; border-radius: 14px; border: 1px solid rgba(245, 158, 11, 0.4); box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(245, 158, 11, 0.2); animation: pkmModalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
         <div class="pkm-modal__header" style="display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); background: rgba(245, 158, 11, 0.08);">
             <div style="display: flex; align-items: center; gap: 12px;">
                 <div style="width: 34px; height: 34px; border-radius: 8px; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">

@@ -2,7 +2,7 @@
 {{-- 1. Modal Form Tambah Koleksi Pokédex (Crimson Dark Glassmorphism) --}}
 <div id="addCaughtModal" class="pkm-modal" role="dialog" aria-modal="true" aria-labelledby="addCaughtTitle" hidden>
     <div class="pkm-modal__backdrop" data-close-caught-modal></div>
-    <div class="pkm-modal__dialog" style="max-width: 520px; background: #0f1923; color: #f1f5f9; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255, 70, 85, 0.35); box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 70, 85, 0.2); animation: pkmModalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
+    <div class="pkm-modal__dialog" style="max-width: 520px; background: #0f1923; color: #f1f5f9; border-radius: 14px; border: 1px solid rgba(255, 70, 85, 0.35); box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 70, 85, 0.2); animation: pkmModalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
         
         {{-- Header Modal --}}
         <div class="pkm-modal__header" style="display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); background: rgba(255, 70, 85, 0.06);">
@@ -21,27 +21,33 @@
         {{-- Form Body --}}
         <form id="formAddCaught" style="padding: 22px 24px;">
             @csrf
-            {{-- Field 1: Nomor Index + Tombol Ambil PokéAPI --}}
-            <div class="form-group" style="margin-bottom: 16px;">
+            {{-- Field 1: Nomor Index --}}
+            <div class="form-group" style="margin-bottom: 14px;">
                 <label class="field-label" for="apiDexIndex" style="display: block; font-size: 0.78rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">
                     Nomor Index Pokémon (Manual atau Otomatis PokéAPI)
                 </label>
-                <div class="caught-api-row" style="display: flex; gap: 8px;">
-                    <input type="number" id="apiDexIndex" name="nomor_index" placeholder="Contoh: 25 atau 150" required min="1" max="1025"
-                           class="text-input" style="flex: 1; padding: 10px 14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 8px; color: #ffffff; font-size: 0.95rem; font-family: monospace; font-weight: 700; outline: none;">
-                    <button type="button" id="btnFetchPokeApi"
-                            style="padding: 10px 18px; background: rgba(255, 70, 85, 0.15); border: 1px solid rgba(255, 70, 85, 0.4); border-radius: 8px; font-weight: 700; font-size: 0.85rem; color: #ff4655; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s; white-space: nowrap;">
+                <input type="number" id="apiDexIndex" name="nomor_index" placeholder="Contoh: 25 atau 150" required min="1" max="1025"
+                       class="text-input" style="width: 100%; box-sizing: border-box; padding: 10px 14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 8px; color: #ffffff; font-size: 0.95rem; font-family: monospace; font-weight: 700; outline: none;">
+            </div>
+
+            {{-- Field 2: Nama Pokémon + Rekomendasi Dropdown & Tombol Ambil PokéAPI --}}
+            <div class="form-group" style="margin-bottom: 16px;">
+                <label class="field-label" for="apiDexName" style="display: block; font-size: 0.78rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">
+                    Nama Pokémon (Ketik untuk Rekomendasi)
+                </label>
+                <div class="caught-autocomplete" id="apiDexNameWrap">
+                    <input type="text" id="apiDexName" name="nama_pokemon" placeholder="Contoh: Pik atau Pikachu" required autocomplete="off"
+                           role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="apiDexNameList"
+                           class="text-input" style="width: 100%; box-sizing: border-box; padding: 10px 14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 8px; color: #ffffff; font-size: 0.95rem; outline: none;">
+                    <ul id="apiDexNameList" class="caught-suggest-list" role="listbox" aria-label="Rekomendasi Nama Pokémon" hidden></ul>
+                </div>
+                <div class="caught-api-fetch-bar">
+                    <button type="button" id="btnFetchPokeApi" class="caught-api-fetch-btn">
                         <svg viewBox="0 0 24 24" style="width: 15px; height: 15px; fill: currentColor;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                         <span>Ambil PokéAPI</span>
                     </button>
+                    <span class="caught-api-hint">Isi Nomor Index atau Nama Pokémon (lalu pilih rekomendasi atau klik tombol) untuk mengisi data otomatis.</span>
                 </div>
-            </div>
-
-            {{-- Field 2: Nama Pokémon --}}
-            <div class="form-group" style="margin-bottom: 16px;">
-                <label class="field-label" for="apiDexName" style="display: block; font-size: 0.78rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Nama Pokémon</label>
-                <input type="text" id="apiDexName" name="nama_pokemon" placeholder="Contoh: Pikachu" required
-                       class="text-input" style="width: 100%; box-sizing: border-box; padding: 10px 14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 8px; color: #ffffff; font-size: 0.95rem; outline: none;">
             </div>
 
             {{-- Field 3: Tipe 1 & Tipe 2 --}}
@@ -118,7 +124,7 @@
                 </div>
                 <div style="flex: 1; text-align: left;">
                     <div id="apiDexPreviewTitle" style="font-size: 0.92rem; font-weight: 700; color: #ffffff; margin-bottom: 2px;">Preview Sprite Pokémon</div>
-                    <div id="apiDexPreviewSub" style="font-size: 0.78rem; color: #94a3b8;">Ketik nomor index di atas lalu klik &ldquo;Ambil PokéAPI&rdquo;</div>
+                    <div id="apiDexPreviewSub" style="font-size: 0.78rem; color: #94a3b8;">Ketik nomor index atau nama Pokémon di atas lalu klik &ldquo;Ambil PokéAPI&rdquo;</div>
                 </div>
             </div>
 
@@ -267,6 +273,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const btnFetch = document.getElementById('btnFetchPokeApi');
     const inputIndex = document.getElementById('apiDexIndex');
     const inputName = document.getElementById('apiDexName');
+    const nameWrap = document.getElementById('apiDexNameWrap');
+    const suggestList = document.getElementById('apiDexNameList');
     const selType1 = document.getElementById('apiDexType1');
     const selType2 = document.getElementById('apiDexType2');
     const selGen = document.getElementById('apiDexGen');
@@ -283,64 +291,383 @@ document.addEventListener('DOMContentLoaded', function() {
         inputCaughtAt.value = new Date().toISOString().split('T')[0];
     }
 
-    // Auto-fetch data dari PokéAPI v2
+    const defaultFetchBtnHtml = '<svg viewBox="0 0 24 24" style="width: 15px; height: 15px; fill: currentColor;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> <span>Ambil PokéAPI</span>';
+    let lastEditedField = 'index';
+    let currentMatches = [];
+    let activeSuggestionIdx = -1;
+
+    function normalizePokeApiSlug(raw) {
+        return String(raw || '')
+            .trim()
+            .toLowerCase()
+            .replace(/♀/g, '-f')
+            .replace(/♂/g, '-m')
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[.'’:]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-')
+            .replace(/^-|-$/g, '');
+    }
+
+    function formatDisplayNameFromSlug(slug) {
+        if (!slug) return '';
+        return String(slug)
+            .split('-')
+            .filter(Boolean)
+            .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+            .join(' ');
+    }
+
+    // Katalog searchable Pokémon diurutkan berdasarkan index (num) ascending
+    const catalogMap = new Map();
+    let catalogList = [];
+
+    function rebuildCatalogList() {
+        catalogList = Array.from(catalogMap.values()).sort((a, b) => a.num - b.num);
+    }
+
+    const initialPokemons = Array.isArray(window.POKEDEX?.pokemons) ? window.POKEDEX.pokemons : [];
+    initialPokemons.forEach(p => {
+        const num = parseInt(p.num, 10);
+        if (!num || num < 1) return;
+        catalogMap.set(num, {
+            num,
+            name: String(p.name || ''),
+            apiSlug: normalizePokeApiSlug(p.name),
+            types: Array.isArray(p.types) ? p.types : [],
+            sprite: p.sprite || `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${num}.png`,
+        });
+    });
+    rebuildCatalogList();
+
+    function ensureFullPokeApiCatalog() {
+        if (window.__pokeApiMasterListLoaded) return Promise.resolve();
+        if (!window.__pokeApiMasterListPromise) {
+            window.__pokeApiMasterListPromise = fetch('https://pokeapi.co/api/v2/pokemon?limit=1025')
+                .then(res => (res.ok ? res.json() : null))
+                .then(json => {
+                    if (!json || !Array.isArray(json.results)) return;
+                    json.results.forEach(entry => {
+                        const match = String(entry.url || '').match(/\/pokemon\/(\d+)\/?$/);
+                        if (!match) return;
+                        const num = parseInt(match[1], 10);
+                        if (!num || num > 1025) return;
+                        const slug = String(entry.name || '');
+                        if (catalogMap.has(num)) {
+                            const existing = catalogMap.get(num);
+                            existing.apiSlug = slug;
+                        } else {
+                            catalogMap.set(num, {
+                                num,
+                                name: formatDisplayNameFromSlug(slug),
+                                apiSlug: slug,
+                                types: [],
+                                sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${num}.png`,
+                            });
+                        }
+                    });
+                    window.__pokeApiMasterListLoaded = true;
+                    rebuildCatalogList();
+                    if (document.activeElement === inputName && inputName.value.trim()) {
+                        renderSuggestions(inputName.value);
+                    }
+                })
+                .catch(() => {
+                    window.__pokeApiMasterListPromise = null;
+                });
+        }
+        return window.__pokeApiMasterListPromise;
+    }
+
+    function resolvePokeApiIdentifierFromName(rawName) {
+        const clean = String(rawName || '').trim();
+        const lower = clean.toLowerCase();
+        const slug = normalizePokeApiSlug(clean);
+        const exactMatch = catalogList.find(
+            item => item.name.toLowerCase() === lower || item.apiSlug === slug
+        );
+        if (exactMatch) {
+            return { query: exactMatch.apiSlug || String(exactMatch.num), preferredName: exactMatch.name };
+        }
+        return { query: slug, preferredName: null };
+    }
+
+    function hideSuggestions() {
+        if (!suggestList || !inputName) return;
+        suggestList.hidden = true;
+        inputName.setAttribute('aria-expanded', 'false');
+        inputName.removeAttribute('aria-activedescendant');
+        activeSuggestionIdx = -1;
+        currentMatches = [];
+    }
+
+    function updateActiveSuggestion(nextIdx) {
+        if (!suggestList || currentMatches.length === 0) return;
+        const items = suggestList.querySelectorAll('.caught-suggest-item');
+        items.forEach(el => {
+            el.classList.remove('is-active');
+            el.setAttribute('aria-selected', 'false');
+        });
+        if (nextIdx < 0 || nextIdx >= items.length) {
+            activeSuggestionIdx = -1;
+            inputName.removeAttribute('aria-activedescendant');
+            return;
+        }
+        activeSuggestionIdx = nextIdx;
+        const activeEl = items[nextIdx];
+        activeEl.classList.add('is-active');
+        activeEl.setAttribute('aria-selected', 'true');
+        inputName.setAttribute('aria-activedescendant', activeEl.id);
+        activeEl.scrollIntoView({ block: 'nearest' });
+    }
+
+    function appendHighlightedText(parentEl, text, rawQuery) {
+        const q = String(rawQuery || '').trim();
+        if (!q) {
+            parentEl.textContent = text;
+            return;
+        }
+        const idx = text.toLowerCase().indexOf(q.toLowerCase());
+        if (idx === -1) {
+            parentEl.textContent = text;
+            return;
+        }
+        if (idx > 0) parentEl.appendChild(document.createTextNode(text.slice(0, idx)));
+        const mark = document.createElement('mark');
+        mark.textContent = text.slice(idx, idx + q.length);
+        parentEl.appendChild(mark);
+        if (idx + q.length < text.length) {
+            parentEl.appendChild(document.createTextNode(text.slice(idx + q.length)));
+        }
+    }
+
+    function selectSuggestion(item) {
+        if (!item) return;
+        inputIndex.value = item.num;
+        inputName.value = item.name;
+        lastEditedField = 'index';
+        hideSuggestions();
+        fetchPokemonFromPokeApi(item.apiSlug || String(item.num), item.name);
+    }
+
+    function renderSuggestions(rawQuery) {
+        if (!suggestList || !inputName) return;
+        const q = String(rawQuery || '').trim().toLowerCase().replace(/^#/, '');
+        if (!q) {
+            hideSuggestions();
+            return;
+        }
+        const qSlug = normalizePokeApiSlug(q);
+        const prefixMatches = [];
+        const containsMatches = [];
+
+        for (let i = 0; i < catalogList.length; i++) {
+            const item = catalogList[i];
+            const nameLow = item.name.toLowerCase();
+            if (nameLow.startsWith(q) || (qSlug && item.apiSlug.startsWith(qSlug))) {
+                prefixMatches.push(item);
+            } else if (
+                nameLow.includes(q) ||
+                (qSlug && item.apiSlug.includes(qSlug)) ||
+                String(item.num) === q ||
+                String(item.num).padStart(4, '0').includes(q)
+            ) {
+                containsMatches.push(item);
+            }
+        }
+
+        // Prefix diutamakan, lalu substring; masing-masing tetap terurut index (num) ascending
+        currentMatches = prefixMatches.concat(containsMatches).slice(0, 20);
+        suggestList.innerHTML = '';
+        activeSuggestionIdx = -1;
+        inputName.removeAttribute('aria-activedescendant');
+
+        if (currentMatches.length === 0) {
+            const emptyLi = document.createElement('li');
+            emptyLi.className = 'caught-suggest-empty';
+            emptyLi.textContent = 'Tidak ada di daftar lokal. Klik "Ambil PokéAPI" untuk mencari langsung ke server PokéAPI.';
+            suggestList.appendChild(emptyLi);
+        } else {
+            currentMatches.forEach((item, idx) => {
+                const li = document.createElement('li');
+                li.id = `caught-suggest-opt-${item.num}`;
+                li.className = 'caught-suggest-item';
+                li.setAttribute('role', 'option');
+                li.setAttribute('aria-selected', 'false');
+                li.style.animationDelay = `${Math.min(idx * 18, 180)}ms`;
+
+                const img = document.createElement('img');
+                img.className = 'caught-suggest-sprite';
+                img.src = item.sprite;
+                img.alt = '';
+                img.loading = 'lazy';
+
+                const meta = document.createElement('div');
+                meta.className = 'caught-suggest-meta';
+
+                const nameEl = document.createElement('span');
+                nameEl.className = 'caught-suggest-name';
+                appendHighlightedText(nameEl, item.name, q);
+
+                const subEl = document.createElement('span');
+                subEl.className = 'caught-suggest-types';
+                subEl.textContent = item.types.length ? item.types.join(' / ') : 'Klik untuk ambil dari PokéAPI';
+
+                meta.appendChild(nameEl);
+                meta.appendChild(subEl);
+
+                const numBadge = document.createElement('span');
+                numBadge.className = 'caught-suggest-num';
+                numBadge.textContent = `#${String(item.num).padStart(4, '0')}`;
+
+                li.appendChild(img);
+                li.appendChild(meta);
+                li.appendChild(numBadge);
+
+                li.addEventListener('click', function() {
+                    selectSuggestion(item);
+                });
+
+                suggestList.appendChild(li);
+            });
+        }
+
+        suggestList.hidden = false;
+        inputName.setAttribute('aria-expanded', 'true');
+    }
+
+    async function fetchPokemonFromPokeApi(identifier, preferredDisplayName = null) {
+        const cleanTarget = String(identifier || '').trim();
+        if (!cleanTarget) return;
+
+        btnFetch.innerHTML = '<svg class="spinner" viewBox="0 0 24 24" style="width: 14px; height: 14px; animation: spin 1s linear infinite;" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-linecap="round"/></svg> <span>Mengambil...</span>';
+        btnFetch.disabled = true;
+
+        try {
+            const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${encodeURIComponent(cleanTarget)}`);
+            if (!res.ok) {
+                const label = /^\d+$/.test(cleanTarget) ? `index #${cleanTarget}` : `"${inputName.value.trim() || cleanTarget}"`;
+                throw new Error(`Pokémon dengan ${label} tidak ditemukan di PokéAPI.`);
+            }
+            const data = await res.json();
+
+            const num = parseInt(data.id, 10);
+            inputIndex.value = num;
+
+            const catalogItem = catalogMap.get(num);
+            const formattedName = preferredDisplayName || (catalogItem ? catalogItem.name : formatDisplayNameFromSlug(data.name));
+            inputName.value = formattedName;
+
+            if (data.types[0]) selType1.value = data.types[0].type.name.charAt(0).toUpperCase() + data.types[0].type.name.slice(1);
+            if (data.types[1]) selType2.value = data.types[1].type.name.charAt(0).toUpperCase() + data.types[1].type.name.slice(1);
+            else selType2.value = '';
+
+            if (num <= 151) selGen.value = 'Generasi I (Kanto)';
+            else if (num <= 251) selGen.value = 'Generasi II (Johto)';
+            else if (num <= 386) selGen.value = 'Generasi III (Hoenn)';
+            else if (num <= 493) selGen.value = 'Generasi IV (Sinnoh)';
+            else if (num <= 649) selGen.value = 'Generasi V (Unova)';
+            else if (num <= 721) selGen.value = 'Generasi VI (Kalos)';
+            else if (num <= 809) selGen.value = 'Generasi VII (Alola)';
+            else if (num <= 905) selGen.value = 'Generasi VIII (Galar)';
+            else selGen.value = 'Generasi IX (Paldea)';
+
+            const spriteUrl = data.sprites?.front_default || `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${num}.png`;
+            inputSprite.value = spriteUrl;
+
+            previewImg.src = spriteUrl;
+            previewImg.style.display = 'block';
+            if (placeholderIcon) placeholderIcon.style.display = 'none';
+            previewTitle.textContent = `${formattedName} (#${String(num).padStart(4, '0')})`;
+            const typeInfo = selType2.value ? `${selType1.value} / ${selType2.value}` : selType1.value;
+            previewSub.textContent = `${typeInfo} · ${selGen.value}`;
+            previewBox.style.borderColor = '#ff4655';
+            previewBox.style.background = 'radial-gradient(circle at center, rgba(255, 70, 85, 0.18) 0%, rgba(15, 25, 35, 0.8) 100%)';
+        } catch (err) {
+            window.showCaughtFeedback(false, 'Gagal Mengambil PokéAPI', err.message);
+        } finally {
+            btnFetch.innerHTML = defaultFetchBtnHtml;
+            btnFetch.disabled = false;
+        }
+    }
+
+    if (inputIndex) {
+        inputIndex.addEventListener('input', function() {
+            lastEditedField = 'index';
+        });
+    }
+
+    if (inputName) {
+        inputName.addEventListener('focus', function() {
+            ensureFullPokeApiCatalog();
+            if (inputName.value.trim()) {
+                renderSuggestions(inputName.value);
+            }
+        });
+
+        inputName.addEventListener('input', function() {
+            lastEditedField = 'name';
+            ensureFullPokeApiCatalog();
+            renderSuggestions(inputName.value);
+        });
+
+        inputName.addEventListener('keydown', function(e) {
+            const isOpen = suggestList && !suggestList.hidden;
+            if (!isOpen) return;
+
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (currentMatches.length > 0) {
+                    const next = activeSuggestionIdx + 1 >= currentMatches.length ? 0 : activeSuggestionIdx + 1;
+                    updateActiveSuggestion(next);
+                }
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (currentMatches.length > 0) {
+                    const prev = activeSuggestionIdx - 1 < 0 ? currentMatches.length - 1 : activeSuggestionIdx - 1;
+                    updateActiveSuggestion(prev);
+                }
+            } else if (e.key === 'Enter' && activeSuggestionIdx >= 0 && currentMatches[activeSuggestionIdx]) {
+                e.preventDefault();
+                selectSuggestion(currentMatches[activeSuggestionIdx]);
+            } else if (e.key === 'Escape') {
+                e.preventDefault();
+                hideSuggestions();
+            }
+        });
+    }
+
+    document.addEventListener('click', function(e) {
+        if (nameWrap && !nameWrap.contains(e.target)) {
+            hideSuggestions();
+        }
+    });
+
+    // Auto-fetch data dari PokéAPI v2 (mendukung Index maupun Nama)
     if (btnFetch) {
-        btnFetch.addEventListener('click', async function() {
-            const id = inputIndex.value.trim();
-            if (!id) {
-                window.showCaughtFeedback(false, 'Indeks Kosong', 'Silakan masukkan nomor index Pokémon (1 - 1025) terlebih dahulu.');
+        btnFetch.addEventListener('click', function() {
+            const indexVal = inputIndex ? inputIndex.value.trim() : '';
+            const nameVal = inputName ? inputName.value.trim() : '';
+
+            hideSuggestions();
+
+            if (lastEditedField === 'name' && nameVal) {
+                const resolved = resolvePokeApiIdentifierFromName(nameVal);
+                fetchPokemonFromPokeApi(resolved.query, resolved.preferredName);
+                return;
+            }
+            if (indexVal) {
+                fetchPokemonFromPokeApi(indexVal);
+                return;
+            }
+            if (nameVal) {
+                const resolved = resolvePokeApiIdentifierFromName(nameVal);
+                fetchPokemonFromPokeApi(resolved.query, resolved.preferredName);
                 return;
             }
 
-            btnFetch.innerHTML = '<svg class="spinner" viewBox="0 0 24 24" style="width: 14px; height: 14px; animation: spin 1s linear infinite;" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-linecap="round"/></svg> <span>Mengambil...</span>';
-            btnFetch.disabled = true;
-
-            try {
-                const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-                if (!res.ok) throw new Error('Pokémon dengan index #' + id + ' tidak ditemukan di PokéAPI.');
-                const data = await res.json();
-
-                // Isi nama
-                const formattedName = data.name.charAt(0).toUpperCase() + data.name.slice(1);
-                inputName.value = formattedName;
-
-                // Isi tipe
-                if (data.types[0]) selType1.value = data.types[0].type.name.charAt(0).toUpperCase() + data.types[0].type.name.slice(1);
-                if (data.types[1]) selType2.value = data.types[1].type.name.charAt(0).toUpperCase() + data.types[1].type.name.slice(1);
-                else selType2.value = '';
-
-                // Tentukan Generasi
-                const num = parseInt(id);
-                if (num <= 151) selGen.value = 'Generasi I (Kanto)';
-                else if (num <= 251) selGen.value = 'Generasi II (Johto)';
-                else if (num <= 386) selGen.value = 'Generasi III (Hoenn)';
-                else if (num <= 493) selGen.value = 'Generasi IV (Sinnoh)';
-                else if (num <= 649) selGen.value = 'Generasi V (Unova)';
-                else if (num <= 721) selGen.value = 'Generasi VI (Kalos)';
-                else if (num <= 809) selGen.value = 'Generasi VII (Alola)';
-                else if (num <= 905) selGen.value = 'Generasi VIII (Galar)';
-                else selGen.value = 'Generasi IX (Paldea)';
-
-                // Sprite URL
-                const spriteUrl = data.sprites?.front_default || `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${num}.png`;
-                inputSprite.value = spriteUrl;
-
-                // Update Preview Hologram
-                previewImg.src = spriteUrl;
-                previewImg.style.display = 'block';
-                if (placeholderIcon) placeholderIcon.style.display = 'none';
-                previewTitle.textContent = `${formattedName} (#${String(num).padStart(4, '0')})`;
-                const typeInfo = selType2.value ? `${selType1.value} / ${selType2.value}` : selType1.value;
-                previewSub.textContent = `${typeInfo} · ${selGen.value}`;
-                previewBox.style.borderColor = '#ff4655';
-                previewBox.style.background = 'radial-gradient(circle at center, rgba(255, 70, 85, 0.18) 0%, rgba(15, 25, 35, 0.8) 100%)';
-
-            } catch (err) {
-                window.showCaughtFeedback(false, 'Gagal Mengambil PokéAPI', err.message);
-            } finally {
-                btnFetch.innerHTML = '<svg viewBox="0 0 24 24" style="width: 15px; height: 15px; fill: currentColor;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> <span>Ambil PokéAPI</span>';
-                btnFetch.disabled = false;
-            }
+            window.showCaughtFeedback(false, 'Input Kosong', 'Silakan masukkan nomor index (1 - 1025) atau nama Pokémon terlebih dahulu.');
         });
     }
 

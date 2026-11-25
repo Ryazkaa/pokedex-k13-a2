@@ -2,7 +2,7 @@
 {{-- 1. Modal Utama Jurnal Taktis (Cyber Crimson / Dark Glassmorphism) --}}
 <div id="journalModal" class="pkm-modal" role="dialog" aria-modal="true" aria-labelledby="journalModalTitle" hidden>
     <div class="pkm-modal__backdrop" data-close-journal-modal></div>
-    <div class="pkm-modal__dialog" style="max-width: 650px; background: #0f1923; color: #f1f5f9; border-radius: 14px; overflow: hidden; border: 1px solid rgba(56, 189, 248, 0.35); box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(56, 189, 248, 0.18); animation: pkmModalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
+    <div class="pkm-modal__dialog" style="max-width: 650px; background: #0f1923; color: #f1f5f9; border-radius: 14px; border: 1px solid rgba(56, 189, 248, 0.35); box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(56, 189, 248, 0.18); animation: pkmModalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
 
         {{-- Header Modal --}}
         <div class="pkm-modal__header" style="display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); background: linear-gradient(90deg, rgba(56, 189, 248, 0.12), rgba(15, 25, 35, 0.8));">

@@ -73,6 +73,11 @@ Proyek ini dikembangkan oleh **Kelompok 13 — Kelas Praktikum Pemrograman Web A
 * **Topbar & Filter Mobile Sempit (`<= 479px` & `<= 359px`):** Menyembunyikan `.topbar-auth-name` saat login di layar sempit `< 480px` agar status badge, switch, logout, bahasa, dan tombol hamburger tidak meluber; menyusun 19 tombol `Filter Tipe` dalam grid seragam 3 kolom (2 kolom di `< 360px`); serta merapikan `.caught-toolbar` dalam grid simetris 1 + 2.
 * **Modal Autentikasi & Showcase Ultra-Rapi:** Menata `.auth-tabs` (`Login | Daftar | Switch Dev (K13)`) tetap muat 1 baris penuh tanpa terlipat di `<= 540px`, memperluas dropdown `.select-field` menjadi `100%` sejak `<= 600px`, serta mengkompaksi `.showcase__stage` dan grid sprite 2 kolom di layar ponsel.
 
+### 12. Pencarian PokéAPI via Nama, Autocomplete Beranimasi & Perbaikan Scroll Modal (v1.5.0 Milestone)
+* **Autocomplete Nama Pokémon Beranimasi (`#apiDexNameList`):** Saat mengetik nama Pokémon di modal *Tambah Koleksi Pokédex* (misal `pik`), sistem menampilkan dropdown rekomendasi beranimasi (`@keyframes caughtSuggestIn` & `caughtSuggestItemIn`, menghormati `prefers-reduced-motion`) dengan sprite thumbnail, lencana nomor indeks, tipe elemen, dan sorotan kata kunci yang diurutkan menaik (*ascending*) berdasarkan nomor Pokédex (sehingga `#0025 Pikachu` tampil di atas `#0731 Pikipek`). Mendukung navigasi keyboard (`ArrowUp`, `ArrowDown`, `Enter`, `Escape`) serta sinkronisasi katalog lengkap 1.025 Pokémon.
+* **Ambil Data PokéAPI via Nomor Index atau Nama (`#btnFetchPokeApi`):** Memindahkan tombol **⚡ Ambil PokéAPI** ke bawah kolom *Nama Pokémon* dan mendukung pengambilan data `https://pokeapi.co/api/v2/pokemon/{identifier}` berdasarkan **Nomor Index** maupun **Nama Pokémon** lengkap (mengisi otomatis kolom nomor index, nama, tipe 1/2, generasi, sprite URL, dan preview hologram).
+* **Perbaikan Bug Scroll & Tata Letak Tombol Modal (`caught-modal.blade.php`, `journal-modal.blade.php`, `caught-table.blade.php`, `pokedex.css`):** Menghapus deklarasi inline `overflow: hidden` yang sebelumnya menghalangi scroll vertikal pada `.pkm-modal__dialog` di zoom 100% maupun layar kecil, serta memperbaiki `.pkm-modal__actions .action-pill` (`width: auto`) agar tombol `Batal` dan `Simpan Koleksi` sejajar rapi tanpa terpotong di bawah layar.
+
 ---
 
 ## 🛠️ Tumpukan Teknologi (Tech Stack)
@@ -108,6 +113,7 @@ Pertemuan 999/
 │   ├── pokedex-app(v1.4.0).zip     # Rilis Cloud Hosting Railway: HTTPS proxy, ext-gd/zip & config:cache sanitizer (Arya & K13)
 │   ├── pokedex-app(v1.4.1).zip     # Rilis UI Responsif Mobile/Tablet: Topbar, Hero Deck, Caught DataTables & Scrollable Modals (Arya & K13)
 │   ├── pokedex-app(v1.4.2).zip     # Rilis Penyempurnaan Responsif Lanjutan: Eyebrow Hero, Grid 3-Kol Filter Tipe, Auth Tabs 1-Baris (Arya & K13)
+│   ├── pokedex-app(v1.5.0).zip     # Rilis Fitur PokéAPI by Name, Animated Autocomplete & Perbaikan Scroll Modal Tambah Koleksi (Arya & K13)
 │   └── README.md                   # Catatan rilis dan riwayat versi komprehensif
 ├── datasets/                       # Dataset acuan spreadsheet (.xlsx)
 ├── docs/                           # Dokumentasi & rancangan sistem
@@ -185,7 +191,7 @@ Pertemuan 999/
 | Anggota | Modul Utama | Status Integrasi | Luaran & Komponen yang Dihasilkan |
 |---|---|:---:|---|
 | **Yanuar Dwi Prasetya**<br>*(J0404251022)* | **Modul 1:** Autentikasi, Sesi, & Role Developer | ✅ **Terintegrasi (v1.1.0 / v1.1.1)** | Migrasi `users.role`, `EnsureDeveloper` Middleware, `AuthController`, modal login/switch account (`auth-modal.blade.php`), lencana status navbar `DEV`/`TRAINER`. |
-| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1 / v1.2.1–v1.2.4 / v1.3.1 / v1.4.0–v1.4.2)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Card 2 Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching, identitas brand Pokéball resmi, sistem bilingual (ID/EN) menyeluruh, Cloud DevOps Railway, dan optimasi UI responsif mobile. |
+| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1 / v1.2.1–v1.2.4 / v1.3.1 / v1.4.0–v1.5.0)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Card 2 Dropdown Gen 1–9, Card 3 Kelengkapan Library, Git branching, identitas brand Pokéball resmi, sistem bilingual (ID/EN), Cloud DevOps Railway, UI responsif mobile, serta autocomplete PokéAPI by Name & scroll fix modal. |
 | **Madina Dwiyana Putri**<br>*(J0404251090)* | **Modul 3:** Pokédex Caught Tracker, DataTables, & Ekspor | ✅ **Terintegrasi (v1.2.0 / v1.2.1)** | Migrasi `trainer_catches`, model `TrainerCatch`, modal `+ Tambah Koleksi` dengan auto-fetch PokéAPI, integrasi DataTables, serta ekspor Excel & DomPDF A4. |
 | **Iasha Irdanti**<br>*(J0404251115)* | **Modul 4:** Field Notes & Jurnal Strategi Trainer | ✅ **Terintegrasi (v1.3.0)** | Migrasi `trainer_notes`, model `TrainerNote`, modal Jurnal Taktik dengan tanggal/lokasi tangkap, integrasi editor WYSIWYG Quill.js, sanitasi HTML. |
 
