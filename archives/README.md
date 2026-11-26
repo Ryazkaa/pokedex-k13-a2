@@ -27,6 +27,7 @@ Repositori ini menyimpan arsip kompresi (`.zip`) dari setiap pencapaian *milesto
 | `pokedex-app(v1.5.2).zip` | `v1.5.2` | 25 November 2026 | **Arya Andra Diazka** & **Kelompok 13** | **Ekspor Data Terpadu (Hold-to-Confirm + Animasi Burung Kertas) & Bento Distribusi Wilayah I–IX:**<br>1. **Tombol Terpadu `Ekspor Data` & Modal Pilihan Format (`caught-table.blade.php`):** Menyatukan `Ekspor Excel` dan `Unduh Laporan PDF` menjadi 1 tombol **Ekspor Data** (`#btnOpenCaughtExportModal`) yang membuka `#caughtExportModal` untuk memilih `.XLSX` atau `.PDF` dan mengonfirmasinya dengan **Hold to Confirm**.<br>2. **Animasi Dokumen → Burung Kertas Origami → Terbang ke Kanan Atas (`#paperBirdOverlay`):** Lembar dokumen `.XLSX`/`.PDF` terlipat menjadi burung kertas SVG bersayap mengepak dan terbang melengkung menuju sudut kanan atas layar (arah ikon Unduhan Chrome) saat file diunduh.<br>3. **Bento 1-Kotak Panjang `Distribusi Wilayah Generasi I – IX` (`bento.blade.php`):** Mengganti 2 kotak *Format & Aturan* menjadi 1 daftar batang populasi 9 region (**Kanto** s.d. **Paldea**) yang dapat diklik untuk langsung menyaring tabel Pustaka Pokémon (`data-filter-gen`) serta mendukung mode bilingual ID/EN. |
 | `pokedex-app(v1.5.3).zip` | `v1.5.3` | 25 November 2026 | **Arya Andra Diazka** & **Kelompok 13** | **Reorganisasi Bento Kolom Tengah & Fitur Random Encounter Spotlight:**<br>1. **Susunan Baru Kolom Tengah (`bento.blade.php`, `pokedex.css`):** Menghilangkan dropdown *Filter Generasi* (`#bentoGenFilter`) yang sudah diwakili Bento kiri, memindahkan **Filter Tipe** (19 elemen) ke posisi teratas, dan menempatkan kartu **Import Pokemon untuk Database** di posisi bawah tepat di atas teks *Tarik & lepas file `.xlsx`*.<br>2. **Fitur `Random Encounter` Tengah (`#encounterCard`, `pokedex.js`, `caught-modal.blade.php`):** Menambahkan kartu eksplorasi acak dengan tombol **Acak**, **Detail** (buka Showcase Modal), dan **+ Tangkap** (otomatis mengisi form Tambah Koleksi via `openAddCaughtModal(prefill)`). |
 | `pokedex-app(v1.5.4).zip` | `v1.5.4` | 25 November 2026 | **Arya Andra Diazka** & **Kelompok 13** | **Radar Efektivitas & Kelemahan Tipe (Penuh-Ruang Independen + Dropdown 19 Elemen):**<br>1. **Pengganti Penuh-Ruang (`bento.blade.php`, `pokedex.css`):** Mengganti kartu `Random Encounter` di bagian tengah dengan **Radar Efektivitas Tipe** (`.type-radar-box` dengan `flex: 1`) sehingga mengisi penuh celah tinggi antara *Filter Tipe* dan *Import Pokemon untuk Database*.<br>2. **Dropdown Pemilih 19 Elemen Independen (`#typeRadarPickerBtn`, `#typeRadarDropdown`, `pokedex.js`):** Berfungsi independen dari *Filter Tipe* tabel utama; klik nama elemen di atas kartu untuk membuka dropdown grid 19 tipe berikon SVG lalu meninjau populasi, **2× Efektif Serang**, **2× Kelemahan**, serta **½× / 0× Resistensi**. |
+| `pokedex-app(v1.5.5).zip` | `v1.5.5` | 26 November 2026 | **Arya Andra Diazka** & **Kelompok 13** | **Penambahan Akun Evaluasi Dual-Role (`Developer` & `Basic Trainer`):**<br>1. **Helper Terpusat (`User::syncEvaluationAccounts()`):** Menyiapkan akun `developer@gmail.com` (`role: developer`) dan `basic@gmail.com` (`role: trainer`) melalui migrasi `2026_11_26_000001_seed_evaluation_accounts_in_users_table.php`, `DatabaseSeeder.php`, serta pengecekan otomatis di `AuthController::login()`.<br>2. **Kesiapan Uji Dosen:** Memudahkan penguji menguji langsung perbedaan hak akses antara akun `DEV` (dapat mengakses Import Excel Master Library) dan `TRAINER` (terkunci modal gembok Dev-Only). |
 
 ---
 
@@ -395,6 +396,17 @@ Repositori ini menyimpan arsip kompresi (`.zip`) dari setiap pencapaian *milesto
   2. **Dropdown Pemilih 19 Elemen Independen (`#typeRadarPickerBtn`, `#typeRadarDropdown`, `pokedex.js`):**
      * Berjalan terpisah dari *Filter Tipe* tabel utama (`#typeFilter`) sehingga pengguna bisa mengecek matchup elemen apa pun tanpa mengubah atau menggulir tabel Pustaka.
      * Mengklik tombol elemen di bagian atas kartu Radar membuka dropdown berikon SVG 19 tipe (`.type-radar-dropdown`, mendukung klik luar & `Escape`), dan setiap badge hasil (**2× Efektif Serang**, **2× Kelemahan**, **½× / 0× Resistensi**) dapat diklik untuk langsung beralih memeriksa elemen tersebut.
+
+---
+
+### 20. Versi 1.5.5 (`pokedex-app(v1.5.5).zip`)
+* **Tanggal Rilis:** 26 November 2026
+* **Kontributor Utama:** Arya Andra Diazka (NIM: J0404251155) & Kelompok 13
+* **Penambahan Akun Evaluasi Dual-Role (`Developer` vs `Trainer`) untuk Uji Dosen:**
+  1. **Helper & Migrasi Sinkronisasi Akun (`User::syncEvaluationAccounts()`, `2026_11_26_000001_seed_evaluation_accounts_in_users_table.php`, `DatabaseSeeder.php`):**
+     * Menyediakan akun evaluasi `developer@gmail.com` (role `developer`) dan `basic@gmail.com` (role `trainer`) dengan hashing `Bcrypt`.
+  2. **Auto-Ensure Saat Login (`AuthController::login()`):**
+     * Memastikan kedua akun uji tetap terjamin keberadaannya dan sesuai perannya di lingkungan lokal maupun produksi Railway saat penguji masuk untuk membandingkan perbedaan hak akses (`DEV` vs `TRAINER`).
 
 ---
 

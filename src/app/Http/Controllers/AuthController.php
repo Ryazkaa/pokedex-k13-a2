@@ -29,6 +29,10 @@ class AuthController extends Controller
             'password' => ['required', 'string'],
         ]);
 
+        if (in_array(strtolower(trim($credentials['email'])), ['developer@gmail.com', 'basic@gmail.com'], true)) {
+            User::syncEvaluationAccounts();
+        }
+
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
             return redirect()->intended(route('pokedex.index'))->with('success', 'Selamat datang kembali, Trainer ' . Auth::user()->name . '!');

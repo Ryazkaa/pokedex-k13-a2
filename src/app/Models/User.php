@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -54,6 +55,49 @@ class User extends Authenticatable
     public function isDeveloper(): bool
     {
         return $this->role === 'developer';
+    }
+
+    /**
+     * Memastikan akun evaluasi dosen (Developer & Basic Trainer) tersedia dengan role yang sesuai.
+     */
+    public static function syncEvaluationAccounts(): void
+    {
+        $accounts = [
+            'developer@gmail.com' => [
+                'name'          => 'Developer K13',
+                'password'      => '123456',
+                'role'          => 'developer',
+                'trainer_class' => 'Developer Admin',
+                'avatar_badge'  => 'badge_dev.png',
+            ],
+            'basic@gmail.com' => [
+                'name'          => 'Basic Trainer',
+                'password'      => '123456',
+                'role'          => 'trainer',
+                'trainer_class' => 'Pokemon Trainer',
+                'avatar_badge'  => 'badge_trainer.png',
+            ],
+        ];
+
+        foreach ($accounts as $email => $cfg) {
+            $user = self::firstOrCreate(
+                ['email' => $email],
+                [
+                    'name'          => $cfg['name'],
+                    'password'      => Hash::make($cfg['password']),
+                    'role'          => $cfg['role'],
+                    'trainer_class' => $cfg['trainer_class'],
+                    'avatar_badge'  => $cfg['avatar_badge'],
+                ]
+            );
+
+            if ($user->role !== $cfg['role']) {
+                $user->update([
+                    'role'          => $cfg['role'],
+                    'trainer_class' => $cfg['trainer_class'],
+                ]);
+            }
+        }
     }
 
     /**

@@ -95,6 +95,9 @@ Proyek ini dikembangkan oleh **Kelompok 13 — Kelas Praktikum Pemrograman Web A
 * **Mengganti `Random Encounter` dengan `Radar Efektivitas Tipe` (`#typeRadarCard`, `.type-radar-box`):** Mengisi penuh sisa ruang vertikal di kolom tengah Bento (`flex: 1`) sehingga rata sejajar dengan kolom kiri (*Distribusi Wilayah*) dan kanan (*Progress Koleksi*) tanpa celah kosong.
 * **Dropdown Pemilih 19 Elemen Independen (`#typeRadarPickerBtn`, `#typeRadarDropdown`, `TYPE_MATCHUPS`):** Berjalan independen tanpa mengganggu *Filter Tipe* tabel utama; pengguna cukup mengklik nama elemen di bagian atas kartu Radar untuk membuka dropdown grid berikon 19 tipe (atau mengklik lencana di dalam Radar) guna melihat jumlah populasi serta **2× Efektif Serang**, **2× Kelemahan**, dan **½× / 0× Resistensi/Kebal**.
 
+### 17. Akun Evaluasi Dual-Role (`Developer` vs `Trainer`) untuk Pengujian Dosen (v1.5.5 Milestone)
+* **Sinkronisasi Otomatis Akun Uji Dual-Role (`User::syncEvaluationAccounts()`):** Menambahkan helper terpusat pada `app/Models/User.php`, seeder `DatabaseSeeder.php`, migrasi `2026_11_26_000001_seed_evaluation_accounts_in_users_table.php`, serta pengecekan otomatis pada `AuthController::login()` untuk menyediakan dua akun uji terpisah (`developer@gmail.com` ber-role `developer` dan `basic@gmail.com` ber-role `trainer`) agar penguji dapat membandingkan hak akses Import Master Library vs akun Trainer biasa secara aman.
+
 ---
 
 ## 🛠️ Tumpukan Teknologi (Tech Stack)
@@ -135,6 +138,7 @@ Pertemuan 999/
 │   ├── pokedex-app(v1.5.2).zip     # Rilis Ekspor Data Terpadu (Hold + Animasi Burung Kertas) & Bento Distribusi Region I-IX (Arya & K13)
 │   ├── pokedex-app(v1.5.3).zip     # Rilis Reorganisasi Bento Tengah: Filter Tipe Atas, Random Encounter Tengah & Import Bawah (Arya & K13)
 │   ├── pokedex-app(v1.5.4).zip     # Rilis Bento Tengah Penuh-Ruang: Radar Efektivitas 19 Elemen Independen + Dropdown (Arya & K13)
+│   ├── pokedex-app(v1.5.5).zip     # Rilis Akun Evaluasi Dual-Role (Developer & Basic Trainer) untuk Pengujian Dosen (Arya & K13)
 │   └── README.md                   # Catatan rilis dan riwayat versi komprehensif
 ├── datasets/                       # Dataset acuan spreadsheet (.xlsx)
 ├── docs/                           # Dokumentasi & rancangan sistem
@@ -212,7 +216,7 @@ Pertemuan 999/
 | Anggota | Modul Utama | Status Integrasi | Luaran & Komponen yang Dihasilkan |
 |---|---|:---:|---|
 | **Yanuar Dwi Prasetya**<br>*(J0404251022)* | **Modul 1:** Autentikasi, Sesi, & Role Developer | ✅ **Terintegrasi (v1.1.0 / v1.1.1)** | Migrasi `users.role`, `EnsureDeveloper` Middleware, `AuthController`, modal login/switch account (`auth-modal.blade.php`), lencana status navbar `DEV`/`TRAINER`. |
-| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1 / v1.2.1–v1.2.4 / v1.3.1 / v1.4.0–v1.5.4)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Distribusi Region I–IX, Radar Efektivitas 19 Tipe, Card 3 Kelengkapan Library, Git branching, identitas brand Pokéball resmi, bilingual (ID/EN), Cloud DevOps Railway, UI responsif mobile, autocomplete PokéAPI by Name, proteksi duplikat First Caught, serta Ekspor Data + animasi burung kertas. |
+| **Arya Andra Diazka**<br>*(J0404251155)* | **Modul 2:** Master Library, Excel Import, & DevOps | ✅ **Terintegrasi (v1.0.1 / v1.1.1 / v1.2.1–v1.2.4 / v1.3.1 / v1.4.0–v1.5.5)** | Katalog 1.025 entitas master, validasi 4 kolom `PhpSpreadsheet`, Bento Distribusi Region I–IX, Radar Efektivitas 19 Tipe, Card 3 Kelengkapan Library, Git branching, identitas brand Pokéball resmi, bilingual (ID/EN), Cloud DevOps Railway, UI responsif mobile, autocomplete PokéAPI by Name, proteksi duplikat First Caught, Ekspor Data + animasi burung kertas, serta sinkronisasi akun evaluasi dual-role. |
 | **Madina Dwiyana Putri**<br>*(J0404251090)* | **Modul 3:** Pokédex Caught Tracker, DataTables, & Ekspor | ✅ **Terintegrasi (v1.2.0 / v1.2.1)** | Migrasi `trainer_catches`, model `TrainerCatch`, modal `+ Tambah Koleksi` dengan auto-fetch PokéAPI, integrasi DataTables, serta ekspor Excel & DomPDF A4. |
 | **Iasha Irdanti**<br>*(J0404251115)* | **Modul 4:** Field Notes & Jurnal Strategi Trainer | ✅ **Terintegrasi (v1.3.0)** | Migrasi `trainer_notes`, model `TrainerNote`, modal Jurnal Taktik dengan tanggal/lokasi tangkap, integrasi editor WYSIWYG Quill.js, sanitasi HTML. |
 

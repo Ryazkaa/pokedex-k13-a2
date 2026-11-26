@@ -1,8 +1,8 @@
 # Dokumen Arsitektur Sistem: Pokédex Collection Tracker & Trainer Directory
 
-**Versi Dokumen:** 1.5.4 (Cloud Hosting Railway, Ekspor Data Burung Kertas, Bento Distribusi Wilayah & Radar Efektivitas Tipe)
-**Status Rilis:** Rilis Produksi v1.5.4 (Live Cloud Hosting Railway, Paper Bird Export, Region Bento & Type Effectiveness Radar)
-**Tanggal Rilis:** 25 November 2026
+**Versi Dokumen:** 1.5.5 (Cloud Hosting Railway, Radar Efektivitas Tipe & Akun Evaluasi Dual-Role)
+**Status Rilis:** Rilis Produksi v1.5.5 (Live Cloud Hosting Railway, Paper Bird Export, Type Radar & Dual-Role Test Accounts)
+**Tanggal Rilis:** 26 November 2026
 **Live URL:** `https://pokedex-k13-a2-production.up.railway.app/pokedex`
 **Pengembang:** Kelompok 13 — Kelas Praktikum Pemrograman Web A / A2  
 * Arya Andra Diazka (J0404251155) — *Lead Architect & DevOps*
@@ -226,4 +226,6 @@ Untuk menjamin kenyamanan akses di perangkat seluler (*smartphone* `320px–480p
   * Kolom kiri Bento Grid (`bento.blade.php`) diringkas menjadi 1 kartu panjang tunggal **Distribusi Wilayah Generasi I – IX** (`.region-panel`) berisi 9 grafik batang klik-able (`data-filter-gen`) untuk menyaring tabel Pustaka Pokémon secara instan.
 * **Reorganisasi Bento Kolom Tengah & Radar Efektivitas Tipe (`v1.5.3` – `v1.5.4`):**
   * Kolom tengah Bento Grid menaikkan **Filter Tipe** (19 elemen) ke posisi teratas, meletakkan kartu **Import Pokemon untuk Database** di posisi paling bawah tepat di atas teks petunjuk drag-and-drop `.xlsx`, serta mengisi ruang tengah (`flex: 1`) dengan **Radar Efektivitas & Kelemahan Tipe** (`#typeRadarCard`, `TYPE_MATCHUPS`, `renderTypeRadar()`) independen ber-dropdown 19 elemen (`#typeRadarPickerBtn`, `#typeRadarDropdown`) yang menampilkan serangan **2×**, kelemahan **2×**, dan resistensi/kebal **½× / 0×**.
+* **Akun Evaluasi Dual-Role (`v1.5.5`):**
+  * `User::syncEvaluationAccounts()` yang dipanggil melalui migrasi `2026_11_26_000001_seed_evaluation_accounts_in_users_table.php`, `DatabaseSeeder.php`, dan `AuthController::login()` menjamin ketersediaan akun uji terpisah untuk role `developer` (`developer@gmail.com`) dan `trainer` (`basic@gmail.com`) dalam pengujian hak akses RBAC.
 
